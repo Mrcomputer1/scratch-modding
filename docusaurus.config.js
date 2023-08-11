@@ -16,11 +16,6 @@ const config = {
     // For GitHub pages deployment, it is often '/<projectName>/'
     baseUrl: '/scratch-modding/',
     
-    // GitHub pages deployment config.
-    // If you aren't using GitHub pages, you don't need these.
-    organizationName: 'Mrcomputer1', // Usually your GitHub org/user name.
-    projectName: 'scratch-3-modding', // Usually your repo name.
-    
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
 
@@ -84,7 +79,7 @@ const config = {
                         },
                         {
                             label: "Forum Topic",
-                            href: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // TODO replace with forum topic when ready
+                            href: "https://scratch.mit.edu/discuss/topic/703721/"
                         },
                         {
                             label: "Credits",
