@@ -14,12 +14,10 @@ The [Guide to Modding Scratch 3.0](https://scratch.mit.edu/discuss/topic/289503/
 * [Reporters and Booleans](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/reporters-and-booleans)
 * [Rebranding the Editor](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/rebranding-editor)
 * [Releasing the Mod](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/releasing-the-mod)
-[/list]
 
 ### Additional Tutorials
 * [Adding Extensions](http://mrcomputer1.github.io/scratch-modding/tutorial/adding-extensions)
 * [Block Themes](http://mrcomputer1.github.io/scratch-modding/tutorial/block-themes)
-[/list]
 
 ## Contributing
 Helpful Pages:
