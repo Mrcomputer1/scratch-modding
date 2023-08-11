@@ -1,6 +1,6 @@
 # Scratch 3.0 Modding Tutorial
 
-The [Guide to Modding Scratch 3.0](https://scratch.mit.edu/discuss/topic/289503/) sticky by JGames101 is good and helpful for modding Scratch, but it only shows how to setup for modding and how to add a basic block. This tutorial (or really multiple tutorials) includes the setup process, adding blocks with inputs, reporter and boolean blocks, block themes (like high constrast) and more.
+The [Guide to Modding Scratch 3.0](https://scratch.mit.edu/discuss/topic/289503/) sticky by JGames101 is good and it is helpful for modding Scratch, but it only shows how to setup for modding and how to add a basic block. This tutorial (or really multiple tutorials) includes the setup process, adding blocks with inputs, reporter and boolean blocks, block themes (like high contrast) and more.
 
 ## Tutorial List
 ### Getting Started
