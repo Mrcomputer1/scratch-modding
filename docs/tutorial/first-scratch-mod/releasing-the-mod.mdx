@@ -1,0 +1,116 @@
+---
+sidebar_position: 6
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+# Releasing the Mod
+
+## GitHub (with GitHub Actions) <span class="badge badge--primary">Recommended</span>
+:::info
+This section expects that you forked the Scratch repositories and cloned your fork when initally setting up your mod.
+:::
+
+### Commit and push your changes
+First, you will need to commit and push your changes to GitHub.
+
+```shell
+git commit -am "any commit message you want... should describe your changes."
+git push origin develop
+```
+
+:::info
+`develop` is the main branch for most Scratch repositories.
+:::
+
+### Add GitHub Actions workflow
+In your `scratch-gui` repository, add a `.github/workflows/publish.yml` file.
+
+```yaml title="scratch-gui/.github/workflows/publish.yml"
+name: Publish
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Scratch
+        run: npm run build
+      
+      - name: Upload the pages artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ./build
+  
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+```
+
+Next, make sure that GitHub Pages's Source setting is set to "GitHub Actions" in your repository's `Settings -> Pages`.
+
+Finally, go to the Actions tab, go to "Publish" on the left sidebar, press "Run workflow" (in the blue banner), ensure the `develop` branch is selected and press "Run workflow" to build and publish Scratch to GitHub Pages.
+
+### Improvements
+You could improve this by automatically rebuilding when you push to the repository or when you publish a release.
+
+#### Run on push to repository
+```yaml title="scratch-gui/.github/workflows/publish.yml"
+on:
+  push:
+    branches:
+      - "develop"
+```
+
+#### Run on release publish
+```yaml title="scratch-gui/github/workflows/publish.yml"
+on:
+  release:
+    types: [published]
+```
+
+## Manual Hosting
+Run this command to build `scratch-gui`. Once you have run the command, you will have a folder called `build`, this contains the Scratch build.
+<Tabs groupId="package-manager" queryString>
+    <TabItem value="npm" label="NPM" default>
+        <CodeBlock language="shell">
+            npm run build
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="yarn" label="Yarn" default>
+        <CodeBlock language="shell">
+            yarn run build
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="pnpm" label="PNPM" default>
+        <CodeBlock language="shell">
+            pnpm run build
+        </CodeBlock>
+    </TabItem>
+</Tabs>
+
+Once you have built Scratch, you can upload the contents of the `build` folder anywhere you like.

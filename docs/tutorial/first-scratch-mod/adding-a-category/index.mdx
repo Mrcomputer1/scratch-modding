@@ -1,0 +1,307 @@
+---
+sidebar_position: 2
+---
+
+# Adding a Category
+
+## Adding the category to `scratch-blocks`
+Let's move the alert block to a Dialogs category.
+
+### `blocks_vertical`
+First, create a file called `dialogs.js` in `blocks_vertical`.
+
+At the top of the file put:
+```js title="scratch-blocks/blocks_vertical/dialogs.js"
+'use strict';
+
+goog.provide('Blockly.Blocks.dialogs'); // "dialogs" being the category.
+
+goog.require('Blockly.Blocks');
+goog.require('Blockly.Colours');
+goog.require('Blockly.ScratchBlocks.VerticalExtensions');
+```
+
+Move your block from `looks.js` to `dialogs.js` (leaving `looks.js` like it was originally).
+```js title="scratch-blocks/blocks_vertical/dialogs.js"
+// highlight-next-line
+Blockly.Blocks['tutorialmod_dialogs_alert'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      // highlight-next-line
+      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_ALERT, 
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "MESSAGE"
+        }
+      ],
+      // highlight-start
+      "category": Blockly.Categories.dialogs,
+      "extensions": ["colours_dialogs", "shape_statement"]
+      // highlight-end
+    });
+  }
+};
+```
+
+### The block messages
+First, move your block's message to a new section (to keep the file organised) and update the message to match the one in the block definition.
+
+Second, under the "Category labels" section, add one for your new category.
+
+```js title="scratch-blocks/msg/messages.js"
+// Category labels
+// highlight-next-line
+Blockly.Msg.CATEGORY_DIALOGS = 'Dialogs';
+Blockly.Msg.CATEGORY_MOTION = 'Motion';
+Blockly.Msg.CATEGORY_LOOKS = 'Looks';
+Blockly.Msg.CATEGORY_SOUND = 'Sound';
+Blockly.Msg.CATEGORY_EVENTS = 'Events';
+Blockly.Msg.CATEGORY_CONTROL = 'Control';
+Blockly.Msg.CATEGORY_SENSING = 'Sensing';
+Blockly.Msg.CATEGORY_OPERATORS = 'Operators';
+Blockly.Msg.CATEGORY_VARIABLES = 'Variables';
+Blockly.Msg.CATEGORY_MYBLOCKS = 'My Blocks';
+```
+
+### The block category
+In `core/constants.js`, find `Blockly.Categories` and add your category to it.
+
+```js title="scratch-blocks/core/constants.js"
+/**
+ * ENUM for categories.
+ * @const
+ */
+Blockly.Categories = {
+  // highlight-next-line
+  "dialogs": "dialogs",
+  "motion": "motion",
+  "looks": "looks",
+  "sound": "sounds",
+  "pen": "pen",
+  "data": "data",
+  "dataLists": "data-lists",
+  "event": "events",
+  "control": "control",
+  "sensing": "sensing",
+  "operators": "operators",
+  "more": "more"
+};
+```
+
+### The block colour
+In `core/colours.js`, add your colour to the `Blockly.Colours` object.
+
+```js title="scratch-blocks/core/colours.js"
+// ...
+goog.provide('Blockly.Colours');
+
+Blockly.Colours = {
+  // SVG colours: these must be specificed in #RRGGBB style
+  // To add an opacity, this must be specified as a separate property (for SVG fill-opacity)
+  // highlight-start
+  "dialogs": {
+    "primary": "#60a05c",
+    "secondary": "#4c8249",
+    "tertiary": "#31542f",
+    "quaternary": "#31542f"
+  },
+  // highlight-end
+  "motion": {
+    "primary": "#4C97FF",
+    "secondary": "#4280D7",
+    "tertiary": "#3373CC",
+    "quaternary": "#3373CC"
+  },
+  // ...
+};
+```
+
+The colours are these:
+
+| Colour        | Hex Code            | Example                                                                 |
+| ------------- | ------------------- | ----------------------------------------------------------------------- |
+| Primary       | `#60a05c`           | <div class="colour-example" style={{backgroundColor: "#60a05c"}}></div> |
+| Secondary     | `#4c8249`           | <div class="colour-example" style={{backgroundColor: "#4c8249"}}></div> |
+| Tertiary      | `#31542f`           | <div class="colour-example" style={{backgroundColor: "#31542f"}}></div> |
+| Quaternary    | `#31542f`           | <div class="colour-example" style={{backgroundColor: "#31542f"}}></div> |
+
+### The block colour extension
+In the `blocks_vertical/vertical_extensions.js` file, in the function `Blockly.ScratchBlocks.VerticalExtensions.registerAll`, add your category's name to the `categoryNames` variable.
+
+```js title="scratch-blocks/blocks_vertical/vertical_extensions.js"
+/**
+ * Register all extensions for scratch-blocks.
+ * @package
+ */
+Blockly.ScratchBlocks.VerticalExtensions.registerAll = function() {
+  var categoryNames =
+      ['control', 'data', 'data_lists', 'sounds', 'motion', 'looks', 'event',
+  // highlight-next-line
+        'sensing', 'pen', 'operators', 'more', 'dialogs'];
+  // Register functions for all category colours.
+  for (var i = 0; i < categoryNames.length; i++) {
+    var name = categoryNames[i];
+    Blockly.Extensions.register('colours_' + name,
+        Blockly.ScratchBlocks.VerticalExtensions.colourHelper(name));
+  }
+
+  // ...
+};
+```
+
+## Adding the category to `scratch-gui`
+
+### Adding the category to the toolbox
+In `src/lib/make-toolbox-xml.js`, remove your changes from the `looks` category and add the following:
+
+```js title="scratch-gui/src/lib/make-toolbox-xml.js"
+/* eslint-disable no-unused-vars */
+const dialogs = function (isInitialSetup, isStage, targetId, colors) {
+    const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category name="%{BKY_CATEGORY_DIALOGS}" id="dialogs" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
+        <block type="tutorialmod_dialogs_alert">
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        ${categorySeparator}
+    </category>
+    `;
+};
+```
+
+At the bottom of the file, there is a function called `makeToolboxXml`, make the highlighted changes to it:
+```js title="scratch-gui/src/lib/make-toolbox-xml.js"
+const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categoriesXML = [],
+    costumeName = '', backdropName = '', soundName = '', colors = defaultColors) {
+    // ...
+    
+    categoriesXML = categoriesXML.slice();
+    const moveCategory = categoryId => {
+        // ...
+    };
+    // highlight-next-line
+    const dialogsXML = moveCategory('dialogs') || dialogs(isInitialSetup, isStage, targetId, colors.dialogs);
+    const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId, colors.motion);
+    const looksXML = moveCategory('looks') ||
+        looks(isInitialSetup, isStage, targetId, costumeName, backdropName, colors.looks);
+    // ...
+
+    const everything = [
+        xmlOpen,
+        // highlight-next-line
+        dialogsXML, gap,
+        motionXML, gap,
+        looksXML, gap,
+        // ...
+        myBlocksXML
+    ];
+
+    for (const extensionCategory of categoriesXML) {
+        everything.push(gap, extensionCategory.xml);
+    }
+
+    everything.push(xmlClose);
+    return everything.join('\n');
+}
+```
+
+### Adding the block to the default theme
+In the file `src/lib/themes/default/index.js`, add the block colours you specified in `scratch-blocks`'s `core/colours.js`
+
+```js title="scratch-gui/src/lib/themes/default/index.js"
+const blockColors = {
+    dialogs: {
+        primary: "#60a05c",
+        secondary: "#4c8249",
+        tertiary: "#31542f",
+        quaternary: "#31542f"
+    },
+    // ...
+};
+```
+
+:::tip
+If you want, you can also add the category to the `dark`, `high-constrast` or [your own custom themes](../../block-themes/index.mdx) themes.
+:::
+
+## Adding the category to `scratch-vm`.
+First, remove the changes from `scratch3_looks.js`.
+
+In the `src/blocks` folder, add a `tutorialmod_dialogs.js` file.
+
+```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
+class TutorialModDialogsBlocks {
+    constructor (runtime){
+        /**
+         * The runtime instantiating this block package.
+         * @type {Runtime}
+         */
+        this.runtime = runtime;
+    }
+
+    /**
+     * Retrieve the block primitives implemented by this package.
+     * @return {object.<string, Function>} Mapping of opcode to Function.
+     */
+    getPrimitives () {
+        return {
+            tutorialmod_dialogs_alert: this.alertBlock
+        };
+    }
+
+    alertBlock(args, util) {
+        alert(args.MESSAGE);
+    }
+}
+
+module.exports = TutorialModDialogsBlocks;
+```
+
+And finally, in `src/engine/runtime.js`, add your category's file to `defaultBlockPackages`
+
+```js title="scratch-vm/src/engine/runtime.js"
+const defaultBlockPackages = {
+    // highlight-next-line
+    tutorialmod_dialogs: require('../blocks/tutorialmod_dialogs'),
+    scratch3_control: require('../blocks/scratch3_control'),
+    scratch3_event: require('../blocks/scratch3_event'),
+    scratch3_looks: require('../blocks/scratch3_looks'),
+    scratch3_motion: require('../blocks/scratch3_motion'),
+    scratch3_operators: require('../blocks/scratch3_operators'),
+    scratch3_sound: require('../blocks/scratch3_sound'),
+    scratch3_sensing: require('../blocks/scratch3_sensing'),
+    scratch3_data: require('../blocks/scratch3_data'),
+    scratch3_procedures: require('../blocks/scratch3_procedures')
+};
+```
+
+## Completed Files
+| Component         | File                                      | Download                                                      |
+| ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `scratch-blocks`  | `blocks_vertical/dialogs.js`              | [dialogs.js](resources/dialogs.js)                            |
+| `scratch-blocks`  | `blocks_vertical/vertical_extensions.js`  | [vertical_extensions.js](resources/vertical_extensions.js)    |
+| `scratch-blocks`  | `core/colours.js`                         | [colours.js](resources/colours.js)                            |
+| `scratch-blocks`  | `core/constants.js`                       | [constants.js](resources/constants.js)                        |
+| `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js)                          |
+| `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js)          |
+| `scratch-gui`     | `src/lib/themes/default/index.js`         | [index.js](resources/index.js)                                |
+| `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js)    |
+| `scratch-vm`      | `src/engine/runtime.js`                   | [runtime.js](resources/runtime.js)                            |
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
+    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
+    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+</details>

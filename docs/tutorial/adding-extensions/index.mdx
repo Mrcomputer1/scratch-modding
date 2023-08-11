@@ -1,0 +1,323 @@
+---
+sidebar_position: 3
+---
+
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Adding Extensions
+
+:::info
+If you just want to make Scratch extensions, but not a Scratch mod, you might prefer [TurboWarp's custom extensions](https://docs.turbowarp.org/development/extensions/introduction). This tutorial is focused on adding an extension to a Scratch mod. Some parts of the TurboWarp custom extensions tutorial may help in developing Scratch extensions that can be used here.
+:::
+
+In this tutorial, we are going to create the dialogs blocks from the [Your First Scratch Mod](../first-scratch-mod/adding-a-block/index.mdx) tutorial series, but in the form of an extension.
+
+<ScratchBlocks>
+{`alert [Hello!]::extension
+(prompt [Hello!]::extension)
+(confirm [Hello!]::boolean extension)`}
+</ScratchBlocks>
+
+## Creating the extension
+In `scratch-vm`, locate the `src/extensions` folder and create your own folder within it. I am going to call the folder `tutorialmod_dialogs`. Inside this folder create an `index.js` file.
+
+This file looks like this (explanations are after):
+```js title="scratch-vm/src/extensions/tutorialmod_dialogs/index.js"
+const formatMessage = require("format-message");
+const BlockType = require("../../extension-support/block-type");
+const ArgumentType = require("../../extension-support/argument-type");
+
+class TutorialModDialogsExtension{
+    constructor (runtime){
+        /**
+         * The runtime instantiating this block package.
+         * @type {Runtime}
+         */
+        this.runtime = runtime;
+    }
+
+    /**
+     * @returns {object} metadata for this extension and its blocks.
+     */
+    getInfo () {
+        return {
+            id: "jsdialogs",
+            name: formatMessage({
+                id: "dialogs.categoryName",
+                default: "Dialogs",
+                description: "Name of the Dialogs extension."
+            }),
+            // blockIconURI
+            // menuIconURI
+            blocks: [
+                {
+                    opcode: "js_alert",
+                    text: formatMessage({
+                        id: "dialogs.alertBlock",
+                        default: "alert [MESSAGE]",
+                        description: "Alert dialog"
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        MESSAGE: {
+                            type: ArgumentType.STRING,
+                            defaultValue: formatMessage({
+                                id: "dialogs.hello",
+                                default: "Hello!",
+                                description: "Hello!"
+                            })
+                        }
+                    }
+                },
+                {
+                    opcode: "js_prompt",
+                    text: formatMessage({
+                        id: "dialogs.promptBlock",
+                        default: "prompt [MESSAGE]",
+                        description: "Prompt dialog"
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        MESSAGE: {
+                            type: ArgumentType.STRING,
+                            defaultValue: formatMessage({
+                                id: "dialogs.hello",
+                                default: "Hello!",
+                                description: "Hello!"
+                            })
+                        }
+                    }
+                },
+                {
+                    opcode: "js_confirm",
+                    text: formatMessage({
+                        id: "dialogs.confirmBlock",
+                        default: "confirm [MESSAGE]",
+                        description: "Confirm dialog"
+                    }),
+                    blockType: BlockType.BOOLEAN,
+                    arguments: {
+                        MESSAGE: {
+                            type: ArgumentType.STRING,
+                            defaultValue: formatMessage({
+                                id: "dialogs.hello",
+                                default: "Hello!",
+                                description: "Hello!"
+                            })
+                        }
+                    }
+                }
+            ]
+        };
+    }
+
+    js_alert (args, util){
+        alert(args.MESSAGE);
+    }
+
+    js_prompt (args, util){
+        return prompt(args.MESSAGE);
+    }
+
+    js_confirm (args, util){
+        return confirm(args.MESSAGE);
+    }
+}
+
+module.exports = TutorialModDialogsExtension;
+```
+
+### Explanations
+```js
+const formatMessage = require("format-message");
+const BlockType = require("../../extension-support/block-type");
+const ArgumentType = require("../../extension-support/argument-type");
+```
+
+`format-message` is the package used for translations.
+
+`BlockType` are the types of blocks, this is used instead of the "extensions" in `scratch-blocks`. `shape_statement`, `output_string`, `output_boolean`, etc.
+
+`ArgumentType` is the type of argument.
+
+---
+
+```js
+class TutorialModDialogsExtension{
+    // highlight-start
+    constructor (runtime){
+        /**
+         * The runtime instantiating this block package.
+         * @type {Runtime}
+         */
+        this.runtime = runtime;
+    }
+    // highlight-end
+}
+```
+
+The `constructor` is where the extension's initialisation code can go, currently it just stores the `runtime` into a class field.
+
+---
+
+For the next bit, the explanations are highlighted:
+
+```js
+getInfo () {
+    return {
+        // highlight-next-line
+        // The ID of the extension
+        id: "jsdialogs",
+        // highlight-next-line
+        // The name of the extension, using the format-message translation system.
+        name: formatMessage({
+            id: "dialogs.categoryName",
+            default: "Dialogs",
+            description: "Name of the Dialogs extension."
+        }),
+        // highlight-next-line
+        // You can specify a URI for a block icon (appears on the block) and menu icon (appears in the toolbox). I am not an artist, so I did not do this.
+        blockIconURI: "",
+        menuIconURI: "",
+        // highlight-next-line
+        // blocks is list of blocks
+        blocks: [
+            // highlight-next-line
+            // This is a block.
+            {
+                // highlight-next-line
+                // The opcode for the block.
+                opcode: "js_alert",
+                // highlight-next-line
+                // Unlike blocks added to the Scratch core, use the name of the argument surrounded by [SQUARE BRACKETS] instead of %1.
+                text: formatMessage({
+                    id: "dialogs.alertBlock",
+                    default: "alert [MESSAGE]",
+                    description: "Alert dialog"
+                }),
+                // highlight-next-line
+                // The type of block. BOOLEAN, COMMAND, CONDITIONAL (if), HAT, LOOP (repeat), REPORTER, etc.
+                blockType: BlockType.COMMAND,
+                // highlight-next-line
+                // The arguments for this block.
+                arguments: {
+                    // highlight-next-line
+                    // The matches the [MESSAGE] from the block's text.
+                    MESSAGE: {
+                        // highlight-next-line
+                        // The type of argument: ANGLE (numeric), BOOLEAN, COLOR, NUMBER, STRING, etc.
+                        type: ArgumentType.STRING,
+                        // highlight-next-line
+                        // The default value for this argument.
+                        defaultValue: formatMessage({
+                            id: "dialogs.hello",
+                            default: "Hello!",
+                            description: "Hello!"
+                        })
+                    }
+                }
+            },
+            // ...
+        ]
+    };
+}
+```
+
+---
+
+```js
+js_alert (args, util){
+    alert(args.MESSAGE);
+}
+
+js_prompt (args, util){
+    return prompt(args.MESSAGE);
+}
+
+js_confirm (args, util){
+    return confirm(args.MESSAGE);
+}
+```
+
+The block implementations are exactly like they are when added directly to the Scratch core.
+
+## Adding the extension as a built-in extension
+In `src/extension-support/extension-manager.js`, near the top is a variable called `builtinExtensions`, add your extension to it:
+
+```js title="scratch-vm/src/extension-support/extension-manager.js"
+const builtinExtensions = {
+    // This is an example that isn't loaded with the other core blocks,
+    // but serves as a reference for loading core blocks as extensions.
+    coreExample: () => require('../blocks/scratch3_core_example'),
+    // These are the non-core built-in extensions.
+    // highlight-next-line
+    jsdialogs: () => require('../extensions/tutorialmod_dialogs'),
+    pen: () => require('../extensions/scratch3_pen'),
+    wedo2: () => require('../extensions/scratch3_wedo2'),
+    music: () => require('../extensions/scratch3_music'),
+    microbit: () => require('../extensions/scratch3_microbit'),
+    text2speech: () => require('../extensions/scratch3_text2speech'),
+    translate: () => require('../extensions/scratch3_translate'),
+    videoSensing: () => require('../extensions/scratch3_video_sensing'),
+    ev3: () => require('../extensions/scratch3_ev3'),
+    makeymakey: () => require('../extensions/scratch3_makeymakey'),
+    boost: () => require('../extensions/scratch3_boost'),
+    gdxfor: () => require('../extensions/scratch3_gdx_for')
+};
+```
+
+## Adding the extension to the extension library
+This part is the only part of adding an extension done in `scratch-gui`. In the `src/lib/libraries/extensions/index.jsx` file, add your extension to the extension list.
+
+```jsx title="scratch-gui/src/lib/libraries/extensions/index.jsx"
+export default [
+    {
+        name: (
+            <FormattedMessage
+                defaultMessage="Dialogs"
+                description="Name for the 'Dialogs' extension"
+                id="gui.extension.dialogs.name"
+            />
+        ),
+        // highlight-next-line
+        // This must be your extension's ID.
+        extensionId: "jsdialogs",
+        // highlight-next-line
+        // This is the big image in the extension library.
+        iconURL: "",
+        // highlight-next-line
+        // This is the small image in the extension library.
+        insetIconURL: "",
+        description: (
+            <FormattedMessage
+                defaultMessage="JavaScript dialogs"
+                description="Description for the 'Dialogs' extension"
+                id="gui.extension.dialogs.description"
+            />
+        ),
+        // highlight-next-line
+        // Currently, all extensions in Scratch are featured. Setting this to false simply makes the extension appear smaller in the library.
+        featured: true
+    },
+    // ...
+]
+```
+
+## More Information
+Information in [TurboWarp's Custom Extension](https://docs.turbowarp.org/development/extensions/introduction) tutorial can help in making extensions. However, the TurboWarp extension tutorial is designed for extensions that aren't built in. Instead of using `Scratch.` APIs, you probably need to `require` it from somewhere in Scratch instead. For example, `Scratch.BlockType.*` is required from `../extension-support/block-type`.
+
+## Completed Files
+| Component         | File                                          | Download                                                      |
+| ----------------- | --------------------------------------------- | ------------------------------------------------------------- |
+| `scratch-vm`      | `src/extensions/tutorialmod_dialogs/index.js` | [index.js](resources/index.js)                                |
+| `scratch-vm`      | `src/extension-support/extension-manager.js`  | [extension-manager.js](resources/extension-manager.js)        |
+| `scratch-gui`     | `src/lib/libraries/extensions/index.jsx`      | [index.jsx](resources/index.jsx)                              |
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
+    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
+    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+</details>

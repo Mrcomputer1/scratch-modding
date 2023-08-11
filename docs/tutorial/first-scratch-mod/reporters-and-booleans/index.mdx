@@ -1,0 +1,138 @@
+---
+sidebar_position: 3
+---
+
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Reporters and Booleans
+
+## Reporters
+Reporters are the rounded corner blocks. They can either return a string or number.
+
+We will add one to our Dialogs category:
+<ScratchBlocks>
+(prompt [Hello!]::#60a05c)
+</ScratchBlocks>
+
+### The block definition and message (`scratch-blocks`)
+Copy the definition for your Alert block and make the following changes:
+
+```js title="scratch-blocks/blocks_vertical/dialogs.js"
+// highlight-next-line
+Blockly.Blocks['tutorialmod_dialogs_prompt'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      // highlight-next-line
+      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_PROMPT, 
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "MESSAGE"
+        }
+      ],
+      "category": Blockly.Categories.dialogs,
+      // highlight-next-line
+      "extensions": ["colours_dialogs", "output_string"]
+    });
+  }
+};
+```
+
+Other than changing the message and opcode, we also changed `shape_statement` to `output_string`. `output_string` and `output_number` are the reporter shapes.
+
+:::tip
+Don't forget to add the message to `msg/messages.js`.
+:::
+
+### Adding the block to the toolbox
+Copy the entry for the Alert block and adjust it as needed:
+
+```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
+<block type="tutorialmod_dialogs_prompt">
+    <value name="MESSAGE">
+        <shadow type="text">
+            <field name="TEXT">${hello}</field>
+        </shadow>
+    </value>
+</block>
+```
+
+### The block implementation
+Simply `return` from the block's function to return a value from the block. Don't forget to add the block to `getPrimitives`
+
+```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
+promptBlock(args, util) {
+    return prompt(args.MESSAGE);
+}
+```
+
+## Booleans
+Booleans are almost exactly like reporters. Instead of `output_string` or `output_number`, you use `output_boolean`. And in the block's function, you return a boolean. Let's add this block:
+
+<ScratchBlocks>
+(confirm [Hello!]::boolean #60a05c)
+</ScratchBlocks>
+
+### Block definition
+```js title="scratch-blocks/blocks_vertical/dialogs.js"
+Blockly.Blocks['tutorialmod_dialogs_confirm'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_CONFIRM, 
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "MESSAGE"
+        }
+      ],
+      "category": Blockly.Categories.dialogs,
+      "extensions": ["colours_dialogs", "output_boolean"]
+    });
+  }
+};
+```
+
+:::tip
+Don't forget `msg/messages.js`
+:::
+
+### Toolbox entry
+```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
+<block type="tutorialmod_dialogs_confirm">
+    <value name="MESSAGE">
+        <shadow type="text">
+            <field name="TEXT">${hello}</field>
+        </shadow>
+    </value>
+</block>
+```
+
+### Implementation
+```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
+confirmBlock(args, util) {
+    return confirm(args.MESSAGE);
+}
+```
+
+## Completed Files
+| Component         | File                                      | Download                                                      |
+| ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `scratch-blocks`  | `blocks_vertical/dialogs.js`              | [dialogs.js](resources/dialogs.js)                            |
+| `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js)                          |
+| `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js)          |
+| `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js)    |
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
+    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
+    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+</details>

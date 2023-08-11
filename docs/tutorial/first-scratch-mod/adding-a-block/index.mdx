@@ -1,0 +1,256 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Adding a Block
+
+:::info
+This tutorial is for adding blocks as core blocks (blocks that are not included in an extensions) in a mod. If you want to add a custom extension to your Scratch mod, see the [Adding Extensions](../../adding-extensions/index.mdx) tutorial. If you want just want make a Scratch extension and not a Scratch mod, you probably want to look at [TurboWarp's custom extensions](https://docs.turbowarp.org/development/extensions/introduction) instead.
+:::
+
+## What block are we adding?
+Let's add a very simple block, that uses the browser's `alert()` function to display a message.
+
+<ScratchBlocks>
+    alert [Hello!]::looks
+</ScratchBlocks>
+
+## Making the block
+The first step to adding a block is actually making the block itself.
+
+Since we are adding a looks blocks, we need to open the `looks.js` file. This file is part of `scratch-blocks` and is located at `blocks_vertical/looks.js`.
+
+### Anatomy of a block
+Let's take a look at the first block in the file, which is `looks_sayforsecs` or <ScratchBlocks inline>say [Hello!] for (2) secs</ScratchBlocks>. Explanations are included in the highlighted comments.
+
+```js title="scratch-blocks/blocks_vertical/looks.js"
+// highlight-start
+// "Blockly.Blocks" is the object that contains the blocks in Scratch.
+// "looks_sayforsecs" is the ID of the block.
+// highlight-end
+Blockly.Blocks['looks_sayforsecs'] = {
+  // highlight-next-line
+  // A JSDoc comment, it provides documentation about the code and may help your code editor provide relevant autocomplete suggestions.
+  /**
+   * Block to say for some time.
+   * @this Blockly.Block
+   */
+  // highlight-next-line
+  // The "init" function is called by Scratch Blocks/Blockly to initialise the block.
+  init: function() {
+    // highlight-next-line
+    // this.jsonInit is a function that initialises the block with information provided in the form of a JavaScript object.
+    this.jsonInit({
+      // highlight-start
+      // "message0" is the text the block displays. It currently is pointing to a translatable message (Blockly.Msg.).
+      // The contents of Blockly.Msg.LOOKS_SAYFORSECS is "say %1 for %2 seconds".
+      // The "%1" and "%2" are locations that will be replaced with something else, in this case input boxes.
+      //
+      // If a block has multiple parts, the number after "message" may be increased. An example is the forever block (CONTROL_FOREVER).
+      // highlight-end
+      "message0": Blockly.Msg.LOOKS_SAYFORSECS,
+      // highlight-next-line
+      // These are the replacements for the "%1" and "%2" from the block message. In this case, both are "input_value"s
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "MESSAGE"
+        },
+        {
+          "type": "input_value",
+          "name": "SECS"
+        }
+      ],
+      // highlight-next-line
+      // The category the block is in.
+      "category": Blockly.Categories.looks,
+      // highlight-start
+      // A list of "extensions" for the block, this is unrelated to the Scratch extensions system. These extensions modify the appearance of the blocks.
+      // * "colours_looks": Applies the looks colour to the block.
+      // * "shape_statement": Applies the standard statement/stack block style to the block.
+      // highlight-end
+      "extensions": ["colours_looks", "shape_statement"]
+    });
+  }
+};
+```
+
+### Adding our own block
+Choose a place in the file that you wish to add the block. I will add it near the top, under the `goog.require` lines.
+
+:::caution
+
+You must not add the blocks above the `goog.require` lines.
+
+:::
+
+```js title="scratch-blocks/blocks_vertical/looks.js"
+// highlight-next-line
+// You do not have to prefix your mod's block opcode with your mod name, but I like to.
+Blockly.Blocks['tutorialmod_looks_alert'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      // highlight-next-line
+      // We will add the message next, however the contents of the message will be "alert %1".
+      "message0": Blockly.Msg.TUTORIALMOD_LOOKS_ALERT, 
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "MESSAGE"
+        }
+      ],
+      "category": Blockly.Categories.looks,
+      "extensions": ["colours_looks", "shape_statement"]
+    });
+  }
+};
+```
+
+### Adding the block message
+We need to add the `TUTORALMOD_LOOKS_ALERT` message we referenced in the block definition. For that, we need to open the `msg/messages.js` file in `scratch-blocks`.
+
+Find the "Looks blocks" section of the file (you don't need to place it in the correct section, but it helps keep the file organised) and add this.
+
+```js title="scratch-blocks/msg/messages.js"
+// Looks blocks
+// highlight-next-line
+Blockly.Msg.TUTORIALMOD_LOOKS_ALERT = 'alert %1';
+Blockly.Msg.LOOKS_SAYFORSECS = 'say %1 for %2 seconds';
+```
+
+### Rebuilding Scratch Blocks
+:::info
+
+**Reminder:** If you used Windows Subsystem for Linux or similar for `scratch-blocks`, you will need to use that now too.
+
+:::
+
+You need to rebuild Scratch Blocks every time you make a change to it.
+
+<Tabs groupId="package-manager" queryString>
+    <TabItem value="npm" label="NPM" default>
+        <CodeBlock language="shell">
+{`npm run translate
+npm run prepublish`}
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="yarn" label="Yarn" default>
+        <CodeBlock language="shell">
+{`yarn run translate
+yarn run prepublish`}
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="pnpm" label="PNPM" default>
+        <CodeBlock language="shell">
+{`pnpm run translate
+pnpm run prepublish`}
+        </CodeBlock>
+    </TabItem>
+</Tabs>
+
+After rebuilding Scratch Blocks, you may have to restart the `scratch-gui` development server.
+
+## Adding the block to the toolbox
+Now, we need to move to `scratch-gui` to add the block to the toolbox. The toolbox is defined in `src/lib/make-toolbox-xml.js`. The file has a function for each category (for example, `looks` for the Looks category).
+
+```js title="scratch-gui/src/lib/make-toolbox-xml.js"
+const looks = function (isInitialSetup, isStage, targetId, costumeName, backdropName, colors) {
+    const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
+    const hmm = ScratchBlocks.ScratchMsgs.translate('LOOKS_HMM', 'Hmm...');
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category name="%{BKY_CATEGORY_LOOKS}" id="looks" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
+        // highlight-start
+        <block type="tutorialmod_looks_alert">
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        ${blockSeparator}
+        // highlight-end
+        <!-- the rest of the blocks... -->
+    </category>
+    `;
+}
+```
+
+## Trying the block
+If the `scratch-gui` development server isn't running, start it now. You should see your new block at the top of the Looks category.
+
+## Implementing your block
+The block currently doesn't do anything. So let's implement the block. Implementations of blocks are located in `scratch-vm`, in the folder `src/blocks`. The looks blocks are in a file called `scratch3_looks.js`.
+
+You should place your block's function inside the class, preferably below the `getPrimitives` function or the `getMonitored` and `getHats` functions if they are present. I will place the block above the `say` function, which is the `loosk_say` block. The name of the block function does not need to match the block's opcode.
+
+```js title="scratch-vm/src/blocks/scratch3_looks.js"
+tutorialModAlertBlock(args, util){
+    alert(args.MESSAGE);
+}
+```
+
+We also need to add the block to the `getPrimitives` function, which is how Scratch knows what function to call for a block.
+
+```js title="scratch-vm/src/blocks/scratch3_looks.js"
+/**
+ * Retrieve the block primitives implemented by this package.
+ * @return {object.<string, Function>} Mapping of opcode to Function.
+ */
+getPrimitives () {
+    return {
+        // highlight-next-line
+        tutorialmod_looks_alert: this.tutorialModAlertBlock,
+        looks_say: this.say,
+        looks_sayforsecs: this.sayforsecs,
+        looks_think: this.think,
+        looks_thinkforsecs: this.thinkforsecs,
+        looks_show: this.show,
+        looks_hide: this.hide,
+        looks_hideallsprites: () => {}, // legacy no-op block
+        looks_switchcostumeto: this.switchCostume,
+        looks_switchbackdropto: this.switchBackdrop,
+        looks_switchbackdroptoandwait: this.switchBackdropAndWait,
+        looks_nextcostume: this.nextCostume,
+        looks_nextbackdrop: this.nextBackdrop,
+        looks_changeeffectby: this.changeEffect,
+        looks_seteffectto: this.setEffect,
+        looks_cleargraphiceffects: this.clearEffects,
+        looks_changesizeby: this.changeSize,
+        looks_setsizeto: this.setSize,
+        looks_changestretchby: () => {}, // legacy no-op blocks
+        looks_setstretchto: () => {},
+        looks_gotofrontback: this.goToFrontBack,
+        looks_goforwardbackwardlayers: this.goForwardBackwardLayers,
+        looks_size: this.getSize,
+        looks_costumenumbername: this.getCostumeNumberName,
+        looks_backdropnumbername: this.getBackdropNumberName
+    };
+}
+```
+
+## Completed Files
+| Component         | File                              | Download                                              |
+| ----------------- | --------------------------------- | ----------------------------------------------------- |
+| `scratch-blocks`  | `blocks_vertical/looks.js`        | [looks.js](resources/looks.js)                        |
+| `scratch-blocks`  | `msg/messages.js`                 | [messages.js](resources/messages.js)                  |
+| `scratch-gui`     | `src/lib/make-toolbox-xml.js`     | [make-toolbox-xml.js](resources/make-toolbox-xml.js)  |
+| `scratch-vm`      | `src/blocks/scratch3_looks.js`    | [scratch3_looks.js](resources/scratch3_looks.js)      |
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
+    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
+    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+</details>
