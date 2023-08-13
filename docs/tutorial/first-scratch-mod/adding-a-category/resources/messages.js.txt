@@ -34,7 +34,7 @@ goog.provide('Blockly.Msg.en');
 goog.require('Blockly.Msg');
 
 // Dialogs blocks
-Blockly.Msg.TUTORIALMOD_DIALOGS_ALERT = 'alert %1';
+Blockly.Msg.DIALOGS_ALERT = 'alert %1';
 
 // Control blocks
 Blockly.Msg.CONTROL_FOREVER = 'forever';

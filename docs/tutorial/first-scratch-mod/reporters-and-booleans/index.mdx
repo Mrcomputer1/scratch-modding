@@ -19,14 +19,14 @@ Copy the definition for your Alert block and make the following changes:
 
 ```js title="scratch-blocks/blocks_vertical/dialogs.js"
 // highlight-next-line
-Blockly.Blocks['tutorialmod_dialogs_prompt'] = {
+Blockly.Blocks['dialogs_prompt'] = {
   /**
    * @this Blockly.Block
    */
   init: function(){
     this.jsonInit({
       // highlight-next-line
-      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_PROMPT, 
+      "message0": Blockly.Msg.DIALOGS_PROMPT, 
       "args0": [
         {
           "type": "input_value",
@@ -51,7 +51,7 @@ Don't forget to add the message to `msg/messages.js`.
 Copy the entry for the Alert block and adjust it as needed:
 
 ```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
-<block type="tutorialmod_dialogs_prompt">
+<block type="dialogs_prompt">
     <value name="MESSAGE">
         <shadow type="text">
             <field name="TEXT">${hello}</field>
@@ -78,7 +78,7 @@ Booleans are almost exactly like reporters. Instead of `output_string` or `outpu
 
 ### Block definition
 ```js title="scratch-blocks/blocks_vertical/dialogs.js"
-Blockly.Blocks['tutorialmod_dialogs_confirm'] = {
+Blockly.Blocks['dialogs_confirm'] = {
   /**
    * @this Blockly.Block
    */
@@ -104,7 +104,7 @@ Don't forget `msg/messages.js`
 
 ### Toolbox entry
 ```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
-<block type="tutorialmod_dialogs_confirm">
+<block type="dialogs_confirm">
     <value name="MESSAGE">
         <shadow type="text">
             <field name="TEXT">${hello}</field>

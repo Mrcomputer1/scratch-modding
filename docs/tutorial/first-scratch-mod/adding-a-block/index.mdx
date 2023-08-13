@@ -85,15 +85,13 @@ Blockly.Blocks['looks_sayforsecs'] = {
 Choose a place in the file that you wish to add the block. I will add it near the top, under the `goog.require` lines.
 
 :::caution
-
 You must not add the blocks above the `goog.require` lines.
-
 :::
 
 ```js title="scratch-blocks/blocks_vertical/looks.js"
 // highlight-next-line
-// You do not have to prefix your mod's block opcode with your mod name, but I like to.
-Blockly.Blocks['tutorialmod_looks_alert'] = {
+// Your block's opcode must start with the category ID and an underscore: `looks_restofyouropcode`.
+Blockly.Blocks['looks_tutorialmod_alert'] = {
   /**
    * @this Blockly.Block
    */
@@ -101,7 +99,7 @@ Blockly.Blocks['tutorialmod_looks_alert'] = {
     this.jsonInit({
       // highlight-next-line
       // We will add the message next, however the contents of the message will be "alert %1".
-      "message0": Blockly.Msg.TUTORIALMOD_LOOKS_ALERT, 
+      "message0": Blockly.Msg.LOOKS_TUTORIALMOD_ALERT, 
       "args0": [
         {
           "type": "input_value",
@@ -116,14 +114,14 @@ Blockly.Blocks['tutorialmod_looks_alert'] = {
 ```
 
 ### Adding the block message
-We need to add the `TUTORALMOD_LOOKS_ALERT` message we referenced in the block definition. For that, we need to open the `msg/messages.js` file in `scratch-blocks`.
+We need to add the `LOOKS_TUTORIALMOD_ALERT` message we referenced in the block definition. For that, we need to open the `msg/messages.js` file in `scratch-blocks`.
 
 Find the "Looks blocks" section of the file (you don't need to place it in the correct section, but it helps keep the file organised) and add this.
 
 ```js title="scratch-blocks/msg/messages.js"
 // Looks blocks
 // highlight-next-line
-Blockly.Msg.TUTORIALMOD_LOOKS_ALERT = 'alert %1';
+Blockly.Msg.LOOKS_TUTORIALMOD_ALERT = 'alert %1';
 Blockly.Msg.LOOKS_SAYFORSECS = 'say %1 for %2 seconds';
 ```
 
@@ -170,7 +168,7 @@ const looks = function (isInitialSetup, isStage, targetId, costumeName, backdrop
     return `
     <category name="%{BKY_CATEGORY_LOOKS}" id="looks" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
         // highlight-start
-        <block type="tutorialmod_looks_alert">
+        <block type="looks_tutorialmod_alert">
             <value name="MESSAGE">
                 <shadow type="text">
                     <field name="TEXT">${hello}</field>
@@ -209,7 +207,7 @@ We also need to add the block to the `getPrimitives` function, which is how Scra
 getPrimitives () {
     return {
         // highlight-next-line
-        tutorialmod_looks_alert: this.tutorialModAlertBlock,
+        looks_tutorialmod_alert: this.tutorialModAlertBlock,
         looks_say: this.say,
         looks_sayforsecs: this.sayforsecs,
         looks_think: this.think,

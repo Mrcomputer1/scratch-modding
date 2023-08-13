@@ -24,14 +24,14 @@ goog.require('Blockly.ScratchBlocks.VerticalExtensions');
 Move your block from `looks.js` to `dialogs.js` (leaving `looks.js` like it was originally).
 ```js title="scratch-blocks/blocks_vertical/dialogs.js"
 // highlight-next-line
-Blockly.Blocks['tutorialmod_dialogs_alert'] = {
+Blockly.Blocks['dialogs_alert'] = {
   /**
    * @this Blockly.Block
    */
   init: function(){
     this.jsonInit({
       // highlight-next-line
-      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_ALERT, 
+      "message0": Blockly.Msg.DIALOGS_ALERT, 
       "args0": [
         {
           "type": "input_value",
@@ -165,7 +165,7 @@ const dialogs = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category name="%{BKY_CATEGORY_DIALOGS}" id="dialogs" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
-        <block type="tutorialmod_dialogs_alert">
+        <block type="dialogs_alert">
             <value name="MESSAGE">
                 <shadow type="text">
                     <field name="TEXT">${hello}</field>
@@ -254,7 +254,7 @@ class TutorialModDialogsBlocks {
      */
     getPrimitives () {
         return {
-            tutorialmod_dialogs_alert: this.alertBlock
+            dialogs_alert: this.alertBlock
         };
     }
 
@@ -284,6 +284,28 @@ const defaultBlockPackages = {
 };
 ```
 
+### Make `scratch-vm` understand how to load the category from save
+In `scratch-vm`'s `src/serialization/sb3.js` file, find the `CORE_CATEGORIES` array and add your category to it.
+
+```js title="scratch-vm/src/serialization/sb3.js"
+const CORE_EXTENSIONS = [
+    'argument',
+    'colour',
+    'control',
+    'data',
+    'event',
+    'looks',
+    'math',
+    'motion',
+    'operator',
+    'procedures',
+    'sensing',
+    'sound',
+    // highlight-next-line
+    'dialogs'
+];
+```
+
 ## Completed Files
 | Component         | File                                      | Download                                                      |
 | ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
@@ -296,6 +318,7 @@ const defaultBlockPackages = {
 | `scratch-gui`     | `src/lib/themes/default/index.js`         | [index.js](resources/index.js.txt)                            |
 | `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js.txt)|
 | `scratch-vm`      | `src/engine/runtime.js`                   | [runtime.js](resources/runtime.js.txt)                        |
+| `scratch-vm`      | `src/serialization/sb3.js`                | [sb3.js](resources/sb3.js.txt)                                |
 
 ---
 <details>

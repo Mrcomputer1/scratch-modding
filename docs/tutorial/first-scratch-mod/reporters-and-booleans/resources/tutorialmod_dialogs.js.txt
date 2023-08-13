@@ -13,9 +13,9 @@ class TutorialModDialogsBlocks {
      */
     getPrimitives () {
         return {
-            tutorialmod_dialogs_alert: this.alertBlock,
-            tutorialmod_dialogs_prompt: this.promptBlock,
-            tutorialmod_dialogs_confirm: this.confirmBlock
+            dialogs_alert: this.alertBlock,
+            dialogs_prompt: this.promptBlock,
+            dialogs_confirm: this.confirmBlock
         };
     }
 

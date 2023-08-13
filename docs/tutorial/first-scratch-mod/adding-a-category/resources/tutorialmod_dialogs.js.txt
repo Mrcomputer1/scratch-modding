@@ -13,7 +13,7 @@ class TutorialModDialogsBlocks {
      */
     getPrimitives () {
         return {
-            tutorialmod_dialogs_alert: this.alertBlock
+            dialogs_alert: this.alertBlock
         };
     }
 

@@ -11,21 +11,21 @@ const dialogs = function (isInitialSetup, isStage, targetId, colors) {
     // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
     return `
     <category name="%{BKY_CATEGORY_DIALOGS}" id="dialogs" colour="${colors.primary}" secondaryColour="${colors.tertiary}">
-        <block type="tutorialmod_dialogs_alert">
+        <block type="dialogs_alert">
             <value name="MESSAGE">
                 <shadow type="text">
                     <field name="TEXT">${hello}</field>
                 </shadow>
             </value>
         </block>
-        <block type="tutorialmod_dialogs_prompt">
+        <block type="dialogs_prompt">
             <value name="MESSAGE">
                 <shadow type="text">
                     <field name="TEXT">${hello}</field>
                 </shadow>
             </value>
         </block>
-        <block type="tutorialmod_dialogs_confirm">
+        <block type="dialogs_confirm">
             <value name="MESSAGE">
                 <shadow type="text">
                     <field name="TEXT">${hello}</field>

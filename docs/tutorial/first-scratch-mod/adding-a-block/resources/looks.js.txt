@@ -28,13 +28,13 @@ goog.require('Blockly.constants');
 goog.require('Blockly.ScratchBlocks.VerticalExtensions');
 
 
-Blockly.Blocks['tutorialmod_looks_alert'] = {
+Blockly.Blocks['looks_tutorialmod_alert'] = {
   /**
    * @this Blockly.Block
    */
   init: function(){
     this.jsonInit({
-      "message0": Blockly.Msg.TUTORIALMOD_LOOKS_ALERT, 
+      "message0": Blockly.Msg.LOOKS_TUTORIALMOD_ALERT, 
       "args0": [
         {
           "type": "input_value",

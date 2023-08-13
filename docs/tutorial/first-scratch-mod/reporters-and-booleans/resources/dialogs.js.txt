@@ -7,13 +7,13 @@ goog.require('Blockly.Colours');
 goog.require('Blockly.ScratchBlocks.VerticalExtensions');
 
 
-Blockly.Blocks['tutorialmod_dialogs_alert'] = {
+Blockly.Blocks['dialogs_alert'] = {
   /**
    * @this Blockly.Block
    */
   init: function(){
     this.jsonInit({
-      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_ALERT, 
+      "message0": Blockly.Msg.DIALOGS_ALERT, 
       "args0": [
         {
           "type": "input_value",
@@ -26,13 +26,13 @@ Blockly.Blocks['tutorialmod_dialogs_alert'] = {
   }
 };
 
-Blockly.Blocks['tutorialmod_dialogs_prompt'] = {
+Blockly.Blocks['dialogs_prompt'] = {
   /**
    * @this Blockly.Block
    */
   init: function(){
     this.jsonInit({
-      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_PROMPT, 
+      "message0": Blockly.Msg.DIALOGS_PROMPT, 
       "args0": [
         {
           "type": "input_value",
@@ -45,13 +45,13 @@ Blockly.Blocks['tutorialmod_dialogs_prompt'] = {
   }
 };
 
-Blockly.Blocks['tutorialmod_dialogs_confirm'] = {
+Blockly.Blocks['dialogs_confirm'] = {
   /**
    * @this Blockly.Block
    */
   init: function(){
     this.jsonInit({
-      "message0": Blockly.Msg.TUTORIALMOD_DIALOGS_CONFIRM, 
+      "message0": Blockly.Msg.DIALOGS_CONFIRM, 
       "args0": [
         {
           "type": "input_value",

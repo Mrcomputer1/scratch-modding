@@ -284,7 +284,7 @@ class Scratch3LooksBlocks {
      */
     getPrimitives () {
         return {
-            tutorialmod_looks_alert: this.tutorialModAlertBlock,
+            looks_tutorialmod_alert: this.tutorialModAlertBlock,
             looks_say: this.say,
             looks_sayforsecs: this.sayforsecs,
             looks_think: this.think,
