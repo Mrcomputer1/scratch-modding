@@ -1,0 +1,164 @@
+---
+sidebar_position: 3
+---
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Adding Hat Blocks
+
+## Hat Block Activation
+There are two ways a hat block can be activated. They can be activated by telling Scratch VM to execute it elsewhere in the code or by letting Scratch VM constantly poll the block to see if the condition is true (this is called edge activation). It is also possible to specify if the hat block's thread should be restarted if it is triggered again while it is already running.
+
+## Common Part
+Like with other types of blocks, hat blocks need to be defined in `scratch-blocks` and added to the toolbox in `scratch-gui`. So let's do that.
+
+We are going to add these two blocks, one will be edge activated and the other won't be.
+
+<ScratchBlocks>
+{`when <>::hat events
+when page visibility changed::hat events`}
+</ScratchBlocks>
+
+### `scratch-blocks`
+In `scratch-blocks`, hat blocks are similar to other blocks, except they have the `shape_hat` extension.
+
+```js title="scratch-blocks/blocks_vertical/event.js"
+Blockly.Blocks['event_tutorialmod_when'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      "message0": Blockly.Msg.EVENT_TUTORIALMOD_WHEN,
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "CONDITION",
+          "check": "Boolean"
+        }
+      ],
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+
+Blockly.Blocks['event_tutorialmod_whenpagevisibilitychanged'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      "message0": Blockly.Msg.EVENT_TUTORIALMOD_WHENPAGEVISIBILITYCHANGED,
+      "category": Blockly.Categories.event,
+      "extensions": ["colours_event", "shape_hat"]
+    });
+  }
+};
+```
+
+Don't forget to add EVENT_TUTORIALMOD_WHEN and EVENT_TUTORIALMOD_WHENPAGEVISIBILITYCHANGED messages, which should be `when %1` and `when page visibility changed`.
+
+### `scratch-gui`
+Add the blocks to the events category in the toolbox.
+
+```js title="scratch-gui/src/lib/make-toolbox-xml.js"
+<block type="event_tutorialmod_when"/>
+<block type="event_tutorialmod_whenpagevisibilitychanged"/>
+${blockSeparator}
+```
+
+## Edge Activated Block
+The edge activated block method is easier to implement, so we will do it first for the `when <>` block.
+
+Like other blocks, we add our block's function to `getPrimitives`, but we also add it to `getHats` this time. If the category you want to add the block to has no hats already, it won't have the `getHats` method, however it is easy to add based off the one in `scratch3_events.js`:
+
+```js title="scratch-vm/src/blocks/scratch3_events.js"
+getHats () {
+    return {
+        event_whenflagclicked: {
+            restartExistingThreads: true
+        },
+        event_whenkeypressed: {
+            restartExistingThreads: false
+        },
+        event_whenthisspriteclicked: {
+            restartExistingThreads: true
+        },
+        event_whentouchingobject: {
+            restartExistingThreads: false,
+            edgeActivated: true
+        },
+        event_whenstageclicked: {
+            restartExistingThreads: true
+        },
+        event_whenbackdropswitchesto: {
+            restartExistingThreads: true
+        },
+        event_whengreaterthan: {
+            restartExistingThreads: false,
+            edgeActivated: true
+        },
+        event_whenbroadcastreceived: {
+            restartExistingThreads: true
+        }
+    };
+}
+```
+
+Since we are adding this to the `events` category, we will add our block to top of that `getHats`:
+
+```js title="scratch-vm/src/blocks/scratch3_events.js"
+event_tutorialmod_when: {
+    restartExistingThreads: false,
+    edgeActivated: true
+},
+```
+
+### Implementation
+I've called the block's function `tutorialModWhen`. Implementing it is simple, you return `true` when you want the block to run and `false` otherwise.
+
+```js title="scratch-gui/src/blocks/scratch3_events.js"
+tutorialModWhen(args, util){
+    return args.CONDITION;
+}
+```
+
+## Non-Edge Activated Blocks
+Unlike edge activated blocks, Scratch VM is not constantly checking if a condition is true, instead it is up to you to tell it when you want it to run.
+
+Unlike other blocks, you do not make a block function or add the block to `getPrimitives`, but you still add the block to `getHats`, just without the `edgeActivated: true` part.
+
+```js title="scratch-vm/src/blocks/scratch3_events.js"
+event_tutorialmod_whenpagevisibilitychanged: {
+    restartExistingThreads: true
+},
+```
+
+We will add our event listener to the constructor in `scratch3_events.js`. We simply listen for the event we want (in this case `document`'s `visibilitychange` event) and use `startHats` from `Runtime` to execute the hats.
+
+```js title="scratch-vm/src/blocks/scratch3_events.js"
+document.addEventListener("visibilitychange", () => {
+    this.runtime.startHats('event_tutorialmod_whenpagevisibilitychanged');
+});
+```
+
+:::info
+Scratch VM doesn't normally interact with the browser, instead Scratch GUI handles interacting with browser and communicates with Scratch GUI via events and Scratch VM's IO device system. However, for the purposes of this tutorial, it is easier to do it directly in Scratch VM.
+:::
+
+## Completed Files
+| Component         | File                                      | Download                                                      |
+| ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `scratch-blocks`  | `blocks_vertical/event.js`                | [event.js](resources/event.js.txt)                            |
+| `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js.txt)                      |
+| `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt)      |
+| `scratch-vm`      | `src/blocks/scratch3_events.js`           | [scratch3_events.js](resources/scratch3_events.js.txt)        |
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
+    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
+    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+</details>
