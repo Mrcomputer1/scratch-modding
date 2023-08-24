@@ -60,7 +60,7 @@ You will notice two differences from a regular block:
 Don't forget to add the block message `DIALOGS_WHILECONFIRMED`, which should be `while confirmed %1`.
 
 ### The `scratch-gui` toolbox entry
-The block input is left out of the toolbox entry, because there isn't any blocks inside by default. You can copy and modify `dialogs_alert` for this block.
+The block input is left out of the toolbox entry, because there aren't any blocks inside by default. You can copy and modify `dialogs_alert` for this block.
 
 <details>
     <summary>You can actually insert blocks into the C block by default</summary>
@@ -117,7 +117,7 @@ startBranch (branchNum, isLoop) {
 }
 ```
 
-The number `1` tells the Scratch VM to start executing the first branch in the block (in our case, the only branch). The `true` tells Scratch VM that this block is a loop. Setting `isLoop` to `true` doesn't make Scratch VM repeatedly execute the branch. It instead tells Scratch VM to re-execute the C block again after the branch's blocks, which can either do nothing and continue to the next block in the stack or re-execute the branch. This is the reason there is no loop in the function itself.
+The number `1` tells the Scratch VM to start executing the first branch in the block (in this case, the only branch). The `true` tells Scratch VM that this block is a loop. Setting `isLoop` to `true` doesn't make Scratch VM repeatedly execute the branch. It instead tells Scratch VM to re-execute the C block again after the branch's blocks, which can either do nothing and continue to the next block in the stack or re-execute the branch. This is the reason there is no loop in the function itself.
 
 ## More branches
 Let's now make a random choice C block with three branches. Because this block is random, it will be randomly placed in the dialog blocks category.

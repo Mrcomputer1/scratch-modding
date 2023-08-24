@@ -6,9 +6,9 @@ import ScratchBlocks from '@site/src/components/ScratchBlocks';
 # Adding Hat Blocks
 
 ## Hat Block Activation
-There are two ways a hat block can be activated. They can be activated by telling Scratch VM to execute it elsewhere in the code or by letting Scratch VM constantly poll the block to see if the condition is true (this is called edge activation). It is also possible to specify if the hat block's thread should be restarted if it is triggered again while it is already running.
+There are two ways a hat block can be activated. They can be activated by telling Scratch VM to execute it elsewhere in the code or by letting Scratch VM constantly poll the block to see if the condition is true (this is called edge activation). You can also specify if the hat block's thread should be restarted if it is triggered again while it is already running.
 
-## Common Part
+## All Hat Blocks
 Like with other types of blocks, hat blocks need to be defined in `scratch-blocks` and added to the toolbox in `scratch-gui`. So let's do that.
 
 We are going to add these two blocks, one will be edge activated and the other won't be.
@@ -37,6 +37,7 @@ Blockly.Blocks['event_tutorialmod_when'] = {
         }
       ],
       "category": Blockly.Categories.event,
+      // highlight-next-line
       "extensions": ["colours_event", "shape_hat"]
     });
   }
@@ -50,13 +51,14 @@ Blockly.Blocks['event_tutorialmod_whenpagevisibilitychanged'] = {
     this.jsonInit({
       "message0": Blockly.Msg.EVENT_TUTORIALMOD_WHENPAGEVISIBILITYCHANGED,
       "category": Blockly.Categories.event,
+      // highlight-next-line
       "extensions": ["colours_event", "shape_hat"]
     });
   }
 };
 ```
 
-Don't forget to add EVENT_TUTORIALMOD_WHEN and EVENT_TUTORIALMOD_WHENPAGEVISIBILITYCHANGED messages, which should be `when %1` and `when page visibility changed`.
+Don't forget to add `EVENT_TUTORIALMOD_WHEN` and `EVENT_TUTORIALMOD_WHENPAGEVISIBILITYCHANGED` messages, which should be `when %1` and `when page visibility changed`.
 
 ### `scratch-gui`
 Add the blocks to the events category in the toolbox.
@@ -70,7 +72,7 @@ ${blockSeparator}
 ## Edge Activated Block
 The edge activated block method is easier to implement, so we will do it first for the `when <>` block.
 
-Like other blocks, we add our block's function to `getPrimitives`, but we also add it to `getHats` this time. If the category you want to add the block to has no hats already, it won't have the `getHats` method, however it is easy to add based off the one in `scratch3_events.js`:
+Like other blocks, we add our block's function to `getPrimitives`, but we also add it to `getHats` this time. If the category you want to add the block to has no hats already, it probably won't have the `getHats` method, however it is easy to add based off the one in `scratch3_events.js`:
 
 ```js title="scratch-vm/src/blocks/scratch3_events.js"
 getHats () {
