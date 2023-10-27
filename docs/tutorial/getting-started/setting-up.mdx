@@ -210,9 +210,14 @@ cd scratch-blocks`}
 `scratch-blocks` may have issues on Windows, I recommend running it on Windows Subsystem for Linux to ensure it works without any issues.
 :::
 
-:::caution
+:::note
 
-`scratch-blocks` requires Python 2 for its build script and it expects the Python 2 command to be `python`.
+As of October 25, 2023 (UTC), `scratch-blocks` now supports building with both Python 3 and Python 2. In case you are modding with an older version of `scratch-blocks`, the Python 2 specific information is still available below:
+
+<details>
+    <summary>Python 2 Instructions</summary>
+
+Older versions of `scratch-blocks` require Python 2 for its build script and it expects the Python 2 command to be `python`.
 
 If your Python 2 command is `python2`, edit `package.json` to change `python` to `python2`.
 
@@ -228,6 +233,8 @@ If your Python 2 command is `python2`, edit `package.json` to change `python` to
     // ...
 }
 ```
+
+</details>
 
 :::
 
@@ -280,5 +287,5 @@ This command will replace the copy of `scratch-blocks` and `scratch-vm` that you
 
     scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
     scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
-    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+    scratch-blocks:     f116732bbbc6b1e0d95119c6ff8d4e23e27da8c0
 </details>

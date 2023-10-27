@@ -34,14 +34,27 @@ You need a Node.js package manager to install Scratch's depenedncies. Node.js co
 ### Windows Subsystem for Linux (WSL) <span class="badge badge--secondary">Only needed for Windows</span>
 `scratch-blocks` doesn't work well on Windows, so I recommend using Windows Subsystem for Linux for `scratch-blocks`. You can continue to use regular Windows for the rest of your mod. You can find out how to install WSL [here](https://learn.microsoft.com/en-us/windows/wsl/setup/environment).
 
-### Python 2 <span class="badge badge--secondary">scratch-blocks</span>
-`scratch-blocks`'s build script depends on an old unsupported version of Python. The version of Python required is Python 2, the latest version of Python 2 is 2.7.18 from April 2020 and can be found [here](https://www.python.org/downloads/release/python-2718/).
+### Python <span class="badge badge--secondary">scratch-blocks</span>
+:::note
+
+Older versions of `scratch-blocks` depends on an old unsupported version of Python. The version of Python required is Python 2, the latest version of Python 2 is 2.7.18 from April 2020 and can be found [here](https://www.python.org/downloads/release/python-2718/).
+
+In case you are modding with an older version of `scratch-blocks`, you can install Python 2 with these commands:
+
+```shell
+sudo apt update
+sudo apt install python2
+```
+
+:::
+
+`scratch-blocks`'s build script depends on Python. You can download Python from their website [here](https://www.python.org/downloads/).
 
 If using Ubuntu Linux (the default distro for WSL), you can use these commands to install Python:
 
 ```shell
 sudo apt update
-sudo apt install python2
+sudo apt install python3 python-is-python3
 ```
 
 ### Java <span class="badge badge--secondary">scratch-blocks</span>
