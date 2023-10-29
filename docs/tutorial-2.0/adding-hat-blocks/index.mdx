@@ -1,0 +1,107 @@
+---
+sidebar_position: 3
+---
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Adding Hat Blocks
+
+## Hat Block Activation
+There are two ways a hat block can be activated. They can be activated by telling the Scratch interpreter to execute it elsewhere in the code or by the Scratch interpreter constantly polling to see if the condition is true (this is called edge triggered).
+
+## Adding the block
+Just like all other blocks, hat blocks need to be defined in `Specs.as`. We are going to add two hat blocks:
+
+<ScratchBlocks style="scratch2">
+{`when <>::hat events
+when project is about to be saved::hat events`}
+</ScratchBlocks>
+
+Add the new hat blocks to the `// triggers` (the Events category) section:
+```actionscript title="src/Specs.as"
+// triggers
+["when %b",								"h", 5, "whenBool", ""],
+["when project is about to be saved",	"h", 5, "whenAboutToSave", ""],
+```
+
+In `Interpreter.as`, add both blocks to the `primTable` with the function `primNoop`.
+
+```actionscript src="src/interpreter/Interpreter.as"
+primTable["whenBool"] = primNoop;
+primTable["whenAboutToSave"] = primNoop;
+```
+
+## Edge Triggered Hat Blocks
+Edge triggered hat blocks are implemented in a function called `startEdgeTriggeredHats`, which is located in `src/scratch/ScratchRuntime.as`. Add your block as a new `else if` block just before the `else if (app.jsEnabled)` line.
+
+```actionscript src="src/scratch/ScratchRuntime.as"
+protected function startEdgeTriggeredHats(hat:Block, target:ScratchObj):void {
+		if (!hat.isHat || !hat.nextBlock) return; // skip disconnected hats
+
+		if ('whenSensorGreaterThan' == hat.op) {
+			// ...
+		} else if ('whenSensorConnected' == hat.op) {
+			// ...
+        // highlight-start
+		} else if ('whenBool' == hat.op) {
+			if(interp.boolarg(hat, 0)) {
+				if (triggeredHats.indexOf(hat) == -1) {
+					if (!interp.isRunning(hat, target)) interp.toggleThread(hat, target);
+				}
+				activeHats.push(hat);
+			}
+        // highlight-end
+		} else if (app.jsEnabled) {
+			// ...
+		}
+	}
+```
+
+## Non-Edge Triggered Hat Blocks
+Unlike edge triggered blocks, the Scratch interpreter is not constantly checking if a condition is true, instead it is up to you to tell it when you want it to run.
+
+First, in `src/scratch/ScratchRuntime.as`, add a function in the section called `Hat Blocks`:
+```actionscript title="src/scratch/ScratchRuntime.as"
+// -----------------------------
+// Hat Blocks
+//------------------------------
+
+public function startAboutToSave():void {
+    for each (var stack:Block in clickedObj.scripts) {
+        if(stack.op == 'whenAboutToSave') {
+            interp.restartThread(stack, clickedObj);
+        }
+    }
+}
+```
+
+To actually activate the block you need to call this function somewhere. In this case, we want to call the block from the function that saves the project. That function is `exportProjectToFile` in `Scratch.as`
+
+```actionscript title="src/Scratch.as"
+public function exportProjectToFile(fromJS:Boolean = false, saveCallback:Function = null):void {
+    function squeakSoundsConverted():void {
+        // ...
+    }
+
+    function fileSaved(e:Event):void {
+        // ...
+    }
+
+    if (loadInProgress) return;
+    // highlight-next-line
+    runtime.startAboutToSave();
+    var projIO:ProjectIO = new ProjectIO(this);
+    projIO.convertSqueakSounds(stagePane, squeakSoundsConverted);
+}
+```
+
+## Completed Files
+:::note
+These files contain source code from the [Your First Scratch Mod](../first-scratch-mod/adding-a-block/index.mdx) tutorial series.
+:::
+
+| File                                      | Download                                                      |
+| ----------------------------------------- | ------------------------------------------------------------- |
+| `src/Specs.as`                            | [Specs.as](resources/Specs.as.txt)                            |
+| `src/scratch/ScratchRuntime.as`           | [ScratchRuntime.as](resources/ScratchRuntime.as.txt)          |
+| `src/scratch/Scratch.as`                  | [Scratch.as](resources/Scratch.as.txt)                        |
+| `src/interpreter/Interpreter.as`          | [Interpreter.as](resources/Interpreter.as.txt)                |

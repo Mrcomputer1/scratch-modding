@@ -1,0 +1,56 @@
+---
+sidebar_position: 3
+---
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Adding C Blocks
+
+Let's add this C block:
+
+<ScratchBlocks style="scratch2">
+{`run (50)% of the time {
+    ...
+}::operators`}
+</ScratchBlocks>
+
+## The block specification
+In `Specs.as`, add the block to the `commands` array:
+
+```actionscript title="src/Specs.as"
+// control - sprite
+["run %n% of the time",					"c", 6, "runPercentOfTheTime",  50],
+
+// ...
+
+// control - stage
+["run %n% of the time",					"c", 106, "runPercentOfTheTime",  50],
+```
+
+You will notice the block type is `c`.
+
+## The block implementation
+Unlike normal blocks, which are implemented in the `primitives` directory, C blocks need to be implemented in the `Interpreter.as`. This is due to their need to access functions that aren't available outside the interpreter. Locate the rest of the primitives and add this:
+
+```actionscript title="src/interpreter/Interpreter.as"
+private function primRunSometimes(b:Block):void {
+    if (b.subStack1 == null) return;
+    if (Math.random() >= numarg(b, 0)) return;
+    startCmdList(b.subStack1);
+}
+```
+
+And, don't forget to add it to the `primTable`, which is located in a function called `initPrims`.
+
+```actionscript title="src/interpreter/Interpreter.as"
+primTable["runPercentOfTheTime"] = primRunSometimes;
+```
+
+## Completed Files
+:::note
+These files contain source code from the [Your First Scratch Mod](../first-scratch-mod/adding-a-block/index.mdx) tutorial series.
+:::
+
+| File                                      | Download                                                      |
+| ----------------------------------------- | ------------------------------------------------------------- |
+| `src/Specs.as`                            | [Specs.as](resources/Specs.as.txt)                            |
+| `src/interpreter/Interpreter.as`          | [Interpreter.as](resources/Interpreter.as.txt)                |

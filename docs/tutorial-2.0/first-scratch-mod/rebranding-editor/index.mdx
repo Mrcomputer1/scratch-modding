@@ -1,0 +1,421 @@
+---
+sidebar_position: 4
+---
+
+import Link from '@docusaurus/Link';
+
+# Rebranding the Editor
+
+You probably want to give your mod a unique look, here are some things you can do to do that.
+
+:::caution
+You cannot use any of Scratch's trademarks in your mod, except to give credit to the original Scratch. Scratch's trademarks are the name Scratch, the Scratch logo, the Scratch Day logo, Scratch Cat and Gobo.
+> **[Scratch Terms of Use](https://scratch.mit.edu/terms_of_use#scratch-content)**
+>
+> 5.4 The Scratch name, Scratch logo, Scratch Day logo, Scratch Cat, and Gobo are Trademarks owned by the Scratch Team. The MIT name and logo are Trademarks owned by the Massachusetts Institute of Technology. Unless you are licensed by Scratch under a specific licensing program or agreement, you may not use these logos to label, promote, or endorse any product or service. You may use the Scratch Logo to refer to the Scratch website and programming language.
+:::
+
+## Adding your mod's logo
+
+### Adding your logo
+:::tip
+For reference, the Scratch logo is located at `src/assets/UI/topbar/scratchlogoOff.png` and `src/assets/UI/topbar/scratchlogoOn.png`. The ScratchX logo is located at `src/assets/UI/topbar/scratchx-logo.png`.
+:::
+
+Place your logo's bitmap (png, gif, etc. - no vectors like svg) into the `src/assets/UI/topbar` folder. Open `src/assets/Resources.as` and locate the `// Top bar` section and add your file that section, like this:
+
+```actionscript title="src/assets/Resources.as"
+[Embed(source='UI/topbar/tutorialModLogo.png')] private static const tutorialModLogo:Class;
+```
+
+### Refactoring the topbar to make adding a custom logo easier
+The topbar is located in the `src/ui/parts/TopBarPart.as` file. The normal Scratch logo is not implemented in the open source version of Scratch, but the ScratchX logo is, so we can use it to determine the best way to add the logo.
+
+We see this code in the `addButtons` function:
+
+```actionscript title="src/ui/parts/TopBarPart.as"
+protected function addButtons():void {
+    addChild(shape = new Shape());
+    addChild(languageButton = new IconButton(app.setLanguagePressed, 'languageButton'));
+    languageButton.isMomentary = true;
+    addTextButtons();
+    addToolButtons();
+    if (Scratch.app.isExtensionDevMode) {
+        // highlight-start
+        addChild(logoButton = new IconButton(app.logoButtonPressed, Resources.createBmp('scratchxlogo')));
+        const desiredButtonHeight:Number = 20;
+        logoButton.scaleX = logoButton.scaleY = 1;
+        var scale:Number = desiredButtonHeight / logoButton.height;
+        logoButton.scaleX = logoButton.scaleY = scale;
+        // highlight-end
+
+        addChild(exportButton = new Button('Save Project', function():void { app.exportProjectToFile(); }));
+        addChild(extensionLabel = makeLabel('My Extension', offlineNoticeFormat, 2, 2));
+
+        var extensionDevManager:ExtensionDevManager = Scratch.app.extensionManager as ExtensionDevManager;
+        if (extensionDevManager) {
+            addChild(loadExperimentalButton = extensionDevManager.makeLoadExperimentalExtensionButton());
+        }
+    }
+}
+```
+
+Let's extract that section into its own function, which we will call `addLogoButton` and that takes one parameter, `bitmap` (type `Bitmap`):
+
+```actionscript title="src/ui.parts/TopBarPart.as"
+private function addLogoButton(bitmap:Bitmap):void {
+    addChild(logoButton = new IconButton(app.logoButtonPressed, bitmap));
+    const desiredButtonHeight:Number = 20;
+    logoButton.scaleX = logoButton.scaleY = 1;
+    var scale:Number = desiredButtonHeight / logoButton.height;
+    logoButton.scaleX = logoButton.scaleY = scale;
+}
+```
+
+And now change the ScratchX logo section to use that new function:
+
+```actionscript title="src/ui/parts/TopBarPart.as"
+protected function addButtons():void {
+    addChild(shape = new Shape());
+    addChild(languageButton = new IconButton(app.setLanguagePressed, 'languageButton'));
+    languageButton.isMomentary = true;
+    addTextButtons();
+    addToolButtons();
+    if (Scratch.app.isExtensionDevMode) {
+        // highlight-next-line
+        addLogoButton(Resources.createBmp('scratchxlogo'));
+
+        addChild(exportButton = new Button('Save Project', function():void { app.exportProjectToFile(); }));
+        addChild(extensionLabel = makeLabel('My Extension', offlineNoticeFormat, 2, 2));
+
+        var extensionDevManager:ExtensionDevManager = Scratch.app.extensionManager as ExtensionDevManager;
+        if (extensionDevManager) {
+            addChild(loadExperimentalButton = extensionDevManager.makeLoadExperimentalExtensionButton());
+        }
+    }
+}
+```
+
+### Adding our own logo
+We can now use this new `addLogoButton` function to add our own logo, just before the `languageButton`:
+
+```actionscript title="src/ui/parts/TopBarPart.as"
+protected function addButtons():void {
+    addChild(shape = new Shape());
+    // highlight-next-line
+    addLogoButton(Resources.createBmp('tutorialModLogo.png'));
+    addChild(languageButton = new IconButton(app.setLanguagePressed, 'languageButton'));
+    languageButton.isMomentary = true;
+    addTextButtons();
+    addToolButtons();
+    // ...
+```
+
+## Adding a default sprite
+
+### Adding your default costumes
+In `src/assets`, create a folder called `defaultCostumes` and create your costumes in there. Let's called them the same as Scratch, `costume1` and `costume2`, and we will make them both `.svg`s, although you could also use a bitmap.
+
+### Creating the default project
+In `src/scratch/ScratchRuntime.as`, there is a function called `installNewProject`, which we will need to create a new project in.
+
+```actionscript title="src/scratch/ScratchRuntime.as"
+// Note: If you want to use a bitmap, remove the mimeType.
+[Embed(source='../assets/defaultCostumes/costume1.svg', mimeType='application/octet-stream')] private static var costume1:Class;
+[Embed(source='../assets/defaultCostumes/costume2.svg', mimeType='application/octet-stream')] private static var costume2:Class;
+
+// Find and modify this function
+public function installNewProject():void {
+    // Create a stage and a sprite.
+    var stage:ScratchStage = new ScratchStage();
+    var sprite:ScratchSprite = new ScratchSprite();
+
+    // Create two costumes.
+    var costume1:ScratchCostume = new ScratchCostume(Translator.map('costume1'), new costume1());
+    var costume2:ScratchCostume = new ScratchCostume(Translator.map('costume2'), new costume2());
+
+    // Set the sprite's costumes and add it to the stage.
+    sprite.costumes = [costume1, costume2];
+    stage.addChild(sprite);
+
+    // Configure Scratch for the project.
+    app.saveForRevert(new ProjectIO(app).encodeProjectAsZipFile(stage), true);
+    app.oldWebsiteURL = "";
+    installProject(stage);
+}
+```
+
+## Changing the colours
+
+### Changing the block colours
+Locate the `categories` array in `src/Specs.as`, you can change the block colours there. There are also a few block colours stored in variables above the array.
+
+```actionscript title="src/Specs.as"
+public static var variableColor:int = 0xEE7D16; // Scratch 1.4: 0xF3761D
+public static var listColor:int = 0xCC5B22; // Scratch 1.4: 0xD94D11
+public static var procedureColor:int = 0x632D99; // 0x531E99;
+public static var parameterColor:int = 0x5947B1;
+public static var extensionsColor:int = 0x4B4A60; // 0x72228C; // 0x672D79;
+
+private static const undefinedColor:int = 0xD42828;
+
+public static const categories:Array = [
+ // id   category name	color
+    [0,  "undefined",	0xD42828],
+    [1,  "Motion",		0x4a6cd4],
+    [2,  "Looks",		0x8a55d7],
+    [3,  "Sound",		0xbb42c3],
+    [4,  "Pen",			0x0e9a6c], // Scratch 1.4: 0x009870
+    [5,  "Events",		0xc88330],
+    [6,  "Control",		0xe1a91a],
+    [7,  "Sensing",		0x2ca5e2],
+    [8,  "Operators",	0x5cb712],
+    [9,  "Data",		variableColor],
+    [10, "More Blocks",	procedureColor],
+    [11, "Parameter",	parameterColor],
+    [12, "List",		listColor],
+    [13, "Dialogs",		0x60a05c],
+    [20, "Extension",	extensionsColor],
+];
+```
+
+### Other colours
+Various other colours (and styles) can be defined in a file called `src/CSS.as`.
+
+```actionscript title="src/CSS.as"
+// Colors
+public static const white:int = 0xFFFFFF;
+public static const backgroundColor_default:int = white;
+public static const topBarColor_default:int = 0x9C9EA2;
+public static const tabColor:int = 0xE6E8E8;
+public static const panelColor:int = 0xF2F2F2;
+public static const itemSelectedColor:int = 0xD0D0D0;
+public static const borderColor:int = 0xD0D1D2;
+public static const textColor:int = 0x5C5D5F; // 0x6C6D6F
+public static const buttonLabelColor:int = textColor;
+public static const buttonLabelOverColor:int = 0xFBA939;
+public static const offColor:int = 0x8F9193; // 0x9FA1A3
+public static const onColor:int = textColor; // 0x4C4D4F
+public static const overColor:int = 0x179FD7;
+public static const arrowColor:int = 0xA6A8AC;
+```
+
+import White from './screenshots/white.png';
+import BackgroundColorDefault from './screenshots/backgroundColor_default.png';
+import TopBarColorDefault from './screenshots/topBarColor_default.png';
+import TabColor from './screenshots/tabColor.png';
+import PanelColor from './screenshots/panelColor.png';
+import ItemSelectedColor from './screenshots/itemSelectedColor.png';
+import BorderColor from './screenshots/borderColor.png';
+import TextColor from './screenshots/textColor.png';
+import ButtonLabelColor from './screenshots/buttonLabelColor.png';
+import ButtonLabelOverColor from './screenshots/buttonLabelOverColor.png';
+import OffColor from './screenshots/offColor.png';
+import OnColor from './screenshots/onColor.png';
+import OverColor from './screenshots/overColor.png';
+import ArrowColor from './screenshots/arrowColor.png';
+
+<table>
+    <thead>
+        <tr>
+            <th>Variable Name</th>
+            <th>Default Value</th>
+            <th></th>
+            <th>Usage Screenshot</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>white</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#FFFFFF"}}></div></td>
+            <td>0xFFFFFF</td>
+            <td><Link to={White} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>backgroundColor_default</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#FFFFFF"}}></div></td>
+            <td>0xFFFFFF</td>
+            <td><Link to={BackgroundColorDefault} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>topBarColor_default</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#9C9EA2"}}></div></td>
+            <td>0x9C9EA2</td>
+            <td><Link to={TopBarColorDefault} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>tabColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#E6E8E8"}}></div></td>
+            <td>0xE6E8E8</td>
+            <td><Link to={TabColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>panelColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#F2F2F2"}}></div></td>
+            <td>0xF2F2F2</td>
+            <td><Link to={PanelColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>itemSelectedColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#D0D0D0"}}></div></td>
+            <td>0xD0D0D0</td>
+            <td><Link to={ItemSelectedColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>borderColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#D0D1D2"}}></div></td>
+            <td>0xD0D1D2</td>
+            <td><Link to={BorderColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>textColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#5C5D5F"}}></div></td>
+            <td>0x5C5D5F</td>
+            <td><Link to={TextColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>buttonLabelColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#5C5D5F"}}></div></td>
+            <td>0x5C5D5F</td>
+            <td><Link to={ButtonLabelColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>buttonLabelOverColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#FBA939"}}></div></td>
+            <td>0xFBA939</td>
+            <td><Link to={ButtonLabelOverColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>offColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#8F9193"}}></div></td>
+            <td>0x8F9193</td>
+            <td><Link to={OffColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>onColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#5C5D5F"}}></div></td>
+            <td>0x5C5D5F</td>
+            <td><Link to={OnColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>overColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#179FD7"}}></div></td>
+            <td>0x179FD7</td>
+            <td><Link to={OverColor} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>arrowColor</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "#A6A8AC"}}></div></td>
+            <td>0xA6A8AC</td>
+            <td><Link to={ArrowColor} target="_blank">Screenshot</Link></td>
+        </tr>
+    </tbody>
+</table>
+
+## Changing the project file extension
+There are a few places you need to change:
+
+* ```actionscript title="src/Scratch.as"
+  public function setProjectName(s:String):void {
+      for (;;) {
+          if (StringUtil.endsWith(s, '.sb')) s = s.slice(0, -3);
+          else if (StringUtil.endsWith(s, '.sb2')) s = s.slice(0, -4);
+          // highlight-next-line
+          else if (StringUtil.endsWith(s, '.sbx')) s = s.slice(0, -4);
+          else break;
+      }
+      stagePart.setProjectName(s);
+  }
+  ```
+  Add a new `else if` line with the file extension you want. Make sure you update the second argument of the slice to be the length but negative. So, for `.tutorialmod`, which is length 12, the second argument of the slice should be -12.
+* ```actionscript title="src/Scratch.as" 
+  public function exportProjectToFile(fromJS:Boolean = false, saveCallback:Function = null):void {
+      function squeakSoundsConverted():void {
+          scriptsPane.saveScripts(false);
+          // highlight-next-line
+          var projectType:String = extensionManager.hasExperimentalExtensions() ? '.sbx' : '.sb2';
+          var defaultName:String = StringUtil.trim(projectName());
+          defaultName = ((defaultName.length > 0) ? defaultName : 'project') + projectType;
+          var zipData:ByteArray = projIO.encodeProjectAsZipFile(stagePane);
+          var file:FileReference = new FileReference();
+          file.addEventListener(Event.COMPLETE, fileSaved);
+          file.save(zipData, fixFileName(defaultName));
+      }
+
+      function fileSaved(e:Event):void {
+          if (!fromJS) setProjectName(e.target.name);
+          if (isExtensionDevMode) {
+              // Some versions of the editor think of this as an "export" and some think of it as a "save"
+              saveNeeded = false;
+          }
+          if (saveCallback != null) saveCallback();
+      }
+
+      if (loadInProgress) return;
+      var projIO:ProjectIO = new ProjectIO(this);
+      projIO.convertSqueakSounds(stagePane, squeakSoundsConverted);
+  }
+  ```
+  Change `.sb2` to the extension you want.
+* ```actionscript title="src/scratch/ScratchRuntime.as"
+  public function selectProjectFile():void {
+      // Prompt user for a file name and load that file.
+      var fileName:String, data:ByteArray;
+      function fileLoadHandler(event:Event):void {
+          var file:FileReference = FileReference(event.target);
+          fileName = file.name;
+          data = file.data;
+          if (app.stagePane.isEmpty()) doInstall();
+          else DialogBox.confirm('Replace contents of the current project?', app.stage, doInstall);
+      }
+      function doInstall(ignore:* = null):void {
+          installProjectFromFile(fileName, data);
+      }
+      stopAll();
+
+      var filter:FileFilter;
+      if (Scratch.app.isExtensionDevMode) {
+          // highlight-next-line
+          filter = new FileFilter('ScratchX Project', '*.sbx;*.sb;*.sb2');
+      }
+      else {
+          // highlight-next-line
+          filter = new FileFilter('Scratch Project', '*.sb;*.sb2');
+      }
+      Scratch.loadSingleFile(fileLoadHandler, filter);
+  }
+  ```
+  Add your file extension to the end of both of these, the file extensions are separated by a `;`.
+
+## Changing the sprite file extension
+Unlike project file extensions, there is only one place you need to change for sprites.
+
+```actionscript title="src/scratch/ScratchSprite.as"
+private function saveToLocalFile():void {
+    function success():void {
+        Scratch.app.log(LogLevel.INFO, 'sprite saved to file', {filename: file.name});
+    }
+    var zipData:ByteArray = new ProjectIO(Scratch.app).encodeSpriteAsZipFile(copyToShare());
+    // highlight-next-line
+    var defaultName:String = objName + '.sprite2';
+    var file:FileReference = new FileReference();
+    file.addEventListener(Event.COMPLETE, success);
+    file.save(zipData, defaultName);
+}
+```
+
+## Changing the output .swf file name
+You can change the the name of the output file in `build.gradle` by changing the output option of `11.6`.
+
+```groovy title="config.groovy"
+environments {
+    '11.6' {
+        // highlight-next-line
+        output = 'Scratch'
+        playerVersion = '11.6'
+        additionalCompilerOptions = [
+                "-swf-version=19",
+                "-define+=SCRATCH::allow3d,true",
+        ]
+    }
+```

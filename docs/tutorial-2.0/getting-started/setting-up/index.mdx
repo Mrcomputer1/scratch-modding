@@ -1,0 +1,137 @@
+---
+sidebar_position: 2
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+import Link from '@docusaurus/Link';
+
+# Setting Up
+
+## Create a folder for your mod
+The first step for creating a mod is creating a folder/directory to store it in. This tutorial uses the highly imaginative name of "Tutorial Mod", so I will use the folder name "TutorialMod".
+
+The structure of this folder will end up looking like this at the end of this page:
+```
+TutorialMod/
+    gradle/
+    libs/
+    src/
+    build.gradle
+    config.groovy
+    README.md
+    scratch.gradle
+    gradlew
+    gradlew.bat
+    ...
+```
+
+## Obtaining the Scratch 2.0 source code
+<Tabs groupId="use-git" queryString>
+    <TabItem value="true" label="With Git" default>
+        <strong>Optional Step:</strong> Fork the repository on GitHub and clone your fork instead.<br/>
+        Open a Command Prompt or Terminal and run this command:
+        <CodeBlock language="shell">
+{`git clone https://github.com/scratchfoundation/scratch-flash.git --depth=1 .`}
+        </CodeBlock>
+        This will clone the repository into your current folder. The <code>--depth=1</code> option instructs Git to only download the latest version and not download the entire history of <code>scratch-flash</code>.
+    </TabItem>
+    <TabItem value="false" label="Without Git">
+        <ol>
+            <li>
+                <a href="https://github.com/scratchfoundation/scratch-flash/archive/refs/heads/develop.zip" class="button button--primary">Download scratch-flash</a>
+            </li>
+            <li>
+                Extract the contents of the folder inside the zip.
+            </li>
+        </ol>
+    </TabItem>
+</Tabs>
+
+## Obtaining an older version of Java
+:::info
+Java 8 works, however a newer or even older version may also work. If you already have a version of Java, you can check if it works by running `gradlew build` in your mod folder, the build should fail at this point, but if fails with a message similar to `Could not determine java version from '20.0.2'.`, you need a different version of Java.
+:::
+
+1. Download the binaries for [Java 8](https://adoptium.net/temurin/archive/?version=8) for your operating system and system architecture.
+2. Create a folder called `jdk8` in your mod directory.
+3. Add `/jdk8/` to a new line in `.gitignore` (Note: you must do this if you use Git, or you will commit Java to your mod repository, which you do not want to do).
+4. Create the batch and shell scripts below to make using this version easier.
+
+:::tip
+If you plan to release your mod, include both the Windows batch script (`.bat`) and the macOS/Linux shell script (`.sh`). This will allow anyone to be able to easily build your mod.
+:::
+
+### `activate_jdk.bat`
+
+```batch title="activate_jdk.bat"
+@echo off
+set PATH=%~dp0\jdk8\bin;%PATH%
+```
+
+### `activate_jdk.sh`
+
+```shell title="activate_jdk.sh"
+#!/bin/sh
+export PATH="$PWD/jdk8/bin:$PATH"
+```
+
+## Fixing the player globals
+Due to Flash no longer being supported, Adobe has removed most downloads for Flash, which includes the "player globals". To fix this you need to edit the `scratch.gradle` file.
+
+```groovy title="scratch.gradle"
+// ...
+repositories {
+    // ...
+    ivy {
+        name 'Player Globals'
+
+        // highlight-start
+        // Remove this line:
+        artifactPattern 'http://fpdownload.macromedia.com/get/flashplayer/installers/archive/[module]/[module][revision].[ext]'
+        // highlight-end
+
+        // highlight-start
+        // Add these lines in its place:
+        ivyPattern 'https://mrcomputer1.github.io/scratch-modding/resources/playerglobal-ivy/[module][revision].[ext]'
+		artifactPattern 'https://raw.githubusercontent.com/nexussays/playerglobal/fef560243029214656d83fc673be0267a1ea0816/[revision]/[module].[ext]'
+        // highlight-end
+    }
+}
+// ...
+dependencies {
+    // ...
+    // highlight-start
+    // Replace this line:
+    external group: 'macromedia.com', name: 'playerglobal', version: playerVersion.replace('.', '_'), ext: 'swc'
+    // with this:
+    external group: 'macromedia.com', name: 'playerglobal', version: playerVersion, ext: 'swc'
+    // highlight-end
+    // ...
+}
+```
+
+## Building and Running Scratch
+
+### Building Scratch
+Use the command `gradlew build` to build Scratch. It should take a little bit of time to download dependencies, future attempts to build Scratch will be faster. You should see `Scratch.swf` in a folder called `build/11.6`.
+
+### Download the Flash Player Projector
+* [Windows](https://fpdownload.macromedia.com/pub/flashplayer/updaters/32/flashplayer_32_sa_debug.exe)
+* [macOS](https://fpdownload.macromedia.com/pub/flashplayer/updaters/32/flashplayer_32_sa_debug.dmg)
+* [Linux](https://fpdownload.macromedia.com/pub/flashplayer/updaters/32/flash_player_sa_linux_debug.x86_64.tar.gz)
+
+### Running Scratch
+Open the Flash Player Projector and drag and drop the `Scratch.swf` into the projector and you should see Scratch.
+
+:::tip
+Instead of closing Flash Player projector and re-opening it each time, you can use the "Close" option in the "File" menu and re-open it from the recent list in the "File" menu.
+:::
+
+## Completed Files
+| File                                          | Download                                                      |
+| --------------------------------------------- | ------------------------------------------------------------- |
+| `.gitingore`                                  | [.gitignore](resources/gitignore.txt)                         |
+| `scratch.gradle`                              | [scratch.gradle](resources/scratch.gradle.txt)                |
+| `activate_jdk.bat`                            | [activate_jdk.bat](resources/activate_jdk.bat.txt)            |
+| `activate_jdk.sh`                             | [activate_jdk.sh](resources/activate_jdk.sh.txt)              |

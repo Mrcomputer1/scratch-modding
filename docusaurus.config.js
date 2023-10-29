@@ -6,8 +6,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: 'Scratch 3.0 Modding Tutorial',
-    tagline: 'Tutorial for modding Scratch 3.0',
+    title: 'Scratch Modding Tutorials',
+    tagline: 'Tutorial for modding Scratch 3.0 and 2.0',
     //favicon: 'img/favicon.ico',
     
     // Set the production url of your site here
@@ -53,7 +53,7 @@ const config = {
         // Replace with your project's social card
         //image: 'img/docusaurus-social-card.jpg',
         navbar: {
-            title: 'Scratch 3.0 Modding Tutorial',
+            title: 'Scratch Modding Tutorials',
             /*logo: {
                 alt: 'Scratch 3.0 Modding Tutorial',
                 src: 'img/logo.svg',
@@ -63,7 +63,13 @@ const config = {
                     type: 'docSidebar',
                     sidebarId: 'tutorialSidebar',
                     position: 'left',
-                    label: 'Tutorial',
+                    label: 'Tutorial (3.0)',
+                },
+                {
+                    type: 'docSidebar',
+                    sidebarId: 'tutorial2Sidebar',
+                    position: 'left',
+                    label: 'Tutorial (2.0)',
                 }
             ],
         },
@@ -71,12 +77,8 @@ const config = {
             style: 'dark',
             links: [
                 {
-                    title: "Modding Tutorial",
+                    title: "Community",
                     items: [
-                        {
-                            label: "Tutorial",
-                            to: "/tutorial/getting-started/prerequisites"
-                        },
                         {
                             label: "Forum Topic",
                             href: "https://scratch.mit.edu/discuss/topic/703721/"
@@ -88,6 +90,19 @@ const config = {
                         {
                             label: "GitHub",
                             href: "https://github.com/Mrcomputer1/scratch-modding"
+                        }
+                    ]
+                },
+                {
+                    title: "Modding Tutorials",
+                    items: [
+                        {
+                            label: "3.0 Tutorial",
+                            to: "/tutorial/getting-started/prerequisites"
+                        },
+                        {
+                            label: "2.0 Tutorial",
+                            to: "/tutorial-2.0/getting-started/prerequisites"
                         }
                     ]
                 },
@@ -110,7 +125,7 @@ const config = {
         prism: {
             theme: lightCodeTheme,
             darkTheme: darkCodeTheme,
-            additionalLanguages: ["bash", "batch", "json", "markup", "yaml"]
+            additionalLanguages: ["bash", "batch", "json", "markup", "yaml", "groovy", "actionscript"]
         },
     }),
 };

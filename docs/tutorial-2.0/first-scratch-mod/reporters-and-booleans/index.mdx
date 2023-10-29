@@ -1,0 +1,70 @@
+---
+sidebar_position: 3
+---
+
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Reporters and Booleans
+
+## Reporters
+Reporters are the rounded corner blocks. They can either return a string or number.
+
+We will add a power block to the Operators category:
+<ScratchBlocks style="scratch2">
+(() ^ ()::operators)
+</ScratchBlocks>
+
+### The block specification
+First, let's add the block to the operators section of the `commands` array in `Specs.as`. Notice how we use `r` instead of a space ` ` for the block type.
+
+```actionscript title="src/Specs.as"
+// operators
+// highlight-next-line
+["%n ^ %n",								"r", 8, "^",					"", ""],
+["%n + %n",								"r", 8, "+",					"", ""],
+["%n - %n",								"r", 8, "-",					"", ""],
+```
+
+### The block implementation
+To make a reporter report something, you just have to `return` from the block's primitive function.
+
+Let's add the block to `Primitives.as`, but let's do it a different way. For shorter, single line block primitives, instead of writing a function on its own line, you can include it directly in the primTable line. The `interp.numarg` function is similar to the `interp.arg` function, but returns a number.
+
+```actionscript title="src/primitives/Primitives.as"
+public function addPrimsTo(primTable:Dictionary):void {
+    // operators
+    // highlight-next-line
+    primTable["^"]				= function(b:*):* { return Math.pow(interp.numarg(b, 0), interp.numarg(b, 1)) };
+```
+
+## Booleans
+Booleans are almost exactly like reporters. Instead of `r` for the block type, you use `b`. And in the block's function, you return a boolean. Let's add these blocks:
+
+<ScratchBlocks style="scratch2">
+{`(true::boolean operators)
+(false::boolean operators)`}
+</ScratchBlocks>
+
+### The block specification
+```actionscript title="src/Specs.as"
+// operators
+["%n ^ %n",								"r", 8, "^",					"", ""],
+// highlight-start
+["true",                                "b", 8, "true"                        ],
+["false",                               "b", 8, "false"                       ],
+// highlight-end
+```
+
+### The block implementation
+We will implement this block just like before, using the shorter method:
+
+```actionscript title="src/primitives/Primitives.as"
+primTable["true"]			= function(b:*):* { return true };
+primTable["false"]			= function(b:*):* { return false };
+```
+
+## Completed Files
+| File                              | Download                                                 |
+| --------------------------------- | -------------------------------------------------------- |
+| `src/Specs.as`                    | [Specs.as](resources/Specs.as.txt)                       |
+| `src/primitives/Primitives.as`    | [Primitives.as](resources/Primitives.as.txt)             |

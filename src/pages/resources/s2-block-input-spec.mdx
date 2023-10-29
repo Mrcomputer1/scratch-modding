@@ -1,0 +1,75 @@
+---
+# Source: https://docs.google.com/spreadsheet/ccc?key=0Ai13BQTlMxCzdG5lelZDczFnc241S2FmWVNhcEkwMEE
+# Notes:
+# * Inputs can be found in the constructor of src/blocks/BlockArg.as
+# * Menus can be found in the static function "BlockMenuHandler" of src/scratch/BlockMenus.as
+# * Icons can be found in the static function "IconNamed" of src/Specs.as
+# * 'location' was not in the original spreadsheet.
+---
+
+# Block Input Specifiers
+
+:::info
+The contents of this page is based on a Google Spreadsheet by [nXIII](https://scratch.mit.edu/users/nXIII/) (link can be found in [djdolphin](https://scratch.mit.edu/users/djdolphin/)'s [Scratch 2.0 Modding for Newbs](https://scratch.mit.edu/discuss/topic/38970/)). I am not including the original link here as the Scratch Team do not like Google Drive links.
+:::
+
+## Inputs
+| Code          | Description               |
+|---------------|---------------------------|
+| `%b`          | Boolean                   |
+| `%c`          | Colour                    |
+| `%d.<menu>`   | Numeric menu              |
+| `%m.<menu>`   | Read-only menu            |
+| `%n`          | Numeric                   |
+| `%s`          | String                    |
+
+## Menus
+`%m.<name>` or `%d.<name>`
+
+| Menu                  | Description                                                       |
+|-----------------------|-------------------------------------------------------------------|
+| `attribute`           | Object attribute names                                            |
+| `backdrop`            | Backdrop names                                                    |
+| `booleanSensor`       | Boolean sensor names                                              |
+| `broadcast`           | Broadcast messages                                                |
+| `broadcastInfoMenu`   | Broadcast messages and options for showing senders/receivers      |
+| `colorPicker`         | Colour picker                                                     |
+| `costume`             | Costume names                                                     |
+| `direction`           | Sprite directions                                                 |
+| `drum`                | Drums                                                             |
+| `effect`              | Effect names                                                      |
+| `instrument`          | Instruments                                                       |
+| `key`                 | Key names                                                         |
+| `list`                | List names                                                        |
+| `listDeleteItem`      | Special deletion options for lists                                |
+| `listItem`            | Special options for lists                                         |
+| `location`            | Sprites, "mouse-pointer" and "random position"                    |
+| `mathOp`              | Math operations                                                   |
+| `motorDirection`      | Motor directions                                                  |
+| `note`                | Note names                                                        |
+| `procMenu`            | "edit" and block context menu items                               |
+| `rotationStyle`       | Rotation styles                                                   |
+| `scrollAlign`         | "bottom-left", "bottom-right", "middle", "top-left", "top-right"  |
+| `sensor`              | Numeric sensor names                                              |
+| `sound`               | Sound names and "record..."                                       |
+| `spriteOnly`          | Sprites and "myself"                                              |
+| `spriteOrMouse`       | Sprites and "mouse-pointer"                                       |
+| `spriteOrStage`       | Sprites and "Stage"                                               |
+| `stageOrThis`         | "stage" and "this sprite"                                         |
+| `stop`                | "all", "this script" and "other scripts in sprite"                |
+| `timeAndDate`         | Time and date names                                               |
+| `touching`            | Sprites, "mouse-pointer" and "edge"                               |
+| `triggerSensor`       | Sensor names, which can trigger a hat block                       |
+| `var`                 | Variable names                                                    |
+| `videoMotionType`     | "motion" and "direction"                                          |
+| `videoState`          | "off", "on" and "on-flipped"                                      |
+
+## Icons
+`@<icon>`
+
+| Code          | Description                       |
+|---------------|-----------------------------------|
+| `@greenFlag`  | Green flag                        |
+| `@stop`       | Stop button                       |
+| `@turnRight`  | Clockwise circular arrow          |
+| `@turnLeft`   | Counter-clockwise circular arrow  |

@@ -17,7 +17,13 @@ function HomepageHeader() {
                     <Link
                         className="button button--secondary button--lg"
                         to="/tutorial/getting-started/prerequisites">
-                    Get Started
+                    Scratch 3.0
+                    </Link>
+
+                    <Link
+                        className="button button--secondary button--lg"
+                        to="/tutorial-2.0/getting-started/prerequisites">
+                    Scratch 2.0
                     </Link>
                 </div>
             </div>
@@ -28,7 +34,7 @@ function HomepageHeader() {
 export default function Home() {
     const {siteConfig} = useDocusaurusContext();
     return (
-        <Layout description="Tutorial for modding Scratch 3.0">
+        <Layout description="Tutorial for modding Scratch 3.0 and Scratch 2.0">
             <HomepageHeader />
         </Layout>
     );

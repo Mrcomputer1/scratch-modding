@@ -1,0 +1,121 @@
+---
+sidebar_position: 2
+---
+
+# Adding a Category
+
+## Creating the category
+To add a category, we need to add it to the `categories` array in `Specs.as`, using an available ID.
+
+```actionscript title="src/Specs.as"
+public static const categories:Array = [
+    // id   category name	color
+    [0,  "undefined",	0xD42828],
+    [1,  "Motion",		0x4a6cd4],
+    [2,  "Looks",		0x8a55d7],
+    [3,  "Sound",		0xbb42c3],
+    [4,  "Pen",			0x0e9a6c], // Scratch 1.4: 0x009870
+    [5,  "Events",		0xc88330],
+    [6,  "Control",		0xe1a91a],
+    [7,  "Sensing",		0x2ca5e2],
+    [8,  "Operators",	0x5cb712],
+    [9,  "Data",		variableColor],
+    [10, "More Blocks",	procedureColor],
+    [11, "Parameter",	parameterColor],
+    [12, "List",		listColor],
+    // highlight-next-line
+    [13, "Dialogs",     0x60a05c],
+    [20, "Extension",	extensionsColor],
+];
+```
+
+1. The first is the category ID, in this case `13`.
+2. The second is the category name, in this case `Dialogs`.
+3. The third and final is the category colour, in this case `0x60a05c`, which is a hexadecimal colour code.
+
+| Hex Code            | Example                                                                 |
+| ------------------- | ----------------------------------------------------------------------- |
+| `#60a05c`           | <div class="colour-example" style={{backgroundColor: "#60a05c"}}></div> |
+
+:::tip
+You can replace the `#` from hexadecimal colour codes with `0x`.
+:::
+
+## Adding the category to the block palette
+Now, we need to actually add the category to the block palette. The category selector part of the block palette is located in `ui/PaletteSelector.as`. To add our category, we just need to add the category to the `categories` array and increase the number of rows to fit.
+
+First, add it to the correct column in the `categories` array.
+
+```actionscript title="src/ui/PaletteSelector.as"
+private static const categories:Array = [
+    // highlight-next-line
+    'Motion', 'Looks', 'Sound', 'Pen', 'Data', 'Dialogs', // column 1
+    'Events', 'Control', 'Sensing', 'Operators', 'More Blocks']; // column 2
+```
+
+Second, increase the number of rows by adjusting the `numberOfRows` variable located in `initCategories`. In vanilla Scratch, it is `5`, but since we are adding a new category, we need 6 rows now. You will have to increase this every second category you add.
+
+```actionscript title="src/ui/PaletteSelector.as"
+private function initCategories():void {
+    // highlight-next-line
+    const numberOfRows:int = 6;
+```
+
+## Making a primitives file for your category
+:::tip
+This step is optional, you can put your primitives in any of the primitives files, such as the generic `Primitives.as` file.
+:::
+
+Create a file called `DialogsPrims.as` in the `primitives` folder and put this in it.
+
+```actionscript title="src/primitives/DialogsPrims.as"
+package primitives {
+    import flash.utils.Dictionary;
+	import blocks.*;
+	import interpreter.*;
+
+public class DialogsPrims {
+
+    private var app:Scratch;
+    private var interp:Interpreter;
+
+    public function DialogsPrims(app:Scratch, interp:Interpreter) {
+        this.app = app;
+        this.interp = interp;
+    }
+
+    public function addPrimsTo(primTable:Dictionary):void {
+		
+    }
+
+}}
+```
+
+Next, move the changes you made to `LooksPrims.as` to this file. The `addPrimsTo` function is where the `primTable` line should go.
+
+Finally, to tell Scratch about this file, go to the `Primitives.as` file and add this line to its `addPrimsTo` function.
+
+```actionscript title="src/primitives/Primitives.as"
+public function addPrimsTo(primTable:Dictionary):void {
+    // ...
+    new VideoMotionPrims(app, interp).addPrimsTo(primTable);
+    // highlight-next-line
+    new DialogsPrims(app, interp).addPrimsTo(primTable);
+    addOtherPrims(primTable);
+}
+```
+
+## Adjust your `Specs.as` entries for your block
+To add the block to your new category, simply change the category ID from `2` (looks) to `13` (your new category, Dialogs). You can remove the Stage looks (category `102`) version of your block now.
+
+:::tip
+Move your block to its own section of the array to keep it organised.
+:::
+
+## Completed Files
+| File                              | Download                                                 |
+| --------------------------------- | -------------------------------------------------------- |
+| `src/Specs.as`                    | [Specs.as](resources/Specs.as.txt)                       |
+| `src/ui/PaletteSelector.as`       | [PaletteSelector.as](resources/PaletteSelector.as.txt)   |
+| `src/primitives/DialogsPrims.as`  | [DialogsPrims.as](resources/DialogsPrims.as.txt)         |
+| `src/primitives/Primitives.as`    | [Primitives.as](resources/Primitives.as.txt)             |
