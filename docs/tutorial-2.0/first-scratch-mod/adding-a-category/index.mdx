@@ -29,7 +29,7 @@ public static const categories:Array = [
 ];
 ```
 
-1. The first is the category ID, in this case `13`.
+1. The first entry in the array is the category ID, in this case `13`.
 2. The second is the category name, in this case `Dialogs`.
 3. The third and final is the category colour, in this case `0x60a05c`, which is a hexadecimal colour code.
 
@@ -66,7 +66,7 @@ private function initCategories():void {
 This step is optional, you can put your primitives in any of the primitives files, such as the generic `Primitives.as` file.
 :::
 
-Create a file called `DialogsPrims.as` in the `primitives` folder and put this in it.
+Create a file called `DialogsPrims.as` in the `primitives` folder and put this in it:
 
 ```actionscript title="src/primitives/DialogsPrims.as"
 package primitives {
@@ -106,7 +106,7 @@ public function addPrimsTo(primTable:Dictionary):void {
 ```
 
 ## Adjust your `Specs.as` entries for your block
-To add the block to your new category, simply change the category ID from `2` (looks) to `13` (your new category, Dialogs). You can remove the Stage looks (category `102`) version of your block now.
+To add the block to your new category, change the category ID from `2` (looks) to `13` (your new category, Dialogs). You can remove the Stage looks (category `102`) version of your block now.
 
 :::tip
 Move your block to its own section of the array to keep it organised.

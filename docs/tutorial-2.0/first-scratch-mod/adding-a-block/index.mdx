@@ -37,7 +37,7 @@ The `commands` array contains an array for each block. Each block's array contai
 
 1. The name of the block ("block specification"). This is what Scratch displays on the block. In this block it is `move %n steps`.
 2. The type of the block. A single space (` `) is a normal stack block, `r` is a reporter, `b` is a boolean, `h` is a hat, `c` is a C block, and more. This is a stack block so it is a single space ` `.
-3. The category of the block, this is a integer. The list of valid categories can be found in the `Specs.as` in an array called `categories`. This is a motion block, which is category ID `1`. `100` is added to the category ID for the Stage version of a category.
+3. The category of the block, this is a integer. The list of valid categories can be found in `Specs.as` in an array called `categories`. This is a motion block, which is category ID `1`. `100` is added to the category ID for the Stage version of a category.
 4. The opcode of the block. This is what Scratch uses to identify this block.
 5. (Optional) Default arguments for each input.
 
@@ -67,16 +67,16 @@ If you want, you can add spaces after the commas to make the block spec array ma
 
 1. `alert %s` is the name of the block. This block is called "alert" and has a string input.
 2. ` ` is the type of block. This block is a stack block.
-3. `2` is the category of block. This block is a looks block, which is category ID `2`.
+3. `2` is the category the block is in. This block is a looks block, which is category ID `2`.
 4. `tutorialModAlert` is the the block's opcode (or ID). This block is `tutorialModAlert`.
 5. `Hello!` is the default value for the string input.
 
 But, since the looks category shows different blocks depending on if you are on the Stage or not, you will need to add it to the Stage version of the category too. To do this, you need to add the block to the `// stage looks` section and change the category ID from `2` to `102`. All information, other than the category ID, should be the same as the original entry.
 
 ### Implementing the block
-Our block doesn't do anything, since we haven't given it any code yet, so let's do that now. Implementations for the blocks are located in the `primitives` folder. The loosk primitives are located in the `LooksPrims.as` file.
+Our block doesn't do anything, since we haven't given it any code yet, so let's do that now. Implementations for the blocks are located in the `primitives` folder. The looks primitives are located in the `LooksPrims.as` file.
 
-First, we need to import `DialogBox` so we can actually display a alert box. Under the other `import`s near the top of the file add:
+First, we need to import `DialogBox` so we can actually display a notify box. Under the other `import`s near the top of the file add:
 
 ```actionscript title="src/primitives/LooksPrims.as"
 package primitives {
@@ -92,13 +92,20 @@ Second, we need to write our function, these can be located anywhere inside the 
 
 ```actionscript title="src/primitives/LooksPrims.as"
 private function primTutorialModAlert(b:Block):void {
-    // First argument is the title for the alert box.
-    // Second argument is the message.
+    // DialogBox.notify usage:
+    // * First argument is the title for the alert box.
+    // * Second argument is the message.
     DialogBox.notify("Tutorial Mod", interp.arg(b, 0));
 }
 ```
 
 The `interp` class variable contains the Scratch `Interpreter`. You can use the `interp.arg` function to retrieve the value of an argument. `b` function parameter contains the block instance. `0` is the index of the argument you wish to retrieve, `0` being the first argument.
+
+:::tip
+
+If you want to retrieve as a number or boolean, you can use `interp.numarg` and `interp.boolarg`.
+
+:::
 
 Finally, we need to tell Scratch which block the function is for. To do this, near the top of the file, add your block to the `primTable`.
 

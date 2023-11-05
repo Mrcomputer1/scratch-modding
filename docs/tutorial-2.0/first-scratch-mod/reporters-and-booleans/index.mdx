@@ -26,7 +26,7 @@ First, let's add the block to the operators section of the `commands` array in `
 ```
 
 ### The block implementation
-To make a reporter report something, you just have to `return` from the block's primitive function.
+To make a reporter report something, you just have to `return` from the block's function.
 
 Let's add the block to `Primitives.as`, but let's do it a different way. For shorter, single line block primitives, instead of writing a function on its own line, you can include it directly in the primTable line. The `interp.numarg` function is similar to the `interp.arg` function, but returns a number.
 

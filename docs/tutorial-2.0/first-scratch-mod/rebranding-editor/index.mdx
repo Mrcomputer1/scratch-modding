@@ -22,7 +22,7 @@ You cannot use any of Scratch's trademarks in your mod, except to give credit to
 For reference, the Scratch logo is located at `src/assets/UI/topbar/scratchlogoOff.png` and `src/assets/UI/topbar/scratchlogoOn.png`. The ScratchX logo is located at `src/assets/UI/topbar/scratchx-logo.png`.
 :::
 
-Place your logo's bitmap (png, gif, etc. - no vectors like svg) into the `src/assets/UI/topbar` folder. Open `src/assets/Resources.as` and locate the `// Top bar` section and add your file that section, like this:
+Place your logo's bitmap (png, gif, etc. - no vectors like svg) into the `src/assets/UI/topbar` folder. Open `src/assets/Resources.as` and locate the `// Top bar` section and add your file to that section, like this:
 
 ```actionscript title="src/assets/Resources.as"
 [Embed(source='UI/topbar/tutorialModLogo.png')] private static const tutorialModLogo:Class;
@@ -385,7 +385,7 @@ There are a few places you need to change:
       Scratch.loadSingleFile(fileLoadHandler, filter);
   }
   ```
-  Add your file extension to the end of both of these, the file extensions are separated by a `;`.
+  Add your file extension to the end of both of these lines, the file extensions are separated by a `;`.
 
 ## Changing the sprite file extension
 Unlike project file extensions, there is only one place you need to change for sprites.
