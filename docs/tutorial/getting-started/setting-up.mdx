@@ -125,7 +125,7 @@ You can press Ctrl+C to stop the editor server and return to the command line.
 `scratch-vm` contains the code that actually runs the projects and all the code for the blocks and built in extensions.
 
 ### Obtaining `scratch-vm`
-:::caution
+:::warning
 Make sure you put `scratch-vm` in your `TutorialMod` (or whatever you called it) folder, not the `scratch-gui` folder.
 :::
 
@@ -177,7 +177,7 @@ In the Command Prompt or Terminal, in the `scratch-vm` folder, enter this comman
 `scratch-blocks` is the block editing workspace, it also contains the definitions for what the blocks look like.
 
 ### Obtaining `scratch-blocks`
-:::caution
+:::warning
 Make sure you put `scratch-blocks` in your `TutorialMod` (or whatever you called it) folder, not the `scratch-gui` or `scratch-vm` folder.
 :::
 
@@ -206,12 +206,11 @@ cd scratch-blocks`}
 </Tabs>
 
 ### Installing the dependencies
-:::caution
+:::warning
 `scratch-blocks` may have issues on Windows, I recommend running it on Windows Subsystem for Linux to ensure it works without any issues.
 :::
 
 :::note
-
 `scratch-blocks` now supports building with both Python 3 and Python 2. In case you are modding with an older version of `scratch-blocks`, the Python 2 specific information is still available below:
 
 <details>
@@ -233,9 +232,7 @@ If your Python 2 command is `python2`, edit `package.json` to change `python` to
     // ...
 }
 ```
-
 </details>
-
 :::
 
 In the Terminal, in the `scratch-blocks` folder, enter this command:

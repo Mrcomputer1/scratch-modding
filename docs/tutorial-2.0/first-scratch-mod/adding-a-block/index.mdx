@@ -13,9 +13,7 @@ import ScratchBlocks from '@site/src/components/ScratchBlocks';
 ## What block are we adding?
 Let's add a very simple block, this will use Scratch's `DialogBox.notify` function.
 
-<ScratchBlocks style="scratch2">
-    alert [Hello!]::looks
-</ScratchBlocks>
+<ScratchBlocks style="scratch2">{`alert [Hello!]::looks`}</ScratchBlocks>
 
 ## Making the block
 The first step to adding a block is actually making the block itself.
@@ -57,7 +55,7 @@ We will add our block to the `looks` category, so find the `// looks` comment wi
 ["alert %s", " ", 2, "tutorialModAlert", "Hello!"],
 ```
 
-:::caution
+:::warning
 Don't forget the `,` at the end!
 :::
 

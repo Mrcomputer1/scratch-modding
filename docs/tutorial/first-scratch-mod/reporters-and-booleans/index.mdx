@@ -10,9 +10,7 @@ import ScratchBlocks from '@site/src/components/ScratchBlocks';
 Reporters are the rounded corner blocks. They can either return a string or number.
 
 We will add one to our Dialogs category:
-<ScratchBlocks>
-(prompt [Hello!]::#60a05c)
-</ScratchBlocks>
+<ScratchBlocks>{`(prompt [Hello!]::#60a05c)`}</ScratchBlocks>
 
 ### The block definition and message (`scratch-blocks`)
 Copy the definition for your Alert block and make the following changes:
@@ -72,9 +70,7 @@ promptBlock(args, util) {
 ## Booleans
 Booleans are almost exactly like reporters. Instead of `output_string` or `output_number`, you use `output_boolean`. And in the block's function, you return a boolean. Let's add this block:
 
-<ScratchBlocks>
-(confirm [Hello!]::boolean #60a05c)
-</ScratchBlocks>
+<ScratchBlocks>{`(confirm [Hello!]::boolean #60a05c)`}</ScratchBlocks>
 
 ### Block definition
 ```js title="scratch-blocks/blocks_vertical/dialogs.js"

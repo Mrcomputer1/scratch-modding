@@ -17,9 +17,7 @@ This tutorial is for adding blocks as core blocks (blocks that are not included 
 ## What block are we adding?
 Let's add a very simple block, that uses the browser's `alert()` function to display a message.
 
-<ScratchBlocks>
-    alert [Hello!]::looks
-</ScratchBlocks>
+<ScratchBlocks>{`alert [Hello!]::looks`}</ScratchBlocks>
 
 ## Making the block
 The first step to adding a block is actually making the block itself.
@@ -27,7 +25,7 @@ The first step to adding a block is actually making the block itself.
 Since we are adding a looks blocks, we need to open the `looks.js` file. This file is part of `scratch-blocks` and is located at `blocks_vertical/looks.js`.
 
 ### Anatomy of a block
-Let's take a look at the first block in the file, which is `looks_sayforsecs` or <ScratchBlocks inline>say [Hello!] for (2) secs</ScratchBlocks>. Explanations are included in the highlighted comments.
+Let's take a look at the first block in the file, which is `looks_sayforsecs` or <ScratchBlocks inline>{`say [Hello!] for (2) secs`}</ScratchBlocks>. Explanations are included in the highlighted comments.
 
 ```js title="scratch-blocks/blocks_vertical/looks.js"
 // highlight-start
@@ -84,7 +82,7 @@ Blockly.Blocks['looks_sayforsecs'] = {
 ### Adding our own block
 Choose a place in the file that you wish to add the block. I will add it near the top, under the `goog.require` lines.
 
-:::caution
+:::warning
 You must not add the blocks above the `goog.require` lines.
 :::
 
@@ -127,9 +125,7 @@ Blockly.Msg.LOOKS_SAYFORSECS = 'say %1 for %2 seconds';
 
 ### Rebuilding Scratch Blocks
 :::info
-
 **Reminder:** If you used Windows Subsystem for Linux or similar for `scratch-blocks`, you will need to use that now too.
-
 :::
 
 You need to rebuild Scratch Blocks every time you make a change to it.
