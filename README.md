@@ -1,27 +1,19 @@
-# Scratch 3.0 Modding Tutorial
+# Scratch Modding Tutorials
 
-The [Guide to Modding Scratch 3.0](https://scratch.mit.edu/discuss/topic/289503/) sticky by JGames101 is good and it is helpful for modding Scratch, but it only shows how to setup for modding and how to add a basic block. This tutorial (or really multiple tutorials) includes the setup process, adding blocks with inputs, reporter and boolean blocks, block themes (like high contrast) and more.
-
-## Tutorial List
-### Getting Started
-* [Prerequisites](https://mrcomputer1.github.io/scratch-modding/tutorial/getting-started/prerequisites)
-* [Structure of Scratch](https://mrcomputer1.github.io/scratch-modding/tutorial/getting-started/structure-of-scratch)
-* [Setting Up](https://mrcomputer1.github.io/scratch-modding/tutorial/getting-started/setting-up)
-
-### Your First Scratch Mod
-* [Adding a Block](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/adding-a-block)
-* [Adding a Category](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/adding-a-category)
-* [Reporters and Booleans](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/reporters-and-booleans)
-* [Rebranding the Editor](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/rebranding-editor)
-* [Releasing the Mod](https://mrcomputer1.github.io/scratch-modding/tutorial/first-scratch-mod/releasing-the-mod)
-
-### Additional Tutorials
-* [Adding Extensions](http://mrcomputer1.github.io/scratch-modding/tutorial/adding-extensions)
-* [Block Themes](http://mrcomputer1.github.io/scratch-modding/tutorial/block-themes)
+## Modding Tutorials
+* [Scratch 3.0](http://mrcomputer1.github.io/scratch-modding/tutorial/getting-started/prerequisites)
+* [Scratch 2.0](http://mrcomputer1.github.io/scratch-modding/tutorial-2.0/getting-started/prerequisites)
 
 ## Contributing
-Helpful Pages:
+For small changes, like a spelling/grammar fix, information correction, etc., just submit a pull request (or submit an issue if you don't want to do the correction yourself).
+
+For larger changes, like adding a new page, reorganising content, rewriting an entire page, etc., create an issue first with details of what you intend to do. This is to allow a chance to review what you want to do before you do it to prevent you wasting your time writing a detailed page that is ultimately decided that it isn't needed, too specific, already in progress or similar.
+
+**Helpful Pages:**
 * Docusaurus's [Markdown Features](https://docusaurus.io/docs/markdown-features) pages.
 
-Helpful Commands:
+**Helpful Commands:**
 * `npm start`
+
+## License
+See http://mrcomputer1.github.io/scratch-modding/license.
