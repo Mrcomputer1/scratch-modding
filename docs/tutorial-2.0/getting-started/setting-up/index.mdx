@@ -73,7 +73,7 @@ set PATH=%~dp0\jdk8\bin;%PATH%
 
 ```shell title="activate_jdk.sh"
 #!/bin/sh
-export PATH="$PWD/jdk8/bin:$PATH"
+export PATH="$(dirname "$(realpath "$0")")/jdk8/bin:$PATH"
 ```
 
 ## Fixing the player globals
@@ -94,7 +94,7 @@ repositories {
         // highlight-start
         // Add these lines in its place:
         ivyPattern 'https://mrcomputer1.github.io/scratch-modding/resources/playerglobal-ivy/[module][revision].[ext]'
-		artifactPattern 'https://raw.githubusercontent.com/nexussays/playerglobal/fef560243029214656d83fc673be0267a1ea0816/[revision]/[module].[ext]'
+        artifactPattern 'https://raw.githubusercontent.com/nexussays/playerglobal/fef560243029214656d83fc673be0267a1ea0816/[revision]/[module].[ext]'
         // highlight-end
     }
 }

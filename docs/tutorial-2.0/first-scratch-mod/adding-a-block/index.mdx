@@ -33,7 +33,7 @@ public static var commands:Array = [
 
 The `commands` array contains an array for each block. Each block's array contains the following:
 
-1. The name of the block ("block specification"). This is what Scratch displays on the block. In this block it is `move %n steps`.
+1. The name of the block ("block specification"). This is what Scratch displays on the block. For this block, it is `move %n steps`.
 2. The type of the block. A single space (` `) is a normal stack block, `r` is a reporter, `b` is a boolean, `h` is a hat, `c` is a C block, and more. This is a stack block so it is a single space ` `.
 3. The category of the block, this is a integer. The list of valid categories can be found in `Specs.as` in an array called `categories`. This is a motion block, which is category ID `1`. `100` is added to the category ID for the Stage version of a category.
 4. The opcode of the block. This is what Scratch uses to identify this block.
@@ -66,7 +66,7 @@ If you want, you can add spaces after the commas to make the block spec array ma
 1. `alert %s` is the name of the block. This block is called "alert" and has a string input.
 2. ` ` is the type of block. This block is a stack block.
 3. `2` is the category the block is in. This block is a looks block, which is category ID `2`.
-4. `tutorialModAlert` is the the block's opcode (or ID). This block is `tutorialModAlert`.
+4. `tutorialModAlert` is the the block's opcode (or ID).
 5. `Hello!` is the default value for the string input.
 
 But, since the looks category shows different blocks depending on if you are on the Stage or not, you will need to add it to the Stage version of the category too. To do this, you need to add the block to the `// stage looks` section and change the category ID from `2` to `102`. All information, other than the category ID, should be the same as the original entry.
@@ -78,10 +78,10 @@ First, we need to import `DialogBox` so we can actually display a notify box. Un
 
 ```actionscript title="src/primitives/LooksPrims.as"
 package primitives {
-	import flash.utils.Dictionary;
-	import blocks.*;
-	import interpreter.*;
-	import scratch.*;
+    import flash.utils.Dictionary;
+    import blocks.*;
+    import interpreter.*;
+    import scratch.*;
     // highlight-next-line
     import uiwidgets.DialogBox;
 ```
