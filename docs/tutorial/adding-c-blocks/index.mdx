@@ -64,28 +64,29 @@ The block input is left out of the toolbox entry, because there aren't any block
 
 <details>
     <summary>You can actually insert blocks into the C block by default</summary>
-If you really want too, you can insert blocks into the C block by default. I'm not sure if there are any practical uses for this, but here is how you can:
 
-```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
-<block type="dialogs_whileconfirmed">
-    <value name="MESSAGE">
-        <shadow type="text">
-            <field name="TEXT">${hello}</field>
-        </shadow>
-    </value>
-    <!-- highlight-start -->
-    <value name="SUBSTACK">
-        <block type="dialogs_alert">
-            <value name="MESSAGE">
-                <shadow type="text">
-                    <field name="TEXT">${hello}</field>
-                </shadow>
-            </value>
-        </block>
-    </value>
-    <!-- highlight-end -->
-</block>
-```
+    If you really want too, you can insert blocks into the C block by default. I'm not sure if there are any practical uses for this, but here is how you can:
+
+    ```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
+    <block type="dialogs_whileconfirmed">
+        <value name="MESSAGE">
+            <shadow type="text">
+                <field name="TEXT">${hello}</field>
+            </shadow>
+        </value>
+        <!-- highlight-start -->
+        <value name="SUBSTACK">
+            <block type="dialogs_alert">
+                <value name="MESSAGE">
+                    <shadow type="text">
+                        <field name="TEXT">${hello}</field>
+                    </shadow>
+                </value>
+            </block>
+        </value>
+        <!-- highlight-end -->
+    </block>
+    ```
 </details>
 
 ### The `scratch-vm` implementation
@@ -211,7 +212,9 @@ JavaScript's `Math.random()` generates floating point numbers between 0 and 1, h
 <details>
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
+    ```
     scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
     scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
     scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+    ```
 </details>

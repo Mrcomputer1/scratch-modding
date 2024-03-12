@@ -116,6 +116,8 @@ event_tutorialmod_when: {
 },
 ```
 
+`restartExistingThreads` is set to `false` to prevent Scratch from restarting the blocks under the hat while it is already running.
+
 ### Implementation
 I've called the block's function `tutorialModWhen`. Implementing it is simple, you return `true` when you want the block to run and `false` otherwise.
 
@@ -145,7 +147,7 @@ document.addEventListener("visibilitychange", () => {
 ```
 
 :::info
-Scratch VM doesn't normally interact with the browser, instead Scratch GUI handles interacting with browser and communicates with Scratch GUI via events and Scratch VM's IO device system. However, for the purposes of this tutorial, it is easier to do it directly in Scratch VM.
+Scratch VM doesn't normally interact with the browser, instead Scratch GUI handles interacting with the browser and communicates with Scratch VM via events and Scratch VM's IO device system. However, for the purposes of this tutorial, it is easier to do it directly in Scratch VM than in Scratch GUI.
 :::
 
 ## Completed Files
@@ -160,7 +162,9 @@ Scratch VM doesn't normally interact with the browser, instead Scratch GUI handl
 <details>
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
+    ```
     scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
     scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
     scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+    ```
 </details>

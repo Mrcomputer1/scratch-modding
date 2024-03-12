@@ -338,7 +338,7 @@ There are a few places you need to change to adjust the project file extension.
       return matches[1].substring(0, 100); // truncate project title to max 100 chars
   }
   ```
-  You will need to adjust the regular expression used. Here is a template you can use: `/^(.*)\.(sb[23]?|(YOUR_EXTENSION_HERE)?)$/`.
+  You will need to adjust the regular expression used. Here is a template you can use: `/^(.*)\.(sb[23]?|YOUR_EXTENSION_HERE)$/`.
 * ```jsx title="scratch-vm/src/virtual-machine.js"
   /**
    * @returns {string} Project in a Scratch 3.0 JSON representation.
@@ -447,7 +447,9 @@ There are a few places you need to change to adjust the sprite file extension.
 <details>
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
+    ```
     scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
     scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
     scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+    ```
 </details>
