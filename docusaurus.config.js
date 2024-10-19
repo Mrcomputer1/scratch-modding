@@ -41,6 +41,9 @@ const config = {
                     sidebarPath: require.resolve('./sidebars.js'),
                     editUrl: 'https://github.com/Mrcomputer1/scratch-modding/tree/master/',
                 },
+                pages: {
+                    editUrl: 'https://github.com/Mrcomputer1/scratch-modding/tree/master/src/pages'
+                },
                 blog: false,
                 theme: {
                     customCss: require.resolve('./src/css/custom.css'),
