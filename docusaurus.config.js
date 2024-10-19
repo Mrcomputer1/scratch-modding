@@ -51,6 +51,23 @@ const config = {
             }),
         ],
     ],
+
+    plugins: [
+        [
+            '@docusaurus/plugin-client-redirects',
+            {
+                createRedirects(existingPath) {
+                    if (existingPath.startsWith('/3.0/tutorial')) {
+                        return existingPath.replace('/3.0/tutorial', '/tutorial');
+                    } else if (existingPath.startsWith('/2.0/tutorial')) {
+                        return existingPath.replace('/2.0/tutorial', '/tutorial-2.0');
+                    }
+
+                    return undefined;
+                }
+            }
+        ],
+    ],
     
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -103,11 +120,11 @@ const config = {
                     items: [
                         {
                             label: "3.0 Tutorial",
-                            to: "/tutorial/getting-started/prerequisites"
+                            to: "/3.0/tutorial/getting-started/prerequisites"
                         },
                         {
                             label: "2.0 Tutorial",
-                            to: "/tutorial-2.0/getting-started/prerequisites"
+                            to: "/2.0/tutorial/getting-started/prerequisites"
                         }
                     ]
                 },

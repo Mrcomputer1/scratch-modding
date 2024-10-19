@@ -16,13 +16,13 @@ function HomepageHeader() {
                 <div className={styles.buttons}>
                     <Link
                         className="button button--secondary button--lg"
-                        to="/tutorial/getting-started/prerequisites">
+                        to="/3.0/tutorial/getting-started/prerequisites">
                     Scratch 3.0
                     </Link>
 
                     <Link
                         className="button button--secondary button--lg"
-                        to="/tutorial-2.0/getting-started/prerequisites">
+                        to="/2.0/tutorial/getting-started/prerequisites">
                     Scratch 2.0
                     </Link>
                 </div>
