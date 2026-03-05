@@ -19,7 +19,6 @@ const config = {
     
     onBrokenLinks: 'throw',
     onBrokenAnchors: 'throw',
-    onBrokenMarkdownLinks: 'warn',
 
     trailingSlash: false,
     
@@ -29,6 +28,11 @@ const config = {
     i18n: {
         defaultLocale: 'en',
         locales: ['en'],
+    },
+
+    future: {
+        experimental_faster: true,
+        v4: true,
     },
     
     presets: [
@@ -156,7 +160,11 @@ const config = {
             comments: false,
             admonitions: false,
             headingIds: true
-        }
+        },
+        hooks: {
+            onBrokenMarkdownLinks: 'warn',
+            onBrokenMarkdownImages: 'warn',
+        },
     }
 };
 
