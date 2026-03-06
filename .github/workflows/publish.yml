@@ -7,12 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: 18
+          node-version: 22
           cache: "npm"
       
       - name: Install Dependencies
@@ -22,7 +22,7 @@ jobs:
         run: npm run build
       
       - name: Upload the pages artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v4
         with:
           path: ./build
   
@@ -38,4 +38,4 @@ jobs:
     steps:
       - name: Publish Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
