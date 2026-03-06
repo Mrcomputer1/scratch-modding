@@ -1,0 +1,237 @@
+---
+sidebar_position: 3
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+import Link from '@docusaurus/Link';
+
+# Setting Up
+
+## Create a folder for your mod
+The first step for creating a mod is creating a folder/directory to store it in. This tutorial uses the highly imaginative name of "Tutorial Mod", so I will use the folder name "TutorialMod".
+
+The structure of this folder will end up looking like this at the end of this page:
+```
+TutorialMod/
+    scratch-editor/
+        packages/
+            scratch-gui/
+                package.json
+                README.md
+                ...
+            scratch-vm/
+                package.json
+                README.md
+                ...
+            ...
+        package.json
+        README.md
+        ...
+    scratch-blocks/
+        package.json
+        README.md
+        ...
+```
+
+## Setting Up `scratch-editor`
+`scratch-editor` contains many of the important components of the Scratch editor, so it is where we will start.
+
+### Obtaining `scratch-editor`
+:::tip
+Forking the Scratch repositories on GitHub and cloning your fork will allow you to more easily release your mod on GitHub later.
+:::
+
+<Tabs groupId="use-git" queryString>
+    <TabItem value="true" label="With Git" default>
+        <strong>Optional Step:</strong> Fork the repository on GitHub and clone your fork instead.<br/>
+        Open a Command Prompt or Terminal and run this command:
+        <CodeBlock language="shell">
+git clone https://github.com/scratchfoundation/scratch-editor.git --depth=1
+cd scratch-editor
+        </CodeBlock>
+        This will create a folder called <code>scratch-editor</code> and download <code>scratch-editor</code> inside it. The <code>--depth=1</code> option instructs Git to only download the latest version and not download the entire history of <code>scratch-editor</code>.
+    </TabItem>
+    <TabItem value="false" label="Without Git">
+        <ol>
+            <li>
+                <a href="https://github.com/scratchfoundation/scratch-editor/archive/refs/heads/develop.zip" class="button button--primary">Download scratch-editor</a>
+            </li>
+            <li>
+                Extract the folder inside the ZIP.
+            </li>
+            <li>
+                Rename the folder from <code>scratch-editor-develop</code> to <code>scratch-editor</code>.
+            </li>
+        </ol>
+    </TabItem>
+</Tabs>
+
+### Installing the dependencies
+In the Command Prompt or Terminal (if you don't already have one open, open one), enter this command:
+
+<Tabs groupId="package-manager" queryString>
+    <TabItem value="npm" label="NPM" default>
+        <CodeBlock language="shell">
+            npm install
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="yarn" label="Yarn">
+        <CodeBlock language="shell">
+            yarn install
+        </CodeBlock>
+    </TabItem>
+</Tabs>
+
+:::info
+It may take a while to download all the dependencies.
+:::
+
+:::info
+You may see a lot of deprecation and security vulnerability warnings, you can ignore these.
+:::
+
+### A small correction for Windows
+:::note
+This correction is needed for Windows. It isn't needed for macOS or Linux, but can, and should, still be applied to them.
+:::
+
+Open `scratch-gui`'s `package.json` file, and find the `"build:dev": "BUILD_TYPE=dev webpack",` script line. You should add `cross-env ` to the start of this script. It should look like this:
+```json title="scratch-editor/packages/scratch-gui/package.json"
+"build:dev": "cross-env BUILD_TYPE=dev webpack",
+```
+
+### Building the components
+Some of the components need to be built before you can start the editor. To do this, run the following command:
+<Tabs groupId="package-manager" queryString>
+    <TabItem value="npm" label="NPM" default>
+        <CodeBlock language="shell">
+            npm run build
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="yarn" label="Yarn">
+        <CodeBlock language="shell">
+            yarn run build
+        </CodeBlock>
+    </TabItem>
+</Tabs>
+
+:::tip
+If you want to save a small bit of storage space, you can delete the `dist` and `build` directory in the `packages/scratch-gui` folder.
+:::
+
+### Making sure it works
+In the Command Prompt or Terminal, enter this command:
+<Tabs groupId="package-manager" queryString>
+    <TabItem value="npm" label="NPM" default>
+        <CodeBlock language="shell">
+            npm start --workspace=packages/scratch-gui
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="yarn" label="Yarn">
+        <CodeBlock language="shell">
+            yarn workspace packages/scratch-gui run start
+        </CodeBlock>
+    </TabItem>
+</Tabs>
+
+It may take a few seconds to become ready, but when you see something like this, it is ready:
+```shell
+webpack 5.105.3 compiled successfully in 3917 ms
+```
+
+You should now be able to access the editor by visiting [http://localhost:8601](http://localhost:8601) in your web browser.
+
+:::tip
+You can press Ctrl+C to stop the editor server and return to the command line.
+:::
+
+## `scratch-blocks`
+`scratch-blocks` is the block editing workspace, it also contains the definitions for what the blocks look like.
+
+### Obtaining `scratch-blocks`
+:::warning
+Make sure you put `scratch-blocks` in your `TutorialMod` (or whatever you called it) folder, not the `scratch-editor` folder.
+:::
+
+<Tabs groupId="use-git" queryString>
+    <TabItem value="true" label="With Git" default>
+        <strong>Optional Step:</strong> Fork the repository on GitHub and clone your fork instead.<br/>
+        <CodeBlock language="shell">
+git clone https://github.com/scratchfoundation/scratch-blocks.git --depth=1
+cd scratch-blocks
+        </CodeBlock>
+        This will create a folder called <code>scratch-blocks</code> and download <code>scratch-blocks</code> inside it.
+    </TabItem>
+    <TabItem value="false" label="Without Git">
+        <ol>
+            <li>
+                <a href="https://github.com/scratchfoundation/scratch-blocks/archive/refs/heads/develop.zip" class="button button--primary">Download scratch-blocks</a>
+            </li>
+            <li>
+                Extract the folder inside the ZIP.
+            </li>
+            <li>
+                Rename the folder from <code>scratch-blocks-develop</code> to <code>scratch-blocks</code>.
+            </li>
+        </ol>
+    </TabItem>
+</Tabs>
+
+### Installing the dependencies
+In the Terminal, in the `scratch-blocks` folder, enter this command:
+<Tabs groupId="package-manager" queryString>
+    <TabItem value="npm" label="NPM" default>
+        <CodeBlock language="shell">
+            npm install
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="yarn" label="Yarn">
+        <CodeBlock language="shell">
+            yarn install
+        </CodeBlock>
+    </TabItem>
+</Tabs>
+
+## Linking `scratch-editor` to `scratch-blocks`
+Currently, `scratch-editor` and `scratch-blocks` are entirely separate, but we want to be able to modify `scratch-blocks`, so we can add a block.
+
+In your `scratch-editor/packages/scratch-gui` folder, run this command:
+<Tabs groupId="package-manager" queryString>
+    <TabItem value="npm" label="NPM" default>
+        <CodeBlock language="shell">
+            npm link ../../../scratch-blocks
+        </CodeBlock>
+    </TabItem>
+    <TabItem value="yarn" label="Yarn">
+        <CodeBlock language="shell">
+            yarn link ../../../scratch-blocks
+        </CodeBlock>
+    </TabItem>
+</Tabs>
+
+This command will replace the copy of `scratch-blocks` that your package manager automatically downloaded with a symbolic link to the one you can modify.
+
+:::note
+If another copy of `scratch-blocks` is found in the `scratch-editor/packages/scratch-gui/node_modules` folder, delete that `scratch-blocks` folder and you have three options:
+* Do nothing more, it will fallback to the copy you just linked to `scratch-editor`. This is the easiest option, but technically the least "correct" option.
+* Change the version in your copy of `scratch-blocks`'s `package.json` to match the one in the `dependencies` section of `scratch-gui`'s `package.json`. Then, repeat the linking process.
+* Download the exact version of `scratch-blocks` that `scratch-gui` depends on and repeat the `scratch-blocks` setup and linking process.
+
+This issue likely happens because of a version mismatch between `scratch-gui` and `scratch-blocks`. If the versions are incompatible with each other, you will need to look in `scratch-gui`'s `package.json` for the `scratch-blocks` version and download that specific tagged version from GitHub and use that instead.
+:::
+
+## Completed Files
+| Component         | File                              | Download                                                 |
+| ----------------- | --------------------------------- | -------------------------------------------------------- |
+| `scratch-gui`     | `package.json`                    | [package.json](resources/package.json.txt)               |
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    ```
+    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
+    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
+    ```
+</details>

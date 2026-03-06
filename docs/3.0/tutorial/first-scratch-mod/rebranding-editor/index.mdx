@@ -9,17 +9,19 @@ import Link from '@docusaurus/Link';
 You probably want to give your mod a unique look, here are some things you can do to do that.
 
 :::warning
-To an extent, you must rebrand your mod as you can't use Scratch's trademarks. Scratch's trademarks are the name Scratch, the Scratch logo, the Scratch Day logo, Scratch Cat and Gobo. *However, you can use them to give credit to the original Scratch.*
-> **[Scratch Terms of Use](https://scratch.mit.edu/terms_of_use#scratch-content)**
->
-> 5.4 The Scratch name, Scratch logo, Scratch Day logo, Scratch Cat, and Gobo are Trademarks owned by the Scratch Team. The MIT name and logo are Trademarks owned by the Massachusetts Institute of Technology. Unless you are licensed by Scratch under a specific licensing program or agreement, you may not use these logos to label, promote, or endorse any product or service. You may use the Scratch Logo to refer to the Scratch website and programming language.
+To an extent, you must rebrand your mod as you can't use Scratch's trademarks. Scratch's trademarks are things like the name Scratch, their logos and their mascots (like Scratch Cat and Gobo). However, you should be fine giving credit to Scratch.
+
+<details>
+    <summary>[Scratch Terms of Service](https://mitscratch.freshdesk.com/en/support/solutions/articles/4000219182-scratch-terms-of-service) quote</summary>
+    > 7.3 **Scratch Team Marks**. You may not use any tradenames, trademarks, logos, or other marks owned or controlled by the Scratch Team, including, but not limited to, the Scratch Cat, the Scratch logo, ScratchJr, Giga, Nano, Pico, Terra, Milli, and Zepto (collectively, the “Scratch Team Marks”) except solely for your personal, educational, and non-commercial purposes in direct connection with your use of the Service to create and share Scratch projects as otherwise permitted herein. Any commercial use of the Scratch Team Marks will be subject to the terms of a separate license agreement negotiated between you and the Scratch Team, if any, provided that the Scratch Team is not obligated to grant any rights or licenses for any commercial use and may deny a license request for any or no reason in the Scratch Team’s sole discretion. You acknowledge that we are the sole owner of the Scratch Team Marks and any and all goodwill associated therewith. You agree that you will not do anything inconsistent with such ownership and that all use by you of the Scratch Team Marks will inure to the benefit of the Scratch Team. You agree further that nothing in these Terms will be construed as granting to you any right, title or interest in the Scratch Team Marks, other than the right to use the Scratch Team Marks as expressly provided in these Terms. You agree that you will not contest, oppose, or challenge our ownership of or title to the Scratch Team Marks or contest, oppose or challenge the validity of the Scratch Team Marks. You further agree that you have no power or right to and will not during the term of these Terms or thereafter contest, oppose or challenge the title or any rights of the Scratch Team in or to the Scratch Team Marks, alone or with other elements; claim any right, title, or interest in or to the Scratch Team Marks, alone or with other elements adverse to the Scratch Team; or register or apply for registration of the Scratch Team Marks anywhere, alone or with other elements. You agree that your use of any Scratch Team Marks permitted under these Terms or pursuant to any separate license will comply with any guidelines provided by Scratch to you. You agree that you will cease all uses of Scratch Team Marks immediately upon the Scratch Team’s request that you cease such uses and the Scratch Team will have no liability to you for your being required to cease such use.  You hereby assign and will assign in the future to us all rights you may acquire by operation of law or otherwise in the Scratch Team Marks, including all applications or registrations therefor, along with the goodwill associated therewith.
+</details>
 :::
 
 ## Changing the Scratch logo
-You can change the logo by replacing the SVG located at `scratch-gui/src/components/menu-bar/scratch-logo.svg`.
+You can change the logo by replacing the SVG located at `scratch-editor/packages/scratch-gui/src/components/menu-bar/scratch-logo.svg`.
 
 ## Changing the default project (including Scratch Cat)
-The default project is located at `scratch-gui/src/lib/default-project`.
+The default project is located at `scratch-editor/packages/scratch-gui/src/lib/default-project`.
 
 | File                                      | Format                | Contents                                  |
 | ----------------------------------------- | --------------------- | ----------------------------------------- |
@@ -28,8 +30,8 @@ The default project is located at `scratch-gui/src/lib/default-project`.
 | `83c36d806dc92327b9e7049a565c6bff.wav`    | Wave Sound            | `Meow`                                    |
 | `bcf454acf82e4504149f7ffe07081dbc.svg`    | SVG Image             | `costume1` (Scratch Cat)                  |
 | `cd21514d0531fdffb22204e0ec5ed84a.svg`    | SVG Image             | `backdrop1`                               |
-| `index.js`                                | JavaScript            | List of contents of the project.          |
-| `projectData.js`                          | JavaScript            | Contains the `project.json`.              |
+| `index.ts`                                | JavaScript            | List of contents of the project.          |
+| `project-data.ts`                         | JavaScript            | Contains the `project.json`.              |
 
 ## Changing the colours
 import UIPrimary from './screenshots/ui-primary.png';
@@ -73,7 +75,7 @@ import ExtensionsPrimary from './screenshots/extensions-primary.png';
 
 import DropHighlight from './screenshots/drop-highlight.png';
 
-Scratch's colours are defined in `scratch-gui/src/css/colors.css`. Below is a table of all the colours and a screenshot of the editor showing an example of where that colour is used. These screenshots do not include all uses of the colour.
+Scratch's colours are defined in `scratch-editor/packages/scratch-gui/src/css/colors.css`. Below is a table of all the colours and a screenshot of the editor showing an example of where that colour is used. These screenshots do not include all uses of the colour.
 
 <table>
     <thead>
@@ -295,7 +297,7 @@ Scratch's colours are defined in `scratch-gui/src/css/colors.css`. Below is a ta
 ## Changing the project file extension
 There are a few places you need to change to adjust the project file extension.
 
-* ```jsx title="scratch-gui/src/containers/sb3-downloader.jsx"
+* ```jsx title="scratch-editor/packages/scratch-gui/src/containers/sb3-downloader.jsx"
   const getProjectFilename = (curTitle, defaultTitle) => {
       let filenameTitle = curTitle;
       if (!filenameTitle || filenameTitle.length === 0) {
@@ -306,7 +308,7 @@ There are a few places you need to change to adjust the project file extension.
   };
   ```
   Adjust the `.sb3` with your own extension.
-* ```jsx title="scratch-gui/src/lib/sb-file-uploader-hoc.jsx"
+* ```jsx title="scratch-editor/packages/scratch-gui/src/lib/sb-file-uploader-hoc.jsx"
   createFileObjects () {
       // redo step 7, in case it got skipped last time and its objects are
       // still in memory
@@ -327,8 +329,8 @@ There are a few places you need to change to adjust the project file extension.
   }
   ```
   Add your extension to the list of accepted extensions.
-* ```jsx title="scratch-gui/src/lib/sb-file-uploader-hoc.jsx"
-  getProjectTitleFromFilename (fileInputFilename) {
+* ```js title="scratch-editor/packages/scratch-gui/src/lib/sb-file-uploader-utils.js"
+  export const getProjectTitleFromFilename = fileInputFilename => {
       if (!fileInputFilename) return '';
       // only parse title with valid scratch project extensions
       // (.sb, .sb2, and .sb3)
@@ -336,10 +338,10 @@ There are a few places you need to change to adjust the project file extension.
       const matches = fileInputFilename.match(/^(.*)\.sb[23]?$/);
       if (!matches) return '';
       return matches[1].substring(0, 100); // truncate project title to max 100 chars
-  }
+  };
   ```
   You will need to adjust the regular expression used. Here is a template you can use: `/^(.*)\.(sb[23]?|YOUR_EXTENSION_HERE)$/`.
-* ```jsx title="scratch-vm/src/virtual-machine.js"
+* ```js title="scratch-editor/packages/scratch-vm/src/virtual-machine.js"
   /**
    * @returns {string} Project in a Scratch 3.0 JSON representation.
   */
@@ -372,7 +374,7 @@ There are a few places you need to change to adjust the project file extension.
 ## Changing the sprite file extension
 There are a few places you need to change to adjust the sprite file extension.
 
-* ```jsx title="scratch-gui/src/components/sprite-selector/sprite-selector.jsx"
+* ```jsx title="scratch-editor/packages/scratch-gui/src/components/sprite-selector/sprite-selector.jsx"
   <ActionMenu
       className={styles.addButton}
       img={spriteIcon}
@@ -406,7 +408,7 @@ There are a few places you need to change to adjust the sprite file extension.
   />
   ```
   Add your sprite file extension to `fileAccept`.
-* ```jsx title="scratch-gui/src/containers/target-pane.jsx"
+* ```jsx title="scratch-editor/packages/scratch-gui/src/containers/target-pane.jsx"
   handleExportSprite (id) {
       const spriteName = this.props.vm.runtime.getTargetById(id).getName();
       const saveLink = document.createElement('a');
@@ -419,7 +421,7 @@ There are a few places you need to change to adjust the sprite file extension.
   }
   ```
   Change `sprite3` to your sprite file extension.
-* ```jsx title="scratch-vm/src/virtual-machine.js"
+* ```js title="scratch-editor/packages/scratch-vm/src/virtual-machine.js"
   exportSprite (targetId, optZipType) {
       const soundDescs = serializeSounds(this.runtime, targetId);
       const costumeDescs = serializeCostumes(this.runtime, targetId);
@@ -448,8 +450,7 @@ There are a few places you need to change to adjust the sprite file extension.
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
     ```
-    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
-    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
-    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
+    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
     ```
 </details>

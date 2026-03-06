@@ -1,5 +1,5 @@
 class TutorialModDialogsBlocks {
-    constructor (runtime){
+    constructor (runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -21,26 +21,30 @@ class TutorialModDialogsBlocks {
         };
     }
 
-    alertBlock(args, util) {
+    alertBlock (args, util) {
+        // eslint-disable-next-line
         alert(args.MESSAGE);
     }
 
-    promptBlock(args, util) {
+    promptBlock (args, util) {
+        // eslint-disable-next-line
         return prompt(args.MESSAGE);
     }
 
-    confirmBlock(args, util) {
+    confirmBlock (args, util) {
+        // eslint-disable-next-line
         return confirm(args.MESSAGE);
     }
 
-    whileConfirmedBlock(args, util){
-        if(confirm(args.MESSAGE)){
+    whileConfirmedBlock (args, util) {
+        // eslint-disable-next-line
+        if (confirm(args.MESSAGE)) {
             util.startBranch(1, true);
         }
     }
 
-    randomChoice(args, util){
-        let randomValue = Math.floor(Math.random() * 4);
+    randomChoice (args, util) {
+        const randomValue = Math.floor((Math.random() * 3) + 1);
         util.startBranch(randomValue, false);
     }
 }

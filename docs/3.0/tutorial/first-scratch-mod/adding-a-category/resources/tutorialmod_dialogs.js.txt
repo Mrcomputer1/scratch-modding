@@ -1,5 +1,5 @@
 class TutorialModDialogsBlocks {
-    constructor (runtime){
+    constructor (runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -17,7 +17,8 @@ class TutorialModDialogsBlocks {
         };
     }
 
-    alertBlock(args, util) {
+    alertBlock (args, util) {
+        // eslint-disable-next-line
         alert(args.MESSAGE);
     }
 }

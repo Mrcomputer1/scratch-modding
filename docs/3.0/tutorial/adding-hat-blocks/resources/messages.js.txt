@@ -33,6 +33,13 @@ goog.provide('Blockly.Msg.en');
 
 goog.require('Blockly.Msg');
 
+// Dialogs blocks
+Blockly.Msg.DIALOGS_ALERT = 'alert %1';
+Blockly.Msg.DIALOGS_PROMPT = 'prompt %1';
+Blockly.Msg.DIALOGS_CONFIRM = 'confirm %1';
+Blockly.Msg.DIALOGS_WHILECONFIRMED = 'while confirmed %1';
+Blockly.Msg.DIALOGS_RANDOMCHOICE = 'random choice';
+
 // Control blocks
 Blockly.Msg.CONTROL_FOREVER = 'forever';
 Blockly.Msg.CONTROL_REPEAT = 'repeat %1';
@@ -77,6 +84,8 @@ Blockly.Msg.DATA_INDEX_LAST = 'last';
 Blockly.Msg.DATA_INDEX_RANDOM = 'random';
 
 // Event blocks
+Blockly.Msg.EVENT_TUTORIALMOD_WHEN = 'when %1';
+Blockly.Msg.EVENT_TUTORIALMOD_WHENPAGEVISIBILITYCHANGED = 'when page visibility changed';
 Blockly.Msg.EVENT_WHENFLAGCLICKED = 'when %1 clicked';
 Blockly.Msg.EVENT_WHENTHISSPRITECLICKED = 'when this sprite clicked';
 Blockly.Msg.EVENT_WHENSTAGECLICKED = 'when stage clicked';
@@ -262,6 +271,7 @@ Blockly.Msg.SENSING_CURRENT_HOUR = 'hour';
 Blockly.Msg.SENSING_CURRENT_MINUTE = 'minute';
 Blockly.Msg.SENSING_CURRENT_SECOND = 'second';
 Blockly.Msg.SENSING_DAYSSINCE2000 = 'days since 2000';
+Blockly.Msg.SENSING_ONLINE = 'online?';
 Blockly.Msg.SENSING_USERNAME = 'username';
 Blockly.Msg.SENSING_USERID = 'user id';
 
@@ -280,6 +290,7 @@ Blockly.Msg.SOUND_VOLUME = 'volume';
 Blockly.Msg.SOUND_RECORD = 'record...';
 
 // Category labels
+Blockly.Msg.CATEGORY_DIALOGS = 'Dialogs';
 Blockly.Msg.CATEGORY_MOTION = 'Motion';
 Blockly.Msg.CATEGORY_LOOKS = 'Looks';
 Blockly.Msg.CATEGORY_SOUND = 'Sound';

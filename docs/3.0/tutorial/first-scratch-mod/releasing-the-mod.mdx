@@ -8,24 +8,19 @@ import CodeBlock from '@theme/CodeBlock';
 # Releasing the Mod
 
 :::warning[Scratch 3.0 and AGPL]
-Scratch 3.0 [has been relicensed](https://scratchfoundation.org/open-source-license) to be under the [GNU Affero General Public License v3](https://github.com/scratchfoundation/scratch-gui/blob/eec78119b42129f6870f6981fa14303ee094e019/LICENSE). This means that, if you release your mod, you must also release the source code of your mod with it.
+Scratch 3.0 is under the [GNU Affero General Public License v3](https://github.com/scratchfoundation/scratch-editor/blob/810ac12eaa1a1eb19d05fcb37f486ad1c4c56314/LICENSE). This means that, if you release your mod, you must also release the source code of your mod with it, even if you have no downloadable version of your mod.
 
 <details>
-
     <summary>Useful Information</summary>
-
-    **What if my mod is based on an older pre-AGPL licensed version of Scratch 3.0?**
-    > This means you are still using a [BSD 3-Clause](https://github.com/scratchfoundation/scratch-gui/blob/1c9ff0dcfcfc9ffee992158bf906e590ad2fb566/LICENSE) licensed version of Scratch. You are not required to release the source code of your mod.
 
     **What does the AGPL license require?**
     > A simple overview of the license can be found [here](https://choosealicense.com/licenses/agpl-3.0/). _Tip: Hover your mouse over the points under permission/conditions/limitations for a description of them._
 
-    **What version of Scratch 3.0 is the code linked at the end of the tutorials from?**
-    > The tutorials currently are based on a BSD 3-Clause licesned version of Scratch 3.0. However, they will be updated to an AGPL licensed version if the BSD 3-Clause licesned version becomes outdated.
-
     **How do I know if I'm using an AGPL or a BSD 3-Clause licensed version of Scratch 3.0?**
-    > In your `scratch-gui` or `scratch-vm` folder, check the `LICENSE.md` file. If it starts with `GNU AFFERO GENERAL PUBLIC LICENSE`, then you are using an AGPL licensed version of Scratch 3.0.
+    > In your `scratch-editor` folder, check the `LICENSE` file. If it starts with `GNU AFFERO GENERAL PUBLIC LICENSE`, then you are using an AGPL licensed version of Scratch 3.0.
 
+    **What if my mod is based on an older pre-AGPL licensed version of Scratch 3.0?**
+    > This means you are still using a [BSD 3-Clause](https://github.com/scratchfoundation/scratch-gui/blob/1c9ff0dcfcfc9ffee992158bf906e590ad2fb566/LICENSE) licensed version of Scratch. You are not required to release the source code of your mod.
 </details>
 :::
 
@@ -35,7 +30,7 @@ This section expects that you forked the Scratch repositories and cloned your fo
 :::
 
 ### Commit and push your changes
-First, you will need to commit and push your changes to GitHub.
+First, delete the `.github` folder in `scratch-editor` and `scratch-blocks` to prevent the Scratch Team's GitHub Actions running. Next, you will need to commit and push your changes to GitHub.
 
 ```shell
 git commit -am "any commit message you want... should describe your changes."
@@ -47,9 +42,9 @@ git push origin develop
 :::
 
 ### Add GitHub Actions workflow
-In your `scratch-gui` repository, add a `.github/workflows/publish.yml` file.
+In your `scratch-editor` repository, add a `.github/workflows/publish.yml` file.
 
-```yaml title="scratch-gui/.github/workflows/publish.yml"
+```yaml title="scratch-editor/.github/workflows/publish.yml"
 name: Publish
 
 on:
@@ -64,7 +59,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
           cache: "npm"
       
       - name: Install Dependencies
@@ -76,7 +71,7 @@ jobs:
       - name: Upload the pages artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: ./build
+          path: ./scratch-gui/build
   
   deploy:
     needs: build
@@ -101,7 +96,7 @@ Finally, go to the Actions tab, go to "Publish" on the left sidebar, press "Run 
 You could improve this by automatically rebuilding when you push to the repository or when you publish a release.
 
 #### Run on push to repository
-```yaml title="scratch-gui/.github/workflows/publish.yml"
+```yaml title="scratch-editor/.github/workflows/publish.yml"
 on:
   push:
     branches:
@@ -109,14 +104,14 @@ on:
 ```
 
 #### Run on release publish
-```yaml title="scratch-gui/github/workflows/publish.yml"
+```yaml title="scratch-editor/.github/workflows/publish.yml"
 on:
   release:
     types: [published]
 ```
 
 ## Manual Hosting
-Run this command to build `scratch-gui`. Once you have run the command, you will have a folder called `build`, this contains the Scratch build.
+Run this command to build `scratch-editor`. Once you have run the command, you will have a folder called `build`, this contains the Scratch build.
 <Tabs groupId="package-manager" queryString>
     <TabItem value="npm" label="NPM" default>
         <CodeBlock language="shell">
@@ -126,11 +121,6 @@ Run this command to build `scratch-gui`. Once you have run the command, you will
     <TabItem value="yarn" label="Yarn" default>
         <CodeBlock language="shell">
             yarn run build
-        </CodeBlock>
-    </TabItem>
-    <TabItem value="pnpm" label="PNPM" default>
-        <CodeBlock language="shell">
-            pnpm run build
         </CodeBlock>
     </TabItem>
 </Tabs>

@@ -7,72 +7,70 @@ sidebar_position: 3
 ## Enabling the hidden dark theme
 First, let's enable the hidden dark theme.
 
-In `scratch-gui`, go to `src/components/menu-bar/theme-menu.jsx`. In that file, there is a `ThemeMenu` component, which has a variable called `enabledThemes`, find it and add DARK_THEME.
+In `scratch-gui`, go to `src/components/menu-bar/settings-menu.jsx`. In that file, there is a variable called `enabledColorModes`, find it and add DARK_THEME.
 
-```jsx title="scratch-gui/src/components/menu-bar/theme-menu.jsx"
-const ThemeMenu = ({
-    isRtl,
-    menuOpen,
-    onChangeTheme,
-    onRequestOpen,
-    theme
-}) => {
-    // highlight-next-line
-    const enabledThemes = [DEFAULT_THEME, HIGH_CONTRAST_THEME, DARK_THEME];
-    const themeInfo = themeMap[theme];
-    
-    // ...
-}
+```jsx title="scratch-editor/packages/scratch-gui/src/components/menu-bar/settings-menu.jsx"
+const enabledColorModes = [DEFAULT_MODE, DARK_MODE, HIGH_CONTRAST_MODE];
 ```
 
 Make sure you import it too:
-```jsx title="scratch-gui/components/menu-bar/theme-menu.jsx"
-import {DARK_THEME, DEFAULT_THEME, HIGH_CONTRAST_THEME, themeMap} from '../../lib/themes';
+```jsx title="scratch-editor/packages/scratch-gui/components/menu-bar/settings-menu.jsx"
+import {DARK_MODE, DEFAULT_MODE, HIGH_CONTRAST_MODE, colorModeMap} from '../../lib/settings/color-mode/index.js';
+```
+
+If we want Scratch to remember the theme, we need to make Scratch consider it a valid theme. To do this we need to add it to `isValidColorMode` in `src/lib/settings/color-mode/persistence.js`:
+```js title="scratch-editor/packages/scratch-gui/src/lib/settings/color-mode/persistence.js"
+const isValidColorMode = colorMode => [DEFAULT_MODE, DARK_MODE, HIGH_CONTRAST_MODE].includes(colorMode);
+```
+
+Make sure you import it for this file too:
+```js title="scratch-editor/packages/scratch-gui/src/lib/settings/color-mode/persistence.js"
+import {DEFAULT_MODE, DARK_MODE, HIGH_CONTRAST_MODE} from '.';
 ```
 
 ## Creating our own theme
 Let's create a theme that makes Scratch harder by making all the colours the same (well two colours, foreground and background).
 
 ### Creating the theme
-Copy and paste `src/lib/themes/default/index.js` to a new `src/lib/themes/hard-mode/index.js` and make some changes to it. I am going to make all the colours either black (foreground/text and blocks background) or white (background).
+Copy and paste `src/lib/settings/color-mode/default/index.js` to a new `src/lib/settings/color-mode/hard-mode/index.js` and make some changes to it. I am going to make all the colours either black (foreground/text and blocks background) or white (background).
 
 ### Registering the theme
-In `src/lib/themes/index.js`, add these:
+In `src/lib/settings/color-mode/index.js`, add these:
 
-```js title="scratch-gui/src/lib/themes/index.js"
+```js title="scratch-editor/packages/scratch-gui/src/lib/settings/color-mode/index.js"
 // ...
 
 import {blockColors as defaultColors} from './default';
 // highlight-next-line
-import {blockColors as hardModeBlockColors} from './hard-mode';
+import {blockColors as hardModeColors} from './hard-mode';
 
 // ...
 
-const DEFAULT_THEME = 'default';
-const HIGH_CONTRAST_THEME = 'high-contrast';
-const DARK_THEME = 'dark';
+const DEFAULT_MODE = 'default';
+const HIGH_CONTRAST_MODE = 'high-contrast';
+const DARK_MODE = 'dark';
 // highlight-next-line
-const HARD_MODE_THEME = 'hard-mode';
+const HARD_MODE = 'hard-mode';
 
 // ...
 
 const messages = defineMessages({
     // ...
     // highlight-start
-    [HARD_MODE_THEME]: {
-        id: 'gui.theme.hardModeTheme',
+    [HARD_MODE]: {
+        id: 'gui.theme.hardMode',
         defaultMessage: 'Hard Mode',
         description: 'label for hard mode'
     }
     // highlight-end
 });
 
-const themeMap = {
+const colorModeMap = {
     // ...
     // highlight-start
-    [HARD_MODE_THEME]: {
+    [HARD_MODE]: {
         blocksMediaFolder: 'blocks-media/default',
-        colors: mergeWithDefaults(hardModeBlockColors),
+        colors: mergeWithDefaults(hardModeColors),
         extensions: {},
         label: messages[HARD_MODE_THEME]
     }
@@ -82,15 +80,16 @@ const themeMap = {
 // ...
 
 export {
-    DEFAULT_THEME,
-    DARK_THEME,
-    HIGH_CONTRAST_THEME,
+    DEFAULT_MODE,
+    DARK_MODE,
+    HIGH_CONTRAST_MODE,
     // highlight-next-line
-    HARD_MODE_THEME,
+    HARD_MODE,
     defaultColors,
-    getColorsForTheme,
-    themeMap
+    getColorsForMode,
+    colorModeMap
 };
+
 ```
 
 ### Enabling the theme
@@ -103,19 +102,19 @@ This is the same process as the dark mode theme.
 </details>
 
 ## Completed Files
-| Component         | File                                          | Download                                                      |
-| ----------------- | --------------------------------------------- | ------------------------------------------------------------- |
-| `scratch-gui`     | `src/lib/themes/index.js`                     | [index.js](resources/index.js.txt)                            |
-| `scratch-gui`     | `src/components/menu-bar/theme-menu.jsx`      | [theme-menu.jsx](resources/theme-menu.jsx.txt)                |
-| `scratch-gui`     | `src/lib/themes/hard-mode/index.js`           | [index-hardmode.js](resources/index-hardmode.js.txt)          |
+| Component         | File                                             | Download                                                      |
+| ----------------- | ------------------------------------------------ | ------------------------------------------------------------- |
+| `scratch-gui`     | `src/lib/settings/color-mode/index.js`           | [index.js](resources/index.js.txt)                            |
+| `scratch-gui`     | `src/components/menu-bar/settings-menu.jsx`      | [theme-menu.jsx](resources/settings-menu.jsx.txt)             |
+| `scratch-gui`     | `src/lib/settings/color-mode/hard-mode/index.js` | [index-hardmode.js](resources/index-hardmode.js.txt)          |
+| `scratch-gui`     | `src/lib/settings/color-mode/persistence.js`     | [persistence.js](resources/persistence.js.txt)                |
 
 ---
 <details>
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
     ```
-    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
-    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
-    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
+    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
     ```
 </details>

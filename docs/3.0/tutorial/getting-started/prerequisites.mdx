@@ -10,7 +10,7 @@ import CodeBlock from '@theme/CodeBlock';
 ## Software and Hardware Requirements
 
 ### A Computer
-You will need a computer (Windows, macOS and Linux all work) to mod Scratch 3.0. You will also need to be able to install software on it. If you do not have a computer or are unable to install software on the computer, you might be able to use an online service like GitHub Codespaces, Replit or Glitch.
+You will need a computer (Windows, macOS and Linux all work) to mod Scratch 3.0. You will also need to be able to install software on it. If you do not have a computer or are unable to install software on the computer, you might be able to use an online service like GitHub Codespaces or Replit.
 
 ### A Web Browser
 As Scratch 3.0 runs in a web browser, you will need a web browser. Since you are reading this, you probably already have one. Any browser that works with Scratch 3.0 will be fine.
@@ -20,48 +20,25 @@ You will need a code editor to write code for your Scratch mod in. You could tec
 
 Here are some code editors:
 * [Visual Studio Code](https://code.visualstudio.com) <span class="badge badge--primary">Recommended</span>
+* [Zed](https://zed.dev/)
 * _please suggest some more_
 
 ### Node.js
 Node.js is used by Scratch's development tools. You can download Node.js [here](https://nodejs.org/en).
 
-### A Node.js Package Manager (NPM, Yarn, PNPM, etc.)
-You need a Node.js package manager to install Scratch's depenedncies. Node.js comes with NPM, but you could also use [Yarn](https://yarnpkg.com/) or [PNPM](https://pnpm.io/).
+### A Node.js Package Manager (NPM, Yarn, etc.)
+You need a Node.js package manager to install Scratch's depenedncies. Node.js comes with NPM, but you could also use [Yarn](https://yarnpkg.com/).
 
 ### Git <span class="badge badge--primary">Recommended, not required</span>
 [Git](https://git-scm.com) is a version control system. Using Git well will allow you to view older versions of your mod and, with GitHub, allow you to collaborate with others to make a mod. Using Git also allows you to more easily release your mod using GitHub and GitHub Pages.
-
-### Windows Subsystem for Linux (WSL) <span class="badge badge--secondary">Only needed for Windows</span>
-`scratch-blocks` doesn't work well on Windows, so I recommend using Windows Subsystem for Linux for `scratch-blocks`. You can continue to use regular Windows for the rest of your mod. You can find out how to install WSL [here](https://learn.microsoft.com/en-us/windows/wsl/setup/environment).
-
-### Python <span class="badge badge--secondary">scratch-blocks</span>
-:::note
-Older versions of `scratch-blocks` depend on an old unsupported version of Python. The version of Python required is Python 2, the latest version of Python 2 is 2.7.18 from April 2020 and can be found [here](https://www.python.org/downloads/release/python-2718/).
-
-In case you are modding with an older version of `scratch-blocks`, you can install Python 2 with these commands:
-
-```shell
-sudo apt update
-sudo apt install python2
-```
-:::
-
-`scratch-blocks`'s build script depends on Python. You can download Python from their website [here](https://www.python.org/downloads/).
-
-If using Ubuntu Linux (the default distro for WSL), you can use these commands to install Python:
-
-```shell
-sudo apt update
-sudo apt install python3 python-is-python3
-```
-
-### Java <span class="badge badge--secondary">scratch-blocks</span>
-`scratch-blocks` uses Google's Closure Compiler, which uses Java, so you will need to have Java installed.
 
 ## Useful Knowledge
 
 ### JavaScript <span class="badge badge--primary">Recommended</span>
 JavaScript is the main language used by Scratch 3.0. Knowing at least the basics of JavaScript will be very helpful in modding Scratch 3.0.
+
+### TypeScript <span class="badge badge--primary">Recommended</span>
+Some parts of Scratch have been ported to TypeScript. Knowing at least the basics of TypeScript will also be very helpful in modding Scratch 3.0. TypeScript is based on JavaScript.
 
 ### Command Line <span class="badge badge--primary">Recommended</span>
 You need to use some commands to setup, build and run Scratch 3.0. You should at least know how to launch the command line on your computer or in your code editor and how to navigate your computer with it (`cd`, `dir`/`ls`, etc.).
@@ -73,8 +50,8 @@ You need to use some commands to setup, build and run Scratch 3.0. You should at
 ### Git <span class="badge badge--primary">Recommended</span>
 If you want to use Git and GitHub, you will need to know at least how to clone a repository and commit. If you want to use GitHub, you will also need to know how to fork a repository on GitHub and push to the repository.
 
-### CommonJS (specifically, `require` and `module.exports`)
-Scratch 3.0 is made up of many files and packages and needs a way to use resources from another file (`require`) and a way to make resources available from a file (`module.exports`).
+### `require`, `module.exports` (CommonJS) and `import`, `export` (ES Modules)
+Scratch 3.0 is made up of many files and packages and needs a way to use resources from another file and a way to make resources available to other files. Some files use the older CommonJS method for importing resources (the `require` function) and exporting resources (the `module.exports` object). Other files use the newer ES Modules method for import resources (the `import` statement) and exporting resources (the `export` statement).
 
 ### HTML
 While HTML is not really used much by Scratch, the concepts can be useful for JSX, which is needed to modify Scratch's interface.

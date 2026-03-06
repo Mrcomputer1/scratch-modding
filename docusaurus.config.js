@@ -153,6 +153,13 @@ const config = {
             darkTheme: darkCodeTheme,
             additionalLanguages: ["bash", "batch", "json", "markup", "yaml", "groovy", "actionscript"]
         },
+        announcementBar: {
+            id: 'scratch-editor-and-sprok',
+            backgroundColor: '#31542F', //'#855cd6',
+            textColor: '#fff',
+            content: 'The 3.0 tutorial has been updated to use the scratch-editor monorepo and the new version of scratch-blocks.',
+            isCloseable: true,
+        },
     }),
 
     markdown: {

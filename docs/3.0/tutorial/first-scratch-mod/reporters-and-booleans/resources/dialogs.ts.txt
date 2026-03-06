@@ -1,0 +1,46 @@
+import * as Blockly from "blockly/core";
+
+Blockly.Blocks['dialogs_alert'] = {
+  init: function(this: Blockly.Block){
+    this.jsonInit({
+      message0: Blockly.Msg.DIALOGS_ALERT, 
+      args0: [
+        {
+          type: "input_value",
+          name: "MESSAGE",
+        },
+      ],
+      extensions: ["colours_dialogs", "shape_statement"],
+    });
+  },
+};
+
+Blockly.Blocks['dialogs_prompt'] = {
+  init: function(this: Blockly.Block){
+    this.jsonInit({
+      message0: Blockly.Msg.DIALOGS_PROMPT, 
+      args0: [
+        {
+          type: "input_value",
+          name: "MESSAGE",
+        },
+      ],
+      extensions: ["colours_dialogs", "output_string"],
+    });
+  },
+};
+
+Blockly.Blocks['dialogs_confirm'] = {
+  init: function(this: Blockly.Block){
+    this.jsonInit({
+      message0: Blockly.Msg.DIALOGS_CONFIRM, 
+      args0: [
+        {
+          type: "input_value",
+          name: "MESSAGE",
+        },
+      ],
+      extensions: ["colours_dialogs", "output_boolean"],
+    });
+  },
+};

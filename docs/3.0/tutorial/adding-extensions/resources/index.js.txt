@@ -1,9 +1,9 @@
-const formatMessage = require("format-message");
-const BlockType = require("../../extension-support/block-type");
-const ArgumentType = require("../../extension-support/argument-type");
+const formatMessage = require('format-message');
+const BlockType = require('../../extension-support/block-type');
+const ArgumentType = require('../../extension-support/argument-type');
 
-class TutorialModDialogsExtension{
-    constructor (runtime){
+class TutorialModDialogsExtension {
+    constructor (runtime) {
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}
@@ -16,68 +16,68 @@ class TutorialModDialogsExtension{
      */
     getInfo () {
         return {
-            id: "jsdialogs",
+            id: 'jsdialogs',
             name: formatMessage({
-                id: "dialogs.categoryName",
-                default: "Dialogs",
-                description: "Name of the Dialogs extension."
+                id: 'dialogs.categoryName',
+                default: 'Dialogs',
+                description: 'Name of the Dialogs extension.'
             }),
-            blockIconURI: "",
-            menuIconURI: "",
+            // blockIconURI
+            // menuIconURI
             blocks: [
                 {
-                    opcode: "js_alert",
+                    opcode: 'js_alert',
                     text: formatMessage({
-                        id: "dialogs.alertBlock",
-                        default: "alert [MESSAGE]",
-                        description: "Alert dialog"
+                        id: 'dialogs.alertBlock',
+                        default: 'alert [MESSAGE]',
+                        description: 'Alert dialog'
                     }),
                     blockType: BlockType.COMMAND,
                     arguments: {
                         MESSAGE: {
                             type: ArgumentType.STRING,
                             defaultValue: formatMessage({
-                                id: "dialogs.hello",
-                                default: "Hello!",
-                                description: "Hello!"
+                                id: 'dialogs.hello',
+                                default: 'Hello!',
+                                description: 'Hello!'
                             })
                         }
                     }
                 },
                 {
-                    opcode: "js_prompt",
+                    opcode: 'js_prompt',
                     text: formatMessage({
-                        id: "dialogs.promptBlock",
-                        default: "prompt [MESSAGE]",
-                        description: "Prompt dialog"
+                        id: 'dialogs.promptBlock',
+                        default: 'prompt [MESSAGE]',
+                        description: 'Prompt dialog'
                     }),
                     blockType: BlockType.REPORTER,
                     arguments: {
                         MESSAGE: {
                             type: ArgumentType.STRING,
                             defaultValue: formatMessage({
-                                id: "dialogs.hello",
-                                default: "Hello!",
-                                description: "Hello!"
+                                id: 'dialogs.hello',
+                                default: 'Hello!',
+                                description: 'Hello!'
                             })
                         }
                     }
                 },
                 {
-                    opcode: "js_confirm",
+                    opcode: 'js_confirm',
                     text: formatMessage({
-                        id: "dialogs.confirmBlock",
-                        default: "confirm [MESSAGE]",
-                        description: "Confirm dialog"
+                        id: 'dialogs.confirmBlock',
+                        default: 'confirm [MESSAGE]',
+                        description: 'Confirm dialog'
                     }),
                     blockType: BlockType.BOOLEAN,
                     arguments: {
                         MESSAGE: {
                             type: ArgumentType.STRING,
                             defaultValue: formatMessage({
-                                id: "dialogs.hello",
-                                default: "Hello!",
-                                description: "Hello!"
+                                id: 'dialogs.hello',
+                                default: 'Hello!',
+                                description: 'Hello!'
                             })
                         }
                     }
@@ -86,15 +86,18 @@ class TutorialModDialogsExtension{
         };
     }
 
-    js_alert (args, util){
+    js_alert (args, util) {
+        // eslint-disable-next-line
         alert(args.MESSAGE);
     }
 
-    js_prompt (args, util){
+    js_prompt (args, util) {
+        // eslint-disable-next-line
         return prompt(args.MESSAGE);
     }
 
-    js_confirm (args, util){
+    js_confirm (args, util) {
+        // eslint-disable-next-line
         return confirm(args.MESSAGE);
     }
 }

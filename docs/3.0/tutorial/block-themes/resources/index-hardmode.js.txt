@@ -1,77 +1,79 @@
+// This object is passed directly to Blockly, hence the colour* fields need to
+// be named exactly as they are, including the UK spelling of "colour".
 const blockColors = {
     dialogs: {
-        primary: "#000000",
-        secondary: "#000000",
-        tertiary: "#000000",
-        quaternary: "#000000"
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     motion: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     looks: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     sounds: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     control: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     event: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     sensing: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     pen: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     operators: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     data: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     // This is not a new category, but rather for differentiation
     // between lists and scalar variables.
     data_lists: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     more: {
-        primary: '#000000',
-        secondary: '#000000',
-        tertiary: '#000000',
-        quaternary: '#000000'
+        colourPrimary: '#000000',
+        colourSecondary: '#000000',
+        colourTertiary: '#000000',
+        colourQuaternary: '#000000'
     },
     text: '#ffffff',
     workspace: '#ffffff',

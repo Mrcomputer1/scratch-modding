@@ -17,22 +17,22 @@ class Scratch3EventBlocks {
             });
         });
 
-        document.addEventListener("visibilitychange", () => {
+        document.addEventListener('visibilitychange', () => {
             this.runtime.startHats('event_tutorialmod_whenpagevisibilitychanged');
         });
     }
 
     /**
      * Retrieve the block primitives implemented by this package.
-     * @return {object.<string, Function>} Mapping of opcode to Function.
+     * @returns {object.<string, Function>} Mapping of opcode to Function.
      */
     getPrimitives () {
         return {
+            event_tutorialmod_when: this.tutorialModWhen,
             event_whentouchingobject: this.touchingObject,
             event_broadcast: this.broadcast,
             event_broadcastandwait: this.broadcastAndWait,
-            event_whengreaterthan: this.hatGreaterThanPredicate,
-            event_tutorialmod_when: this.tutorialModWhen,
+            event_whengreaterthan: this.hatGreaterThanPredicate
         };
     }
 
@@ -74,7 +74,7 @@ class Scratch3EventBlocks {
         };
     }
 
-    tutorialModWhen(args, util){
+    tutorialModWhen (args, util) {
         return args.CONDITION;
     }
 

@@ -1,0 +1,16 @@
+import * as Blockly from "blockly/core";
+
+Blockly.Blocks['dialogs_alert'] = {
+  init: function(this: Blockly.Block){
+    this.jsonInit({
+      message0: Blockly.Msg.DIALOGS_ALERT, 
+      args0: [
+        {
+          type: "input_value",
+          name: "MESSAGE",
+        },
+      ],
+      extensions: ["colours_dialogs", "shape_statement"],
+    });
+  },
+};

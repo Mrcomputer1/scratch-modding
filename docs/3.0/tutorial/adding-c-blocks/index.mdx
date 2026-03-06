@@ -13,44 +13,40 @@ This tutorial builds on the dialog blocks added in the [Your First Scratch Mod](
 Let's add this C block:
 
 <ScratchBlocks>
-{`while confirmed [Hello!] {
+while confirmed [Hello!] \{
     ...
-}::#60a05c`}
+}::#60a05c
 </ScratchBlocks>
 
 We will make this block display a confirm prompt repeatedly. Every time the user says Yes, it will run the code within, if the user says No, it will not display the confirm prompt again.
 
 ### The `scratch-blocks` definition
 
-```js title="scratch-blocks/blocks_vertical/dialogs.js"
+```ts title="scratch-blocks/src/blocks/dialogs.ts"
 Blockly.Blocks['dialogs_whileconfirmed'] = {
-  /**
-   * @this Blockly.Block
-   */
-  init: function(){
+  init: function(this: Blockly.Block){
     this.jsonInit({
-      "message0": Blockly.Msg.DIALOGS_WHILECONFIRMED, // while confirmed %1
+      message0: Blockly.Msg.DIALOGS_WHILECONFIRMED, // while confirmed %1
       // highlight-next-line
-      "message1": "%1",
-      "args0": [
+      message1: "%1",
+      args0: [
         {
-          "type": "input_value",
-          "name": "MESSAGE"
-        }
+          type: "input_value",
+          name: "MESSAGE",
+        },
       ],
       // highlight-start
-      "args1": [
+      args1: [
         {
-          "type": "input_statement",
-          "name": "SUBSTACK"
-        }
+          type: "input_statement",
+          name: "SUBSTACK",
+        },
       ],
       // highlight-end
-      "category": Blockly.Categories.dialogs,
-      "extensions": ["colours_dialogs", "shape_statement"]
+      extensions: ["colours_dialogs", "shape_statement"],
     });
-  }
-}
+  },
+};
 ```
 
 You will notice two differences from a regular block:
@@ -67,7 +63,7 @@ The block input is left out of the toolbox entry, because there aren't any block
 
     If you really want too, you can insert blocks into the C block by default. I'm not sure if there are any practical uses for this, but here is how you can:
 
-    ```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
+    ```xml title="scratch-editor/packages/scratch-gui/src/lib/make-toolbox-xml.js"
     <block type="dialogs_whileconfirmed">
         <value name="MESSAGE">
             <shadow type="text">
@@ -93,9 +89,10 @@ The block input is left out of the toolbox entry, because there aren't any block
 As usual, add the block to the `getPrimitives` function.
 
 This is the code for the block implementation:
-```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
-whileConfirmedBlock(args, util){
-    if(confirm(args.MESSAGE)){
+```js title="scratch-editor/packages/scratch-vm/src/blocks/tutorialmod_dialogs.js"
+whileConfirmedBlock (args, util) {
+    // eslint-disable-next-line
+    if (confirm(args.MESSAGE)) {
         util.startBranch(1, true);
     }
 }
@@ -117,7 +114,7 @@ startBranch (branchNum, isLoop) {
 }
 ```
 
-The number `1` tells the Scratch VM to start executing the first branch in the block (in this case, the only branch). The `true` tells Scratch VM that this block is a loop. Setting `isLoop` to `true` doesn't make Scratch VM repeatedly execute the branch. It instead tells Scratch VM to re-execute the C block again after the branch's blocks, which can either do nothing and continue to the next block in the stack or re-execute the branch. This is the reason there is no loop in the function itself.
+The number `1` tells the Scratch VM to start executing the first branch in the block (in this case, the only branch). The `true` tells Scratch VM that this block is a loop. Setting `isLoop` to `true` doesn't make Scratch VM repeatedly execute the branch. It instead tells Scratch VM to re-execute the C block again after the branch's blocks have finished running, which can either do nothing and continue to the next block in the stack or re-execute the branch. This is the reason there is no loop in the function itself.
 
 ## More branches
 Let's now make a random choice C block with three branches. Because this block is random, it will be randomly placed in the dialog blocks category.
@@ -125,51 +122,47 @@ Let's now make a random choice C block with three branches. Because this block i
 This is what the block will look like:
 
 <ScratchBlocks>
-{`random choice {
+random choice \{
     ...
-} {
+} \{
     ...
-} {
+} \{
     ...
-}::#60a05c`}
+}::#60a05c
 </ScratchBlocks>
 
 ### The `scratch-blocks` definition
-```js title="scratch-blocks/blocks_vertical/dialogs.js"
+```ts title="scratch-blocks/src/blocks/dialogs.ts"
 Blockly.Blocks['dialogs_randomchoice'] = {
-  /**
-   * @this Blockly.Block
-   */
-  init: function(){
+  init: function(this: Blockly.Block){
     this.jsonInit({
-      "message0": Blockly.Msg.DIALOGS_RANDOMCHOICE,
+      message0: Blockly.Msg.DIALOGS_RANDOMCHOICE,
       // highlight-start
-      "message1": "%1",
-      "message2": "%1",
-      "message3": "%1",
-      "args1": [
+      message1: "%1",
+      message2: "%1",
+      message3: "%1",
+      args1: [
         {
-          "type": "input_statement",
-          "name": "SUBSTACK"
-        }
+          type: "input_statement",
+          name: "SUBSTACK"
+        },
       ],
-      "args2": [
+      args2: [
         {
-          "type": "input_statement",
-          "name": "SUBSTACK2"
-        }
+          type: "input_statement",
+          name: "SUBSTACK2"
+        },
       ],
-      "args3": [
+      args3: [
         {
-          "type": "input_statement",
-          "name": "SUBSTACK3"
-        }
+          type: "input_statement",
+          name: "SUBSTACK3"
+        },
       ],
       // highlight-end
-      "category": Blockly.Categories.dialogs,
-      "extensions": ["colours_dialogs", "shape_statement"]
+      extensions: ["colours_dialogs", "shape_statement"],
     });
-  }
+  },
 };
 ```
 
@@ -179,7 +172,7 @@ Again, don't forget to add the block message `DIALOGS_RANDOMCHOICE`, which shoul
 
 ### The `scratch-gui` toolbox entry
 Unlike our other blocks, this block has no inputs, so we can just use this simple one line entry:
-```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
+```xml title="scratch-editor/packages/scratch-gui/src/lib/make-toolbox-xml.js"
 <block type="dialogs_randomchoice" />
 ```
 
@@ -188,22 +181,22 @@ Once again, we must add the block to `getPrimitives` so Scratch can find our blo
 
 This will be the implementation of this block:
 ```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
-randomChoice(args, util){
-    let randomValue = Math.floor(Math.random() * 3 + 1);
+randomChoice (args, util) {
+    const randomValue = Math.floor((Math.random() * 3) + 1);
     util.startBranch(randomValue, false);
 }
 ```
 
 :::tip
-JavaScript's `Math.random()` generates floating point numbers between 0 and 1, however never exactly one. MDN has [examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) on how to use `Math.random()` to get number in the range you want. In this case, the number is 1, 2 or 3.
+JavaScript's `Math.random()` generates floating point numbers between 0 and 1, however never exactly one. MDN has [examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) on how to use `Math.random()` to get number in the range you want. In this case, the number will be either 1, 2 or 3.
 :::
 
-`randomValue` is the branch we want to run and since we only want this block to run once (it isn't a loop), we use `false` instead of `true`.
+`randomValue` is the branch we want to run and since we only want this block to run once (it isn't a loop), we use `false` instead of `true` for `isLoop`.
 
 ## Completed Files
 | Component         | File                                      | Download                                                      |
 | ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
-| `scratch-blocks`  | `blocks_vertical/dialogs.js`              | [dialogs.js](resources/dialogs.js.txt)                        |
+| `scratch-blocks`  | `src/blocsk/dialogs.ts`                   | [dialogs.ts](resources/dialogs.ts.txt)                        |
 | `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js.txt)                      |
 | `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt)      |
 | `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js.txt)|
@@ -213,8 +206,7 @@ JavaScript's `Math.random()` generates floating point numbers between 0 and 1, h
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
     ```
-    scratch-gui:        db1933b2aea9f9dbe51e0ad2d750a2550179314a
-    scratch-vm:         d6420c4c9826d360adee118e0e9e255536be7f7c
-    scratch-blocks:     686df65cc6b5b3df37dc3204f56f443aa18c5085
+    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
+    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
     ```
 </details>
