@@ -294,6 +294,19 @@ Scratch's colours are defined in `scratch-editor/packages/scratch-gui/src/css/co
     </tbody>
 </table>
 
+## Changing the default project title
+You just have to replace the "Scratch Project" text. (Note: not sure if this works for the "scratch-editor" repo because i'm on a BSD clause version and id have to also change the titles in "scratch-l10n" to change the project title.)
+* ```jsx title="scratch-editor/packages/scratch-gui/src/lib/titled-hoc.jsx"
+  const messages = defineMessages({
+        defaultProjectTitle: {
+            id: 'gui.gui.defaultProjectTitle',
+            description: 'Default title for project',
+            // highlight-next-line
+            defaultMessage: 'Scratch Project'
+        }
+  });
+  ```
+
 ## Changing the project file extension
 There are a few places you need to change to adjust the project file extension.
 
