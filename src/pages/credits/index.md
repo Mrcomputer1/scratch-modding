@@ -3,6 +3,7 @@
 ## Scratch (3.0)
 ### Tutorial Contributors
 * Mrcomputer1 [(GitHub)](https://github.com/Mrcomputer1) [(Scratch)](https://scratch.mit.edu/users/Mrcomputer1)
+* J-41 [(GitHub)](https://github.com/J-41)
 
 ### JGames101's [Guide to Modding Scratch 3.0](https://scratch.mit.edu/discuss/topic/289503/)
 
