@@ -46,7 +46,7 @@ const config = {
                     editUrl: 'https://github.com/Mrcomputer1/scratch-modding/tree/master/',
                 },
                 pages: {
-                    editUrl: 'https://github.com/Mrcomputer1/scratch-modding/tree/master/src/pages'
+                    editUrl: 'https://github.com/Mrcomputer1/scratch-modding/tree/master/'
                 },
                 blog: false,
                 theme: {
