@@ -127,6 +127,10 @@ const config = {
                             to: "/3.0/tutorial/getting-started/prerequisites"
                         },
                         {
+                            label: "3.0 (BSD) Tutorial",
+                            to: '/3.0-bsd/tutorial/getting-started/prerequisites'
+                        },
+                        {
                             label: "2.0 Tutorial",
                             to: "/2.0/tutorial/getting-started/prerequisites"
                         }

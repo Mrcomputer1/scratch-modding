@@ -1,0 +1,152 @@
+---
+sidebar_position: 3
+---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
+
+import ScratchBlocks from '@site/src/components/ScratchBlocks';
+
+# Reporters and Booleans
+
+<head>
+    <meta name="robots" content="noindex" />
+</head>
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/first-scratch-mod/reporters-and-booleans",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/first-scratch-mod/reporters-and-booleans",
+    },
+}} active="bsd" />
+
+## Reporters
+Reporters are the rounded corner blocks. They can either return a string or number.
+
+We will add one to our Dialogs category:
+<ScratchBlocks>(prompt [Hello!]::#60a05c)</ScratchBlocks>
+
+### The block definition and message (`scratch-blocks`)
+Copy the definition for your Alert block and make the following changes:
+
+```js title="scratch-blocks/blocks_vertical/dialogs.js"
+// highlight-next-line
+Blockly.Blocks['dialogs_prompt'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      // highlight-next-line
+      "message0": Blockly.Msg.DIALOGS_PROMPT, 
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "MESSAGE"
+        }
+      ],
+      "category": Blockly.Categories.dialogs,
+      // highlight-next-line
+      "extensions": ["colours_dialogs", "output_string"]
+    });
+  }
+};
+```
+
+Other than changing the message and opcode, we also changed `shape_statement` to `output_string`. `output_string` and `output_number` are the reporter shapes.
+
+:::tip
+Don't forget to add the message to `msg/messages.js` and rebuild.
+:::
+
+### Adding the block to the toolbox
+Copy the entry for the Alert block and adjust it as needed:
+
+```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
+<block type="dialogs_prompt">
+    <value name="MESSAGE">
+        <shadow type="text">
+            <field name="TEXT">${hello}</field>
+        </shadow>
+    </value>
+</block>
+```
+
+### The block implementation
+Simply `return` from the block's function to return a value from the block. Don't forget to add the block to `getPrimitives`
+
+```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
+promptBlock(args, util) {
+    return prompt(args.MESSAGE);
+}
+```
+
+## Booleans
+Booleans are almost exactly like reporters. Instead of `output_string` or `output_number`, you use `output_boolean`. And in the block's function, you return a boolean. Let's add this block:
+
+<ScratchBlocks>(confirm [Hello!]::boolean #60a05c)</ScratchBlocks>
+
+### Block definition
+```js title="scratch-blocks/blocks_vertical/dialogs.js"
+Blockly.Blocks['dialogs_confirm'] = {
+  /**
+   * @this Blockly.Block
+   */
+  init: function(){
+    this.jsonInit({
+      "message0": Blockly.Msg.DIALOGS_CONFIRM, 
+      "args0": [
+        {
+          "type": "input_value",
+          "name": "MESSAGE"
+        }
+      ],
+      "category": Blockly.Categories.dialogs,
+      "extensions": ["colours_dialogs", "output_boolean"]
+    });
+  }
+};
+```
+
+:::tip
+Again, don't forget to update `msg/messages.js` and rebuild.
+:::
+
+### Toolbox entry
+```xml title="scratch-gui/src/lib/make-toolbox-xml.js"
+<block type="dialogs_confirm">
+    <value name="MESSAGE">
+        <shadow type="text">
+            <field name="TEXT">${hello}</field>
+        </shadow>
+    </value>
+</block>
+```
+
+### Implementation
+```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
+confirmBlock(args, util) {
+    return confirm(args.MESSAGE);
+}
+```
+
+## Completed Files
+| Component         | File                                      | Download                                                      |
+| ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `scratch-blocks`  | `blocks_vertical/dialogs.js`              | [dialogs.js](resources/dialogs.js.txt)                        |
+| `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js.txt)                      |
+| `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt)      |
+| `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js.txt)|
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    ```
+    scratch-gui:        7a72429477eb0006e91efb87efe2736b610564bd
+    scratch-vm:         a63f3899bfbded7c9b1c9a7ce840bafb08957482
+    scratch-blocks:     774b27a983e13e307c6d42b77ededc84f2b40b9a
+    ```
+</details>

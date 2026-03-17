@@ -1,12 +1,25 @@
 ---
 sidebar_position: 3
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
 import Link from '@docusaurus/Link';
 
 # Setting Up
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/getting-started/setting-up",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/getting-started/setting-up",
+    },
+}} active="agpl" />
 
 ## Create a folder for your mod
 The first step for creating a mod is creating a folder/directory to store it in. This tutorial uses the highly imaginative name of "Tutorial Mod", so I will use the folder name "TutorialMod".

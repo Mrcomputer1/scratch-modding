@@ -1,8 +1,20 @@
 ---
 sidebar_position: 2
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
 
 # Structure of Scratch
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/getting-started/structure-of-scratch",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/getting-started/structure-of-scratch",
+    },
+}} active="agpl" />
 
 Unlike the previous versions of Scratch, Scratch 3.0 is separated into multiple packages, each of which is responsible for part of Scratch. For most mods, you probably do not need to modify all the packages.
 

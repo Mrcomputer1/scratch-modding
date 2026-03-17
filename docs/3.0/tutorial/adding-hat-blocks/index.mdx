@@ -1,9 +1,22 @@
 ---
 sidebar_position: 3
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
+
 import ScratchBlocks from '@site/src/components/ScratchBlocks';
 
 # Adding Hat Blocks
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../3.0/tutorial/adding-hat-blocks",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../3.0-bsd/tutorial/adding-hat-blocks",
+    },
+}} active="agpl" />
 
 ## Hat Block Activation
 There are two ways a hat block can be activated. They can be activated by telling Scratch VM to execute it elsewhere in the code or by letting Scratch VM constantly poll the block to see if the condition is true (this is called edge activation). You can also specify if the hat block's thread should be restarted if it is triggered again while it is already running.
@@ -64,9 +77,9 @@ ${blockSeparator}
 ## Edge Activated Block
 The edge activated block method is easier to implement, so we will do it first for the `when <>` block.
 
-Like other blocks, we add our block's function to `getPrimitives`, but we also add it to `getHats` this time. If the category you want to add the block to has no hats already, it probably won't have the `getHats` method, however it is easy to add based off the one in `scratch3_events.js`:
+Like other blocks, we add our block's function to `getPrimitives`, but we also add it to `getHats` this time. If the category you want to add the block to has no hats already, it probably won't have the `getHats` method, however it is easy to add based off the one in `scratch3_event.js`:
 
-```js title="scratch-editor/packages/scratch-vm/src/blocks/scratch3_events.js"
+```js title="scratch-editor/packages/scratch-vm/src/blocks/scratch3_event.js"
 getHats () {
     return {
         event_whenflagclicked: {
@@ -101,7 +114,7 @@ getHats () {
 
 Since we are adding this to the `events` category, we will add our block to top of that `getHats`:
 
-```js title="scratch-editor/packages/scratch-vm/src/blocks/scratch3_events.js"
+```js title="scratch-editor/packages/scratch-vm/src/blocks/scratch3_event.js"
 event_tutorialmod_when: {
     restartExistingThreads: false,
     edgeActivated: true
@@ -113,7 +126,7 @@ event_tutorialmod_when: {
 ### Implementation
 I've called the block's function `tutorialModWhen`. Implementing it is simple, you return `true` when you want the block to run and `false` otherwise.
 
-```js title="scratch-editor/packages/scratch-gui/src/blocks/scratch3_events.js"
+```js title="scratch-editor/packages/scratch-gui/src/blocks/scratch3_event.js"
 tutorialModWhen(args, util){
     return args.CONDITION;
 }
@@ -124,15 +137,15 @@ Unlike edge activated blocks, Scratch VM is not constantly checking if a conditi
 
 Unlike other blocks, you do not make a block function or add the block to `getPrimitives`, but you still add the block to `getHats`, just without the `edgeActivated: true` part.
 
-```js title="scratch-editor/packages/scratch-vm/src/blocks/scratch3_events.js"
+```js title="scratch-editor/packages/scratch-vm/src/blocks/scratch3_event.js"
 event_tutorialmod_whenpagevisibilitychanged: {
     restartExistingThreads: true
 },
 ```
 
-We will add our event listener to the constructor in `scratch3_events.js`. We simply listen for the event we want (in this case `document`'s `visibilitychange` event) and use `startHats` from `Runtime` to execute the hats.
+We will add our event listener to the constructor in `scratch3_event.js`. We simply listen for the event we want (in this case `document`'s `visibilitychange` event) and use `startHats` from `Runtime` to execute the hats.
 
-```js title="scratch-vm/src/blocks/scratch3_events.js"
+```js title="scratch-vm/src/blocks/scratch3_event.js"
 document.addEventListener('visibilitychange', () => {
     this.runtime.startHats('event_tutorialmod_whenpagevisibilitychanged');
 });
@@ -148,7 +161,7 @@ Scratch VM doesn't normally interact with the browser, instead Scratch GUI handl
 | `scratch-blocks`  | `src/blocks/event.ts`                     | [event.ts](resources/event.ts.txt)                            |
 | `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js.txt)                      |
 | `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt)      |
-| `scratch-vm`      | `src/blocks/scratch3_event.js`            | [scratch3_events.js](resources/scratch3_event.js.txt)         |
+| `scratch-vm`      | `src/blocks/scratch3_event.js`            | [scratch3_event.js](resources/scratch3_event.js.txt)          |
 
 ---
 <details>

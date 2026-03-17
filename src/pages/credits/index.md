@@ -12,8 +12,11 @@
 #### `scratch-blocks`
 Some code from `scratch-blocks` is included. This code is licensed under the [Apache License 2.0](https://github.com/scratchfoundation/scratch-blocks/blob/f116732bbbc6b1e0d95119c6ff8d4e23e27da8c0/LICENSE).
 
-#### `scratch-editor`
+#### `scratch-editor` (Newer versions of Scratch 3.0)
 Some code from `scratch-editor` is included. This code is licensed under [GNU Affero General Public License v3.0](https://github.com/scratchfoundation/scratch-editor/blob/810ac12eaa1a1eb19d05fcb37f486ad1c4c56314/LICENSE).
+
+#### Older versions of Scratch 3.0
+Some code from `scratch-editor` is included. This code is licensed under [BSD 3-Clause](https://github.com/scratchfoundation/scratch-gui/blob/1c9ff0dcfcfc9ffee992158bf906e590ad2fb566/LICENSE).
 
 ## Scratch (2.0)
 ### Tutorial Contributors

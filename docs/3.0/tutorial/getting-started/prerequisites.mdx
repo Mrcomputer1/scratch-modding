@@ -1,11 +1,32 @@
 ---
 sidebar_position: 1
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
 
 # Prerequisites
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/getting-started/prerequisites",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/getting-started/prerequisites",
+    },
+}} active="agpl" />
+
+:::info
+This tutorial uses the newer `scratch-editor`-based version of Scratch, which uses the [GNU Affero General Public License v3.0](https://github.com/scratchfoundation/scratch-editor/blob/810ac12eaa1a1eb19d05fcb37f486ad1c4c56314/LICENSE) license.
+
+If you want to use an older version of Scratch 3.0, that is still under the [BSD 3-Clause](https://github.com/scratchfoundation/scratch-gui/blob/1c9ff0dcfcfc9ffee992158bf906e590ad2fb566/LICENSE) license, see [this](../../../3.0-bsd/tutorial/getting-started/prerequisites.mdx) version of the tutorial.
+
+The newer AGPL-licensed version of Scratch requires you to release the source code of your mod if you publish your mod. The older BSD-licensed version of Scratch doesn't require this.
+:::
 
 ## Software and Hardware Requirements
 

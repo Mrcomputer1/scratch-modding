@@ -1,10 +1,22 @@
 ---
 sidebar_position: 3
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
 
 import ScratchBlocks from '@site/src/components/ScratchBlocks';
 
 # Adding Extensions
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../3.0/tutorial/adding-extensions",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../3.0-bsd/tutorial/adding-extensions",
+    },
+}} active="agpl" />
 
 :::info
 If you just want to make Scratch extensions, but not a Scratch mod, you might prefer [TurboWarp's custom extensions](https://docs.turbowarp.org/development/extensions/introduction). This tutorial is focused on adding an extension to a Scratch mod. Some parts of the TurboWarp custom extensions tutorial may help in developing Scratch extensions that can be used here.

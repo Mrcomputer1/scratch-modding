@@ -1,6 +1,7 @@
 ---
 sidebar_position: 1
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
@@ -9,6 +10,17 @@ import CodeBlock from '@theme/CodeBlock';
 import ScratchBlocks from '@site/src/components/ScratchBlocks';
 
 # Adding a Block
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/first-scratch-mod/adding-a-block",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/first-scratch-mod/adding-a-block",
+    },
+}} active="agpl" />
 
 :::info
 This tutorial is for adding blocks as core blocks (blocks that are not included in an extensions) in a mod. If you want to add a custom extension to your Scratch mod, see the [Adding Extensions](../../adding-extensions/index.mdx) tutorial. If you want just want make a Scratch extension and not a Scratch mod, you probably want to look at [TurboWarp's custom extensions](https://docs.turbowarp.org/development/extensions/introduction) instead.

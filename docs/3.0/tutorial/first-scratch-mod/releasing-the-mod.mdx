@@ -1,11 +1,24 @@
 ---
 sidebar_position: 6
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
 
 # Releasing the Mod
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/first-scratch-mod/releasing-the-mod",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/first-scratch-mod/releasing-the-mod",
+    },
+}} active="agpl" />
 
 :::warning[Scratch 3.0 and AGPL]
 Scratch 3.0 is under the [GNU Affero General Public License v3](https://github.com/scratchfoundation/scratch-editor/blob/810ac12eaa1a1eb19d05fcb37f486ad1c4c56314/LICENSE). This means that, if you release your mod, you must also release the source code of your mod with it, even if you have no downloadable version of your mod.

@@ -1,0 +1,493 @@
+---
+sidebar_position: 5
+---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
+
+import Link from '@docusaurus/Link';
+
+# Rebranding the Editor
+
+<head>
+    <meta name="robots" content="noindex" />
+</head>
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/first-scratch-mod/rebranding-editor",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/first-scratch-mod/rebranding-editor",
+    },
+}} active="bsd" />
+
+You probably want to give your mod a unique look, here are some things you can do to do that.
+
+:::warning
+To an extent, you must rebrand your mod as you can't use Scratch's trademarks. Scratch's trademarks are things like the name Scratch, their logos and their mascots (like Scratch Cat and Gobo). However, you should be fine giving credit to Scratch.
+
+<details>
+    <summary>[Scratch Terms of Service](https://mitscratch.freshdesk.com/en/support/solutions/articles/4000219182-scratch-terms-of-service) quote</summary>
+    > 7.3 **Scratch Team Marks**. You may not use any tradenames, trademarks, logos, or other marks owned or controlled by the Scratch Team, including, but not limited to, the Scratch Cat, the Scratch logo, ScratchJr, Giga, Nano, Pico, Terra, Milli, and Zepto (collectively, the “Scratch Team Marks”) except solely for your personal, educational, and non-commercial purposes in direct connection with your use of the Service to create and share Scratch projects as otherwise permitted herein. Any commercial use of the Scratch Team Marks will be subject to the terms of a separate license agreement negotiated between you and the Scratch Team, if any, provided that the Scratch Team is not obligated to grant any rights or licenses for any commercial use and may deny a license request for any or no reason in the Scratch Team’s sole discretion. You acknowledge that we are the sole owner of the Scratch Team Marks and any and all goodwill associated therewith. You agree that you will not do anything inconsistent with such ownership and that all use by you of the Scratch Team Marks will inure to the benefit of the Scratch Team. You agree further that nothing in these Terms will be construed as granting to you any right, title or interest in the Scratch Team Marks, other than the right to use the Scratch Team Marks as expressly provided in these Terms. You agree that you will not contest, oppose, or challenge our ownership of or title to the Scratch Team Marks or contest, oppose or challenge the validity of the Scratch Team Marks. You further agree that you have no power or right to and will not during the term of these Terms or thereafter contest, oppose or challenge the title or any rights of the Scratch Team in or to the Scratch Team Marks, alone or with other elements; claim any right, title, or interest in or to the Scratch Team Marks, alone or with other elements adverse to the Scratch Team; or register or apply for registration of the Scratch Team Marks anywhere, alone or with other elements. You agree that your use of any Scratch Team Marks permitted under these Terms or pursuant to any separate license will comply with any guidelines provided by Scratch to you. You agree that you will cease all uses of Scratch Team Marks immediately upon the Scratch Team’s request that you cease such uses and the Scratch Team will have no liability to you for your being required to cease such use.  You hereby assign and will assign in the future to us all rights you may acquire by operation of law or otherwise in the Scratch Team Marks, including all applications or registrations therefor, along with the goodwill associated therewith.
+</details>
+:::
+
+## Changing the Scratch logo
+You can change the logo by replacing the SVG located at `scratch-gui/src/components/menu-bar/scratch-logo.svg`.
+
+## Changing the default project (including Scratch Cat)
+The default project is located at `scratch-gui/src/lib/default-project`.
+
+| File                                      | Format                | Contents                                  |
+| ----------------------------------------- | --------------------- | ----------------------------------------- |
+| `0fb9be3e8397c983338cb71dc84d0b25.svg`    | SVG Image             | `costume2` (Scratch Cat)                  |
+| `83a9787d4cb6f3b7632b4ddfebf74367.wav`    | Wave Sound            | `pop`                                     |
+| `83c36d806dc92327b9e7049a565c6bff.wav`    | Wave Sound            | `Meow`                                    |
+| `bcf454acf82e4504149f7ffe07081dbc.svg`    | SVG Image             | `costume1` (Scratch Cat)                  |
+| `cd21514d0531fdffb22204e0ec5ed84a.svg`    | SVG Image             | `backdrop1`                               |
+| `index.js`                                | JavaScript            | List of contents of the project.          |
+| `projectData.js`                          | JavaScript            | Contains the `project.json`.              |
+
+## Changing the colours
+import UIPrimary from './screenshots/ui-primary.png';
+import UISecondary from './screenshots/ui-secondary.png';
+import UITertiary from './screenshots/ui-tertiary.png';
+import UIMotionOverlay from './screenshots/ui-motion-overlay.png';
+import UIWhite from './screenshots/ui-white.png';
+import UIWhiteDim from './screenshots/ui-white-dim.png';
+import UIWhiteTransparent from './screenshots/ui-white-transparent.png';
+import UITransparent from './screenshots/ui-transparent.png';
+import UIBlackTransparent from './screenshots/ui-black-transparent.png';
+
+import TextPrimary from './screenshots/text-primary.png';
+import TextPrimaryTransparent from './screenshots/text-primary-transparent.png';
+
+import MotionPrimary from './screenshots/motion-primary.png';
+
+import LooksPrimary from './screenshots/looks-primary.png';
+import LooksTransparent from './screenshots/looks-transparent.png';
+import LooksLightTransparent from './screenshots/looks-light-transparent.png';
+import LooksSecondaryDark from './screenshots/looks-secondary-dark.png';
+
+import RedPrimary from './screenshots/red-primary.png';
+import RedTertiary from './screenshots/red-tertiary.png';
+
+import SoundPrimary from './screenshots/sound-primary.png';
+import SoundTertiary from './screenshots/sound-tertiary.png';
+
+import ControlPrimary from './screenshots/control-primary.png';
+
+import DataPrimary from './screenshots/data-primary.png';
+
+import PenPrimary from './screenshots/pen-primary.png';
+import PenTransparent from './screenshots/pen-transparent.png';
+import PenTertiary from './screenshots/pen-tertiary.png';
+
+import ErrorPrimary from './screenshots/error-primary.png';
+import ErrorTransparent from './screenshots/error-transparent.png';
+
+import ExtensionsPrimary from './screenshots/extensions-primary.png';
+
+import DropHighlight from './screenshots/drop-highlight.png';
+
+Scratch's colours are defined in `scratch-gui/src/css/colors.css`. Below is a table of all the colours and a screenshot of the editor showing an example of where that colour is used. These screenshots do not include all uses of the colour.
+
+<table>
+    <thead>
+        <tr>
+            <th>Variable Name</th>
+            <th>Default Value</th>
+            <th></th>
+            <th>Usage Screenshot</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>$ui-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(215, 100%, 95%, 1)"}}></div></td>
+            <td>hsla(215, 100%, 95%, 1)</td>
+            <td><Link to={UIPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-secondary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(215, 75%, 95%, 1)"}}></div></td>
+            <td>hsla(215, 75%, 95%, 1)</td>
+            <td><Link to={UISecondary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-tertiary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(215, 50%, 90%, 1)"}}></div></td>
+            <td>hsla(215, 50%, 90%, 1)</td>
+            <td><Link to={UITertiary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-motion-overlay</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(215, 100%, 65%, 0.9)"}}></div></td>
+            <td>hsla(215, 100%, 65%, 0.9)</td>
+            <td><Link to={UIMotionOverlay} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-white</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(0, 100%, 100%, 1)"}}></div></td>
+            <td>hsla(0, 100%, 100%, 1)</td>
+            <td><Link to={UIWhite} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-white-dim</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(0, 100%, 100%, 0.75)"}}></div></td>
+            <td>hsla(0, 100%, 100%, 0.75)</td>
+            <td><Link to={UIWhiteDim} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-white-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(0, 100%, 100%, 0.25)"}}></div></td>
+            <td>hsla(0, 100%, 100%, 0.25)</td>
+            <td><Link to={UIWhiteTransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(0, 100%, 100%, 0)"}}></div></td>
+            <td>hsla(0, 100%, 100%, 0)</td>
+            <td><Link to={UITransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$ui-black-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(0, 0%, 0%, 0.15)"}}></div></td>
+            <td>hsla(0, 0%, 0%, 0.15)</td>
+            <td><Link to={UIBlackTransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$text-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(225, 15%, 40%, 1)"}}></div></td>
+            <td>hsla(225, 15%, 40%, 1)</td>
+            <td><Link to={TextPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$text-primary-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(225, 15%, 40%, 0.75)"}}></div></td>
+            <td>hsla(225, 15%, 40%, 0.75)</td>
+            <td><Link to={TextPrimaryTransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$motion-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(215, 100%, 65%, 1)"}}></div></td>
+            <td>hsla(215, 100%, 65%, 1)</td>
+            <td><Link to={MotionPrimary} target="_blank">Screenshot</Link> (also loading screen)</td>
+        </tr>
+        <tr>
+            <td><code>$motion-tertiary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(215, 60%, 50%, 1)"}}></div></td>
+            <td>hsla(215, 60%, 50%, 1)</td>
+            <td><em>Unused</em></td>
+        </tr>
+        <tr>
+            <td><code>$looks-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(260, 60%, 60%, 1)"}}></div></td>
+            <td>hsla(260, 60%, 60%, 1)</td>
+            <td><Link to={LooksPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$looks-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(260, 60%, 60%, 0.35)"}}></div></td>
+            <td>hsla(260, 60%, 60%, 0.35)</td>
+            <td><Link to={LooksTransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$looks-light-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(260, 60%, 60%, 0.15)"}}></div></td>
+            <td>hsla(260, 60%, 60%, 0.15)</td>
+            <td><Link to={LooksLightTransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$looks-secondary-dark</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(260, 42%, 51%, 1)"}}></div></td>
+            <td>hsla(260, 42%, 51%, 1)</td>
+            <td><Link to={LooksSecondaryDark} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$red-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(20, 100%, 55%, 1)"}}></div></td>
+            <td>hsla(20, 100%, 55%, 1)</td>
+            <td><Link to={RedPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$red-tertiary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(20, 100%, 45%, 1)"}}></div></td>
+            <td>hsla(20, 100%, 45%, 1)</td>
+            <td><Link to={RedTertiary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$sound-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(300, 53%, 60%, 1)"}}></div></td>
+            <td>hsla(300, 53%, 60%, 1)</td>
+            <td><Link to={SoundPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$sound-tertiary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(300, 48%, 50%, 1)"}}></div></td>
+            <td>hsla(300, 48%, 50%, 1)</td>
+            <td><Link to={SoundTertiary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$control-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(38, 100%, 55%, 1)"}}></div></td>
+            <td>hsla(38, 100%, 55%, 1)</td>
+            <td><Link to={ControlPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$data-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(30, 100%, 55%, 1)"}}></div></td>
+            <td>hsla(30, 100%, 55%, 1)</td>
+            <td><Link to={DataPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$pen-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(163, 85%, 40%, 1)"}}></div></td>
+            <td>hsla(163, 85%, 40%, 1)</td>
+            <td><Link to={PenPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$pen-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(163, 85%, 40%, 0.25)"}}></div></td>
+            <td>hsla(163, 85%, 40%, 0.25)</td>
+            <td><Link to={PenTransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$pen-tertiary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(163, 86%, 30%, 1)"}}></div></td>
+            <td>hsla(163, 86%, 30%, 1)</td>
+            <td><Link to={PenTertiary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$error-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(30, 100%, 55%, 1)"}}></div></td>
+            <td>hsla(30, 100%, 55%, 1)</td>
+            <td><Link to={ErrorPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$error-light</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(30, 100%, 70%, 1)"}}></div></td>
+            <td>hsla(30, 100%, 70%, 1)</td>
+            <td><em>No screenshot.</em></td>
+        </tr>
+        <tr>
+            <td><code>$error-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(30, 100%, 55%, 0.25)"}}></div></td>
+            <td>hsla(30, 100%, 55%, 0.25)</td>
+            <td><Link to={ErrorTransparent} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$extensions-primary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(163, 85%, 40%, 1)"}}></div></td>
+            <td>hsla(163, 85%, 40%, 1)</td>
+            <td><Link to={ExtensionsPrimary} target="_blank">Screenshot</Link></td>
+        </tr>
+        <tr>
+            <td><code>$extensions-tertiary</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(163, 85%, 30%, 1)"}}></div></td>
+            <td>hsla(163, 85%, 30%, 1)</td>
+            <td><em>No screenshot.</em></td>
+        </tr>
+        <tr>
+            <td><code>$extensions-transparent</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(163, 85%, 40%, 0.35)"}}></div></td>
+            <td>hsla(163, 85%, 40%, 0.35)</td>
+            <td><em>No screenshot.</em></td>
+        </tr>
+        <tr>
+            <td><code>$extensions-light</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(163, 57%, 85%, 1)"}}></div></td>
+            <td>hsla(163, 57%, 85%, 1)</td>
+            <td><em>No screenshot.</em></td>
+        </tr>
+        <tr>
+            <td><code>$drop-highlight</code></td>
+            <td><div class="colour-example" style={{backgroundColor: "hsla(215, 100%, 77%, 1)"}}></div></td>
+            <td>hsla(215, 100%, 77%, 1)</td>
+            <td><Link to={DropHighlight} target="_blank">Screenshot</Link></td>
+        </tr>
+    </tbody>
+</table>
+
+## Changing the default project title
+You just have to replace the "Scratch Project" text.
+
+:::info
+As this is a default message for a translation message, it will be overridden by the translations stored in `scratch-l10n`. You have two options:
+* Clone the `scratch-l10n` repository, link it to `scratch-gui` similar to how `scratch-blocks` was linked to it in the [Setting Up](../../getting-started/setting-up.mdx#linking-scratch-gui-to-scratch-blocks-and-scratch-vm) tutorial, modify the translation data in the `editor/interface` folder and build it with the `npm run build` command in `scratch-l10n`. (More complicated option, but would allow you to translate your mod into multiple languages.)
+* Search for where `defaultProjectTitle` is used in the `titled-hoc.jsx` file and replace the `intl.formatMessage` call with your custom project title. (Simple, but doesn't allow for translations.)
+:::
+
+```jsx title="scratch-gui/src/lib/titled-hoc.jsx"
+const messages = defineMessages({
+    defaultProjectTitle: {
+        id: 'gui.gui.defaultProjectTitle',
+        description: 'Default title for project',
+        // highlight-next-line
+        defaultMessage: 'Scratch Project'
+    }
+});
+```
+
+## Changing the project file extension
+There are a few places you need to change to adjust the project file extension.
+
+* ```jsx title="scratch-gui/src/containers/sb3-downloader.jsx"
+  const getProjectFilename = (curTitle, defaultTitle) => {
+      let filenameTitle = curTitle;
+      if (!filenameTitle || filenameTitle.length === 0) {
+          filenameTitle = defaultTitle;
+      }
+      // highlight-next-line
+      return `${filenameTitle.substring(0, 100)}.sb3`;
+  };
+  ```
+  Adjust the `.sb3` with your own extension.
+* ```jsx title="scratch-gui/src/lib/sb-file-uploader-hoc.jsx"
+  createFileObjects () {
+      // redo step 7, in case it got skipped last time and its objects are
+      // still in memory
+      this.removeFileObjects();
+      // create fileReader
+      this.fileReader = new FileReader();
+      this.fileReader.onload = this.onload;
+      // create <input> element and add it to DOM
+      this.inputElement = document.createElement('input');
+      // highlight-next-line
+      this.inputElement.accept = '.sb,.sb2,.sb3';
+      this.inputElement.style = 'display: none;';
+      this.inputElement.type = 'file';
+      this.inputElement.onchange = this.handleChange; // connects to step 3
+      document.body.appendChild(this.inputElement);
+      // simulate a click to open file chooser dialog
+      this.inputElement.click();
+  }
+  ```
+  Add your extension to the list of accepted extensions.
+* ```jsx title="scratch-gui/src/lib/sb-file-uploader-hoc.jsx"
+  getProjectTitleFromFilename (fileInputFilename) {
+      if (!fileInputFilename) return '';
+      // only parse title with valid scratch project extensions
+      // (.sb, .sb2, and .sb3)
+      // highlight-next-line
+      const matches = fileInputFilename.match(/^(.*)\.sb[23]?$/);
+      if (!matches) return '';
+      return matches[1].substring(0, 100); // truncate project title to max 100 chars
+  }
+  ```
+  You will need to adjust the regular expression used. Here is a template you can use: `/^(.*)\.(sb[23]?|YOUR_EXTENSION_HERE)$/`.
+* ```jsx title="scratch-vm/src/virtual-machine.js"
+  /**
+   * @returns {string} Project in a Scratch 3.0 JSON representation.
+  */
+  saveProjectSb3 () {
+      const soundDescs = serializeSounds(this.runtime);
+      const costumeDescs = serializeCostumes(this.runtime);
+      const projectJson = this.toJSON();
+
+      // TODO want to eventually move zip creation out of here, and perhaps
+      // into scratch-storage
+      const zip = new JSZip();
+
+      // Put everything in a zip file
+      zip.file('project.json', projectJson);
+      this._addFileDescsToZip(soundDescs.concat(costumeDescs), zip);
+
+      return zip.generateAsync({
+          type: 'blob',
+          // highlight-next-line
+          mimeType: 'application/x.scratch.sb3',
+          compression: 'DEFLATE',
+          compressionOptions: {
+              level: 6 // Tradeoff between best speed (1) and best compression (9)
+          }
+      });
+  }
+  ```
+  This is not directly related to the project extension, but you should adjust it still. You should keep the start of the MIME type the same (`application/x.`).
+
+## Changing the sprite file extension
+There are a few places you need to change to adjust the sprite file extension.
+
+* ```jsx title="scratch-gui/src/components/sprite-selector/sprite-selector.jsx"
+  <ActionMenu
+      className={styles.addButton}
+      img={spriteIcon}
+      moreButtons={[
+          {
+              title: intl.formatMessage(messages.addSpriteFromFile),
+              img: fileUploadIcon,
+              onClick: onFileUploadClick,
+              // highlight-next-line
+              fileAccept: '.svg, .png, .bmp, .jpg, .jpeg, .sprite2, .sprite3, .gif',
+              fileChange: onSpriteUpload,
+              fileInput: spriteFileInput,
+              fileMultiple: true
+          }, {
+              title: intl.formatMessage(messages.addSpriteFromSurprise),
+              img: surpriseIcon,
+              onClick: onSurpriseSpriteClick // TODO need real function for this
+          }, {
+              title: intl.formatMessage(messages.addSpriteFromPaint),
+              img: paintIcon,
+              onClick: onPaintSpriteClick // TODO need real function for this
+          }, {
+              title: intl.formatMessage(messages.addSpriteFromLibrary),
+              img: searchIcon,
+              onClick: onNewSpriteClick
+          }
+      ]}
+      title={intl.formatMessage(messages.addSpriteFromLibrary)}
+      tooltipPlace={isRtl(intl.locale) ? 'right' : 'left'}
+      onClick={onNewSpriteClick}
+  />
+  ```
+  Add your sprite file extension to `fileAccept`.
+* ```jsx title="scratch-gui/src/containers/target-pane.jsx"
+  handleExportSprite (id) {
+      const spriteName = this.props.vm.runtime.getTargetById(id).getName();
+      const saveLink = document.createElement('a');
+      document.body.appendChild(saveLink);
+
+      this.props.vm.exportSprite(id).then(content => {
+          // highlight-next-line
+          downloadBlob(`${spriteName}.sprite3`, content);
+      });
+  }
+  ```
+  Change `sprite3` to your sprite file extension.
+* ```jsx title="scratch-vm/src/virtual-machine.js"
+  exportSprite (targetId, optZipType) {
+      const soundDescs = serializeSounds(this.runtime, targetId);
+      const costumeDescs = serializeCostumes(this.runtime, targetId);
+      const spriteJson = this.toJSON(targetId);
+
+      const zip = new JSZip();
+      zip.file('sprite.json', spriteJson);
+      this._addFileDescsToZip(soundDescs.concat(costumeDescs), zip);
+
+      return zip.generateAsync({
+          type: typeof optZipType === 'string' ? optZipType : 'blob',
+          // highlight-next-line
+          mimeType: 'application/x.scratch.sprite3',
+          compression: 'DEFLATE',
+          compressionOptions: {
+              level: 6
+          }
+      });
+  }
+  ```
+  This is not directly related to the sprite extension, but you should adjust it still. You should keep the start of the MIME type the same (`application/x.`).
+
+
+---
+<details>
+    <summary>Scratch commit hashes at the time of this tutorial</summary>
+
+    ```
+    scratch-gui:        7a72429477eb0006e91efb87efe2736b610564bd
+    scratch-vm:         a63f3899bfbded7c9b1c9a7ce840bafb08957482
+    scratch-blocks:     774b27a983e13e307c6d42b77ededc84f2b40b9a
+    ```
+</details>

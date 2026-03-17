@@ -1,10 +1,22 @@
 ---
 sidebar_position: 3
 ---
+import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
 
 import ScratchBlocks from '@site/src/components/ScratchBlocks';
 
 # Reporters and Booleans
+
+<DocVersionSwitcher versions={{
+    agpl: {
+        name: "AGPL",
+        path: "../../../3.0/tutorial/first-scratch-mod/reporters-and-booleans",
+    },
+    bsd: {
+        name: "BSD",
+        path: "../../../3.0-bsd/tutorial/first-scratch-mod/reporters-and-booleans",
+    },
+}} active="agpl" />
 
 ## Reporters
 Reporters are the rounded corner blocks. They can either return a string or number.
@@ -74,7 +86,7 @@ Booleans are almost exactly like reporters. Instead of `output_string` or `outpu
 Blockly.Blocks['dialogs_confirm'] = {
   init: function(this: Blockly.Block){
     this.jsonInit({
-      message0: Blockly.Msg.TUTORIALMOD_DIALOGS_CONFIRM, 
+      message0: Blockly.Msg.DIALOGS_CONFIRM, 
       args0: [
         {
           type: "input_value",
