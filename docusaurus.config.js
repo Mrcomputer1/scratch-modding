@@ -31,7 +31,6 @@ const config = {
     },
 
     future: {
-        experimental_faster: true,
         v4: true,
     },
     
@@ -60,6 +59,9 @@ const config = {
         [
             '@docusaurus/plugin-client-redirects',
             {
+                /**
+                 * @param {string} existingPath
+                 */
                 createRedirects(existingPath) {
                     if (existingPath.startsWith('/3.0/tutorial')) {
                         return existingPath.replace('/3.0/tutorial', '/tutorial');
@@ -157,21 +159,16 @@ const config = {
             darkTheme: darkCodeTheme,
             additionalLanguages: ["bash", "batch", "json", "markup", "yaml", "groovy", "actionscript"]
         },
-        announcementBar: {
-            id: 'scratch-editor-and-sprok',
-            backgroundColor: '#31542F', //'#855cd6',
-            textColor: '#fff',
-            content: 'The 3.0 tutorial has been updated to use the scratch-editor monorepo and the new version of scratch-blocks.',
-            isCloseable: true,
-        },
+        // announcementBar: {
+        //     id: 'scratch-editor-and-sprok',
+        //     backgroundColor: '#31542F', //'#855cd6',
+        //     textColor: '#fff',
+        //     content: 'The 3.0 tutorial has been updated to use the scratch-editor monorepo and the new version of scratch-blocks.',
+        //     isCloseable: true,
+        // },
     }),
 
     markdown: {
-        mdx1Compat: {
-            comments: false,
-            admonitions: false,
-            headingIds: true
-        },
         hooks: {
             onBrokenMarkdownLinks: 'warn',
             onBrokenMarkdownImages: 'warn',
