@@ -18,7 +18,6 @@ class TutorialModDialogsBlocks {
     }
 
     alertBlock (args, util) {
-        // eslint-disable-next-line
         alert(args.MESSAGE);
     }
 }

@@ -28,23 +28,16 @@ class Scratch3EventBlocks {
      */
     getPrimitives () {
         return {
-            event_tutorialmod_when: this.tutorialModWhen,
             event_whentouchingobject: this.touchingObject,
             event_broadcast: this.broadcast,
             event_broadcastandwait: this.broadcastAndWait,
-            event_whengreaterthan: this.hatGreaterThanPredicate
+            event_whengreaterthan: this.hatGreaterThanPredicate,
+            event_tutorialmod_when: this.tutorialModWhen
         };
     }
 
     getHats () {
         return {
-            event_tutorialmod_when: {
-                restartExistingThreads: false,
-                edgeActivated: true
-            },
-            event_tutorialmod_whenpagevisibilitychanged: {
-                restartExistingThreads: true
-            },
             event_whenflagclicked: {
                 restartExistingThreads: true
             },
@@ -70,7 +63,14 @@ class Scratch3EventBlocks {
             },
             event_whenbroadcastreceived: {
                 restartExistingThreads: true
-            }
+            },
+            event_tutorialmod_when: {
+                restartExistingThreads: false,
+                edgeActivated: true
+            },
+            event_tutorialmod_whenpagevisibilitychanged: {
+                restartExistingThreads: true
+            },
         };
     }
 

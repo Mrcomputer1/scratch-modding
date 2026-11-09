@@ -17,32 +17,32 @@ import DocVersionSwitcher from '@site/src/components/DocVersionSwitcher';
 }} active="agpl" />
 
 ## Adding the category to `scratch-blocks`
-Let's move the alert block to a Dialogs category.
+Let's move the alert block to a new Dialogs category.
 
 ### `src/blocks`
 First, create a file called `dialogs.ts` in `src/blocks`.
 
 At the top of the file put:
 ```ts title="scratch-blocks/src/blocks/dialogs.ts"
-import * as Blockly from "blockly/core";
+import * as Blockly from 'blockly/core';
 ```
 
 Move your block from `looks.ts` to `dialogs.ts` (leaving `looks.ts` like it was originally).
 ```ts title="scratch-blocks/src/blocks/dialogs.ts"
 // highlight-next-line
-Blockly.Blocks['dialogs_alert'] = {
-  init: function(this: Blockly.Block){
+Blockly.Blocks.dialogs_alert = {
+  init: function (this: Blockly.Block) {
     this.jsonInit({
       // highlight-next-line
       message0: Blockly.Msg.DIALOGS_ALERT, 
       args0: [
         {
-          type: "input_value",
-          name: "MESSAGE",
+          type: 'input_value',
+          name: 'MESSAGE',
         },
       ],
       // highlight-next-line
-      extensions: ["colours_dialogs", "shape_statement"],
+      extensions: ['colours_dialogs', 'shape_statement'],
     });
   },
 };
@@ -51,21 +51,20 @@ Blockly.Blocks['dialogs_alert'] = {
 ### The block messages
 First, move your block's message to a new section (to keep the file organised) and update the message to match the one in the block definition.
 
-Second, under the "Category labels" section, add one for your new category.
+Second, where the rest of the `CATEGORY_` messages are, add one for your new category.
 
-```js title="scratch-blocks/msg/messages.js"
-// Category labels
+```js title="scratch-blocks/msg/json/en.json"
 // highlight-next-line
-Blockly.Msg.CATEGORY_DIALOGS = 'Dialogs';
-Blockly.Msg.CATEGORY_MOTION = 'Motion';
-Blockly.Msg.CATEGORY_LOOKS = 'Looks';
-Blockly.Msg.CATEGORY_SOUND = 'Sound';
-Blockly.Msg.CATEGORY_EVENTS = 'Events';
-Blockly.Msg.CATEGORY_CONTROL = 'Control';
-Blockly.Msg.CATEGORY_SENSING = 'Sensing';
-Blockly.Msg.CATEGORY_OPERATORS = 'Operators';
-Blockly.Msg.CATEGORY_VARIABLES = 'Variables';
-Blockly.Msg.CATEGORY_MYBLOCKS = 'My Blocks';
+"CATEGORY_DIALOGS": "Dialogs",
+"CATEGORY_MOTION": "Motion",
+"CATEGORY_LOOKS": "Looks",
+"CATEGORY_SOUND": "Sound",
+"CATEGORY_EVENTS": "Events",
+"CATEGORY_CONTROL": "Control",
+"CATEGORY_SENSING": "Sensing",
+"CATEGORY_OPERATORS": "Operators",
+"CATEGORY_VARIABLES": "Variables",
+"CATEGORY_MYBLOCKS": "My Blocks",
 ```
 
 ### The block category
@@ -73,44 +72,43 @@ In `src/blocks/vertical_extensions.ts`, find `categoryNames` inside the `registe
 
 ```ts title="scratch-blocks/src/blocks/vertical_extensions.ts"
 const categoryNames = [
-  // highlight-next-line
-  "dialogs",
-  "control",
-  "data",
-  "data_lists",
-  "sounds",
-  "motion",
-  "looks",
-  "event",
-  "sensing",
-  "pen",
-  "operators",
-  "more",
-];
+'dialogs',
+'control',
+'data',
+'data_lists',
+'sounds',
+'motion',
+'looks',
+'event',
+'sensing',
+'pen',
+'operators',
+'more',
+]
 ```
 
 Additionally, add an import for your category in `index.ts` with the other imports.
 
 ```ts title="scratch-blocks/src/index.ts"
-import * as Blockly from "blockly/core";
-import "./blocks/colour";
-import "./blocks/math";
-import "./blocks/matrix";
-import "./blocks/note";
-import "./blocks/text";
-import "./blocks/vertical_extensions";
+import * as Blockly from 'blockly/core'
+import './blocks/colour'
 // highlight-next-line
-import "./blocks/dialogs";
-import "./blocks/control";
-import "./blocks/data";
-import "./blocks/event";
-import "./blocks/looks";
-import "./blocks/motion";
-import "./blocks/operators";
-import "./blocks/procedures";
-import "./blocks/sensing";
-import "./blocks/sound";
-import * as scratchBlocksUtils from "./scratch_blocks_utils";
+import './blocks/dialogs';
+import './blocks/control'
+import './blocks/data'
+import './blocks/event'
+import './blocks/looks'
+import './blocks/math'
+import './blocks/matrix'
+import './blocks/motion'
+import './blocks/note'
+import './blocks/operators'
+import './blocks/procedures'
+import './blocks/sensing'
+import './blocks/sound'
+import './blocks/text'
+import './blocks/vertical_extensions'
+import { CheckableContinuousFlyout } from './checkable_continuous_flyout'
 // ...
 ```
 
@@ -295,7 +293,7 @@ const CORE_EXTENSIONS = [
 | `scratch-blocks`  | `src/blocks/dialogs.ts`                   | [dialogs.ts](resources/dialogs.ts.txt)                        |
 | `scratch-blocks`  | `src/blocks/vertical_extensions.ts`       | [vertical_extensions.ts](resources/vertical_extensions.ts.txt)|
 | `scratch-blocks`  | `src/index.ts`                            | [index.ts](resources/index.ts.txt)                            |
-| `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js.txt)                      |
+| `scratch-blocks`  | `msg/json/en.json`                        | [en.json](resources/en.json.txt)                              |
 | `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt)      |
 | `scratch-gui`     | `src/lib/themes/default/index.js`         | [index.js](resources/index.js.txt)                            |
 | `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js.txt)|
@@ -307,7 +305,7 @@ const CORE_EXTENSIONS = [
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
     ```
-    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
-    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
+    scratch-editor:     dc01e76e388c5c8c8a5d3d7c042242ea3e6cf79e
+    scratch-blocks:     ef4a934640888109c14da79ac39f4c2dfe5db360
     ```
 </details>

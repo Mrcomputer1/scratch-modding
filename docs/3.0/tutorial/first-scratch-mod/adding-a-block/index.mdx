@@ -46,7 +46,7 @@ Let's take a look at the first block in the file, which is `looks_sayforsecs` or
 // "Blockly.Blocks" is the object that contains the blocks in Scratch.
 // "looks_sayforsecs" is the ID of the block.
 // highlight-end
-Blockly.Blocks['looks_sayforsecs'] = {
+Blockly.Blocks.looks_sayforsecs = {
   // highlight-next-line
   // A JSDoc comment, it provides documentation about the code and may help your code editor provide relevant autocomplete suggestions.
   /**
@@ -54,7 +54,7 @@ Blockly.Blocks['looks_sayforsecs'] = {
    */
   // highlight-next-line
   // The "init" function is called by Scratch Blocks/Blockly to initialise the block.
-  init: function(this: Blockly.Block) {
+  init: function (this: Blockly.Block) {
     // highlight-next-line
     // this.jsonInit is a function that initialises the block with information provided in the form of a JavaScript object.
     this.jsonInit({
@@ -70,22 +70,22 @@ Blockly.Blocks['looks_sayforsecs'] = {
       // These are the replacements for the "%1" and "%2" from the block message. In this case, both are "input_value"s
       args0: [
         {
-          type: "input_value",
-          name: "MESSAGE"
+          type: 'input_value',
+          name: 'MESSAGE',
         },
         {
-          type: "input_value",
-          name: "SECS"
-        }
+          type: 'input_value',
+          name: 'SECS',
+        },
       ],
       // highlight-start
       // A list of "extensions" for the block, this is unrelated to the Scratch extensions system. These extensions modify the appearance of the blocks.
       // * "colours_looks": Applies the looks colour to the block.
       // * "shape_statement": Applies the standard statement/stack block style to the block.
       // highlight-end
-      extensions: ["colours_looks", "shape_statement"]
+      extensions: ['colours_looks', 'shape_statement'],
     });
-  }
+  },
 };
 ```
 
@@ -99,7 +99,7 @@ You must not add the blocks above the `import` line.
 ```ts title="scratch-blocks/src/blocks/looks.ts"
 // highlight-next-line
 // Your block's opcode must start with the category ID and an underscore: `looks_restofyouropcode`.
-Blockly.Blocks['looks_tutorialmod_alert'] = {
+Blockly.Blocks.looks_tutorialmod_alert = {
   init: function(this: Blockly.Block){
     this.jsonInit({
       // highlight-next-line
@@ -107,63 +107,39 @@ Blockly.Blocks['looks_tutorialmod_alert'] = {
       message0: Blockly.Msg.LOOKS_TUTORIALMOD_ALERT, 
       args0: [
         {
-          type: "input_value",
-          name: "MESSAGE",
+          type: 'input_value',
+          name: 'MESSAGE',
         },
       ],
-      extensions: ["colours_looks", "shape_statement"],
+      extensions: ['colours_looks', 'shape_statement'],
     });
   },
 };
 ```
 
 ### Adding the block message
-We need to add the `LOOKS_TUTORIALMOD_ALERT` message we referenced in the block definition. For that, we need to open the `msg/messages.js` file in `scratch-blocks`.
+We need to add the `LOOKS_TUTORIALMOD_ALERT` message we referenced in the block definition. For that, we need to open the `msg/json/en.json` file in `scratch-blocks`.
 
 Find the "Looks blocks" section of the file (you don't need to place it in the correct section, but it helps keep the file organised) and add this.
 
-```js title="scratch-blocks/msg/messages.js"
+```js title="scratch-blocks/msg/json/en.json"
 // Looks blocks
 // highlight-next-line
-Blockly.Msg.LOOKS_TUTORIALMOD_ALERT = 'alert %1';
-Blockly.Msg.LOOKS_SAYFORSECS = 'say %1 for %2 seconds';
+  "LOOKS_TUTORIALMOD_ALERT": "alert %1",
+  "LOOKS_SAYFORSECS": "say %1 for %2 seconds",
 ```
 
 ### Rebuilding Scratch Blocks
 You need to rebuild Scratch Blocks every time you make a change to it.
 
-#### Scripts to rebuild the messages
-The scripts Scratch Blocks uses to build the translation files are outdated. Updating these scripts is considered out of scope for this tutorial, but updated versions are included here:
-| File                              | Download                                                       |
-| --------------------------------- | -------------------------------------------------------------- |
-| `i18n/js_to_json.js`              | [js_to_json.js](resources/js_to_json.js.txt)                   |
-| `i18n/json_to_js.js`              | [json_to_js.js](resources/json_to_js.js.txt)                   |
-| `i18n/create_scratch_msgs.js`     | [create_scratch_msgs.js](resources/create_scratch_msgs.js.txt) |
-
-To make things easier to run, in the `scratch-blocks` `package.json`, add this script line:
-```json title="scratch-blocks/package.json"
-  "scripts": {
-    "build": "webpack --mode production",
-    "prepare": "husky || true",
-    "start": "webpack serve --open --mode development",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:lint": "eslint .",
-    // highlight-next-line
-    "translate": "node i18n/js_to_json.js && node i18n/json_to_js.js && node i18n/create_scratch_msgs.js"
-  },
-```
-
-#### Actually rebuilding Scratch Blocks
 <Tabs groupId="package-manager" queryString>
     <TabItem value="npm" label="NPM" default>
         <CodeBlock language="shell">
-npm run translate
 npm run build
         </CodeBlock>
     </TabItem>
     <TabItem value="yarn" label="Yarn" default>
         <CodeBlock language="shell">
-yarn run translate
 yarn run build
         </CodeBlock>
     </TabItem>
@@ -206,7 +182,7 @@ If the `scratch-gui` development server isn't running, start it now. You should 
 ## Implementing your block
 The block currently doesn't do anything. So let's implement the block. Implementations of blocks are located in `scratch-vm`, in the folder `src/blocks`. The looks blocks are in a file called `scratch3_looks.js`.
 
-You should place your block's function inside the class, preferably below the `getPrimitives` function or the `getMonitored` and `getHats` functions if they are present. I will place the block above the `say` function, which is the `loosk_say` block. The name of the block function does not need to match the block's opcode.
+You should place your block's function inside the class, preferably below the `getPrimitives` function or the `getMonitored` and `getHats` functions if they are present. I will place the block above the `say` function, which is the `looks_say` block. The name of the block function does not need to match the block's opcode.
 
 ```js title="scratch-editor/packages/scratch-vm/src/blocks/scratch3_looks.js"
 // highlight-next-line
@@ -228,7 +204,6 @@ We also need to add the block to the `getPrimitives` function, which is how Scra
  */
 getPrimitives () {
     return {
-        // highlight-next-line
         looks_tutorialmod_alert: this.tutorialModAlertBlock,
         looks_say: this.say,
         looks_sayforsecs: this.sayforsecs,
@@ -262,7 +237,7 @@ getPrimitives () {
 | Component         | File                              | Download                                                 |
 | ----------------- | --------------------------------- | -------------------------------------------------------- |
 | `scratch-blocks`  | `src/blocks/looks.ts`             | [looks.ts](resources/looks.ts.txt)                       |
-| `scratch-blocks`  | `msg/messages.js`                 | [messages.js](resources/messages.js.txt)                 |
+| `scratch-blocks`  | `msg/json/en.json`                | [en.json](resources/en.json.txt)                         |
 | `scratch-gui`     | `src/lib/make-toolbox-xml.js`     | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt) |
 | `scratch-vm`      | `src/blocks/scratch3_looks.js`    | [scratch3_looks.js](resources/scratch3_looks.js.txt)     |
 
@@ -271,7 +246,7 @@ getPrimitives () {
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
     ```
-    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
-    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
+    scratch-editor:     dc01e76e388c5c8c8a5d3d7c042242ea3e6cf79e
+    scratch-blocks:     ef4a934640888109c14da79ac39f4c2dfe5db360
     ```
 </details>

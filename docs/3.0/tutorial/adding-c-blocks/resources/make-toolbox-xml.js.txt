@@ -6,50 +6,6 @@ const categorySeparator = '<sep gap="36"/>';
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 
-const dialogs = function (isInitialSetup, isStage, targetId, colors) {
-    const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
-    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
-    return `
-    <category name="${ScratchBlocks.ScratchMsgs.translate(
-        'CATEGORY_DIALOGS',
-        'Dialogs'
-    )}" toolboxitemid="dialogs" colour="${
-        colors.colourPrimary
-    }" secondaryColour="${colors.colourTertiary}">
-        <block type="dialogs_alert">
-            <value name="MESSAGE">
-                <shadow type="text">
-                    <field name="TEXT">${hello}</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="dialogs_prompt">
-            <value name="MESSAGE">
-                <shadow type="text">
-                    <field name="TEXT">${hello}</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="dialogs_confirm">
-            <value name="MESSAGE">
-                <shadow type="text">
-                    <field name="TEXT">${hello}</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="dialogs_whileconfirmed">
-            <value name="MESSAGE">
-                <shadow type="text">
-                    <field name="TEXT">${hello}</field>
-                </shadow>
-            </value>
-        </block>
-        <block type="dialogs_randomchoice" />
-        ${categorySeparator}
-    </category>
-    `;
-};
-
 const motion = function (isInitialSetup, isStage, targetId, colors) {
     const stageSelected = ScratchBlocks.ScratchMsgs.translate(
         'MOTION_STAGE_SELECTED',
@@ -201,6 +157,50 @@ const xmlEscape = function (unsafe) {
         case '"': return '&quot;';
         }
     });
+};
+
+const dialogs = function (isInitialSetup, isStage, targetId, colors) {
+    const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category name="${ScratchBlocks.ScratchMsgs.translate(
+        'CATEGORY_DIALOGS',
+        'Dialogs'
+    )}" toolboxitemid="dialogs" colour="${
+        colors.colourPrimary
+    }" secondaryColour="${colors.colourTertiary}">
+        <block type="dialogs_alert">
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="dialogs_prompt">
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="dialogs_confirm">
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="dialogs_whileconfirmed">
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        <block type="dialogs_randomchoice" />
+        ${categorySeparator}
+    </category>
+    `;
 };
 
 const looks = function (isInitialSetup, isStage, targetId, costumeName, backdropName, colors) {

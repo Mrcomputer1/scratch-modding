@@ -39,7 +39,7 @@ const messages = defineMessages({
         description: 'label for high contrast mode'
     },
     [HARD_MODE]: {
-        id: 'gui.theme.hardModeTheme',
+        id: 'gui.theme.hardMode',
         defaultMessage: 'Hard Mode',
         description: 'label for hard mode'
     }

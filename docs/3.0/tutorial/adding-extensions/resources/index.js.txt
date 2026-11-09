@@ -2,8 +2,8 @@ const formatMessage = require('format-message');
 const BlockType = require('../../extension-support/block-type');
 const ArgumentType = require('../../extension-support/argument-type');
 
-class TutorialModDialogsExtension {
-    constructor (runtime) {
+class TutorialModDialogsExtension{
+    constructor (runtime){
         /**
          * The runtime instantiating this block package.
          * @type {Runtime}

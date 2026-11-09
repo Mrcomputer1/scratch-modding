@@ -6,28 +6,6 @@ const categorySeparator = '<sep gap="36"/>';
 const blockSeparator = '<sep gap="36"/>'; // At default scale, about 28px
 
 
-const dialogs = function (isInitialSetup, isStage, targetId, colors) {
-    const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
-    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
-    return `
-    <category name="${ScratchBlocks.ScratchMsgs.translate(
-        'CATEGORY_DIALOGS',
-        'Dialogs'
-    )}" toolboxitemid="dialogs" colour="${
-        colors.colourPrimary
-    }" secondaryColour="${colors.colourTertiary}">
-        <block type="dialogs_alert">
-            <value name="MESSAGE">
-                <shadow type="text">
-                    <field name="TEXT">${hello}</field>
-                </shadow>
-            </value>
-        </block>
-        ${categorySeparator}
-    </category>
-    `;
-};
-
 const motion = function (isInitialSetup, isStage, targetId, colors) {
     const stageSelected = ScratchBlocks.ScratchMsgs.translate(
         'MOTION_STAGE_SELECTED',
@@ -179,6 +157,28 @@ const xmlEscape = function (unsafe) {
         case '"': return '&quot;';
         }
     });
+};
+
+const dialogs = function (isInitialSetup, isStage, targetId, colors) {
+    const hello = ScratchBlocks.ScratchMsgs.translate('LOOKS_HELLO', 'Hello!');
+    // Note: the category's secondaryColour matches up with the blocks' tertiary color, both used for border color.
+    return `
+    <category name="${ScratchBlocks.ScratchMsgs.translate(
+        'CATEGORY_DIALOGS',
+        'Dialogs'
+    )}" toolboxitemid="dialogs" colour="${
+        colors.colourPrimary
+    }" secondaryColour="${colors.colourTertiary}">
+        <block type="dialogs_alert">
+            <value name="MESSAGE">
+                <shadow type="text">
+                    <field name="TEXT">${hello}</field>
+                </shadow>
+            </value>
+        </block>
+        ${categorySeparator}
+    </category>
+    `;
 };
 
 const looks = function (isInitialSetup, isStage, targetId, costumeName, backdropName, colors) {
@@ -835,7 +835,7 @@ const makeToolboxXML = function (isInitialSetup, isStage = true, targetId, categ
         }
         // return `undefined`
     };
-    const dialogsXML = moveCategory('dialogs') || dialogs(isInitialSetup, isStage, targetId, colors.dialogs);
+    const dialogsXML = moveCategory('dialogs') || dialogs(isInitialSetup, isStage, targetId, colors.idalogs);
     const motionXML = moveCategory('motion') || motion(isInitialSetup, isStage, targetId, colors.motion);
     const looksXML = moveCategory('looks') ||
         looks(isInitialSetup, isStage, targetId, costumeName, backdropName, colors.looks);

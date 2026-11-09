@@ -29,19 +29,19 @@ Copy the definition for your Alert block and make the following changes:
 
 ```ts title="scratch-blocks/src/blocks/dialogs.ts"
 // highlight-next-line
-Blockly.Blocks['dialogs_prompt'] = {
-  init: function(this: Blockly.Block){
+Blockly.Blocks.dialogs_prompt = {
+  init: function (this: Blockly.Block) {
     this.jsonInit({
       // highlight-next-line
       message0: Blockly.Msg.DIALOGS_PROMPT, 
       args0: [
         {
-          type: "input_value",
-          name: "MESSAGE",
-        }
+          type: 'input_value',
+          name: 'MESSAGE',
+        },
       ],
       // highlight-next-line
-      extensions: ["colours_dialogs", "output_string"],
+      extensions: ['colours_dialogs', 'output_string'],
     });
   },
 };
@@ -50,7 +50,7 @@ Blockly.Blocks['dialogs_prompt'] = {
 Other than changing the message and opcode, we also changed `shape_statement` to `output_string`. `output_string` and `output_number` are the reporter shapes.
 
 :::tip
-Don't forget to add the message to `msg/messages.js` and rebuild.
+Don't forget to add the message to `msg/json/en.json` and rebuild.
 :::
 
 ### Adding the block to the toolbox
@@ -71,7 +71,6 @@ Simply `return` from the block's function to return a value from the block. Don'
 
 ```js title="scratch-vm/src/blocks/tutorialmod_dialogs.js"
 promptBlock (args, util) {
-    // eslint-disable-next-line
     return prompt(args.MESSAGE);
 }
 ```
@@ -83,24 +82,24 @@ Booleans are almost exactly like reporters. Instead of `output_string` or `outpu
 
 ### Block definition
 ```ts title="scratch-blocks/src/blocks/dialogs.ts"
-Blockly.Blocks['dialogs_confirm'] = {
+Blockly.Blocks.dialogs_confirm = {
   init: function(this: Blockly.Block){
     this.jsonInit({
       message0: Blockly.Msg.DIALOGS_CONFIRM, 
       args0: [
         {
-          type: "input_value",
-          name: "MESSAGE",
-        }
+          type: 'input_value',
+          name: 'MESSAGE',
+        },
       ],
-      extensions: ["colours_dialogs", "output_boolean"],
+      extensions: ['colours_dialogs', 'output_boolean'],
     });
   },
 };
 ```
 
 :::tip
-Again, don't forget to update `msg/messages.js` and rebuild.
+Again, don't forget to update `msg/json/en.json` and rebuild.
 :::
 
 ### Toolbox entry
@@ -126,7 +125,7 @@ confirmBlock (args, util) {
 | Component         | File                                      | Download                                                      |
 | ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
 | `scratch-blocks`  | `src/blocks/dialogs.ts`                   | [dialogs.ts](resources/dialogs.ts.txt)                        |
-| `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js.txt)                      |
+| `scratch-blocks`  | `msg/json/en.json`                        | [en.json](resources/en.json.txt)                              |
 | `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt)      |
 | `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js.txt)|
 
@@ -135,7 +134,7 @@ confirmBlock (args, util) {
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
     ```
-    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
-    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
+    scratch-editor:     dc01e76e388c5c8c8a5d3d7c042242ea3e6cf79e
+    scratch-blocks:     ef4a934640888109c14da79ac39f4c2dfe5db360
     ```
 </details>

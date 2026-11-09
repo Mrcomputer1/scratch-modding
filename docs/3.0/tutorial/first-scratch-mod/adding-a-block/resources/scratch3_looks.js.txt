@@ -329,7 +329,6 @@ class Scratch3LooksBlocks {
     }
 
     tutorialModAlertBlock (args, util) {
-        // eslint-disable-next-line
         alert(args.MESSAGE);
     }
 

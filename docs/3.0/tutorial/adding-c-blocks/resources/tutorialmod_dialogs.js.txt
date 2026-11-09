@@ -22,22 +22,18 @@ class TutorialModDialogsBlocks {
     }
 
     alertBlock (args, util) {
-        // eslint-disable-next-line
         alert(args.MESSAGE);
     }
 
     promptBlock (args, util) {
-        // eslint-disable-next-line
         return prompt(args.MESSAGE);
     }
 
     confirmBlock (args, util) {
-        // eslint-disable-next-line
         return confirm(args.MESSAGE);
     }
 
     whileConfirmedBlock (args, util) {
-        // eslint-disable-next-line
         if (confirm(args.MESSAGE)) {
             util.startBranch(1, true);
         }

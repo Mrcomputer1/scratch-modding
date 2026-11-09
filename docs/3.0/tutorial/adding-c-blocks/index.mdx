@@ -37,27 +37,27 @@ We will make this block display a confirm prompt repeatedly. Every time the user
 ### The `scratch-blocks` definition
 
 ```ts title="scratch-blocks/src/blocks/dialogs.ts"
-Blockly.Blocks['dialogs_whileconfirmed'] = {
-  init: function(this: Blockly.Block){
+Blockly.Blocks.dialogs_whileconfirmed = {
+  init: function (this: Blockly.Block) {
     this.jsonInit({
       message0: Blockly.Msg.DIALOGS_WHILECONFIRMED, // while confirmed %1
       // highlight-next-line
-      message1: "%1",
+      message1: '%1',
       args0: [
         {
-          type: "input_value",
-          name: "MESSAGE",
+          type: 'input_value',
+          name: 'MESSAGE',
         },
       ],
       // highlight-start
       args1: [
         {
-          type: "input_statement",
-          name: "SUBSTACK",
+          type: 'input_statement',
+          name: 'SUBSTACK',
         },
       ],
       // highlight-end
-      extensions: ["colours_dialogs", "shape_statement"],
+      extensions: ['colours_dialogs', 'shape_statement'],
     });
   },
 };
@@ -147,34 +147,34 @@ random choice \{
 
 ### The `scratch-blocks` definition
 ```ts title="scratch-blocks/src/blocks/dialogs.ts"
-Blockly.Blocks['dialogs_randomchoice'] = {
-  init: function(this: Blockly.Block){
+Blockly.Blocks.dialogs_randomchoice = {
+  init: function (this: Blockly.Block) {
     this.jsonInit({
       message0: Blockly.Msg.DIALOGS_RANDOMCHOICE,
       // highlight-start
-      message1: "%1",
-      message2: "%1",
-      message3: "%1",
+      message1: '%1',
+      message2: '%1',
+      message3: '%1',
       args1: [
         {
-          type: "input_statement",
-          name: "SUBSTACK"
+          type: 'input_statement',
+          name: 'SUBSTACK',
         },
       ],
       args2: [
         {
-          type: "input_statement",
-          name: "SUBSTACK2"
+          type: 'input_statement',
+          name: 'SUBSTACK2',
         },
       ],
       args3: [
         {
-          type: "input_statement",
-          name: "SUBSTACK3"
+          type: 'input_statement',
+          name: 'SUBSTACK3',
         },
       ],
       // highlight-end
-      extensions: ["colours_dialogs", "shape_statement"],
+      extensions: ['colours_dialogs', 'shape_statement'],
     });
   },
 };
@@ -211,7 +211,7 @@ JavaScript's `Math.random()` generates floating point numbers between 0 and 1, h
 | Component         | File                                      | Download                                                      |
 | ----------------- | ----------------------------------------- | ------------------------------------------------------------- |
 | `scratch-blocks`  | `src/blocsk/dialogs.ts`                   | [dialogs.ts](resources/dialogs.ts.txt)                        |
-| `scratch-blocks`  | `msg/messages.js`                         | [messages.js](resources/messages.js.txt)                      |
+| `scratch-blocks`  | `msg/json/en.json`                        | [en.json](resources/en.json.txt)                              |
 | `scratch-gui`     | `src/lib/make-toolbox-xml.js`             | [make-toolbox-xml.js](resources/make-toolbox-xml.js.txt)      |
 | `scratch-vm`      | `src/blocks/tutorialmod_dialogs.js`       | [tutorialmod_dialogs.js](resources/tutorialmod_dialogs.js.txt)|
 
@@ -220,7 +220,7 @@ JavaScript's `Math.random()` generates floating point numbers between 0 and 1, h
     <summary>Scratch commit hashes at the time of this tutorial</summary>
 
     ```
-    scratch-editor:     810ac12eaa1a1eb19d05fcb37f486ad1c4c56314
-    scratch-blocks:     bb2f7ce297e2552767b531c212b18ee4f046e92d
+    scratch-editor:     dc01e76e388c5c8c8a5d3d7c042242ea3e6cf79e
+    scratch-blocks:     ef4a934640888109c14da79ac39f4c2dfe5db360
     ```
 </details>
