@@ -3,7 +3,7 @@
 ## Scratch (3.0)
 ### Tutorial Contributors
 * Mrcomputer1 [(GitHub)](https://github.com/Mrcomputer1) [(Scratch)](https://scratch.mit.edu/users/Mrcomputer1)
-* J-41 [(GitHub)](https://github.com/J-41)
+* SomeAverageCoder [(GitHub)](https://github.com/SomeAverageCoder)
 
 ### JGames101's [Guide to Modding Scratch 3.0](https://scratch.mit.edu/discuss/topic/289503/)
 
@@ -16,7 +16,7 @@ Some code from `scratch-blocks` is included. This code is licensed under the [Ap
 Some code from `scratch-editor` is included. This code is licensed under [GNU Affero General Public License v3.0](https://github.com/scratchfoundation/scratch-editor/blob/810ac12eaa1a1eb19d05fcb37f486ad1c4c56314/LICENSE).
 
 #### Older versions of Scratch 3.0
-Some code from `scratch-editor` is included. This code is licensed under [BSD 3-Clause](https://github.com/scratchfoundation/scratch-gui/blob/1c9ff0dcfcfc9ffee992158bf906e590ad2fb566/LICENSE).
+Some code from `scratch-gui` and `scratch-vm` is included. This code is licensed under [BSD 3-Clause](https://github.com/scratchfoundation/scratch-gui/blob/1c9ff0dcfcfc9ffee992158bf906e590ad2fb566/LICENSE).
 
 ## Scratch (2.0)
 ### Tutorial Contributors
